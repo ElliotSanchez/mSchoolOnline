@@ -20,14 +20,11 @@ return array(
                     ),
                 ),
             ),
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
+
             'admin' => array(
-                'type'    => 'Literal',
+                'type' => 'Hostname',
                 'options' => array(
-                    'route'    => '/admin',
+                    'route' => 'admin.mschool.lp',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'controller'    => 'Index',
@@ -45,11 +42,67 @@ return array(
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
+                                'controller' => 'Index',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+
+                    // AUTH
+                    'login' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/login',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Auth',
+                                'action'     => 'login',
+                            ),
+                        ),
+                    ),
+                    'authenticate' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/authenticate',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Auth',
+                                'action'     => 'authenticate',
                             ),
                         ),
                     ),
                 ),
             ),
+
+
+            // The following is a route to simplify getting started creating
+            // new controllers and actions without needing to create a new
+            // module. Simply drop new controllers in, and you can access them
+            // using the path /application/:controller/:action
+//            'admin' => array(
+//                'type'    => 'Literal',
+//                'options' => array(
+//                    'route'    => '/admin',
+//                    'defaults' => array(
+//                        '__NAMESPACE__' => 'Admin\Controller',
+//                        'controller'    => 'Index',
+//                        'action'        => 'index',
+//                    ),
+//                ),
+//                'may_terminate' => true,
+//                'child_routes' => array(
+//                    'default' => array(
+//                        'type'    => 'Segment',
+//                        'options' => array(
+//                            'route'    => '/[:controller[/:action]]',
+//                            'constraints' => array(
+//                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+//                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+//                            ),
+//                            'defaults' => array(
+//                            ),
+//                        ),
+//                    ),
+//                ),
+//            ),
         ),
     ),
     'service_manager' => array(
@@ -73,7 +126,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Admin\Controller\Index' => 'Admin\Controller\IndexController'
+            'Admin\Controller\Index' => 'Admin\Controller\IndexController',
+            'Admin\Controller\Auth' => 'Admin\Controller\AuthController'
         ),
     ),
     'view_manager' => array(
