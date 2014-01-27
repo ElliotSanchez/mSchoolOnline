@@ -1,0 +1,14 @@
+{
+    "name": "mschool",
+    "description": "mschool",
+    "license": "proprietary",
+    "keywords": [
+        "framework",
+        "zf2"
+    ],
+    "homepage": "http://mschools.org/",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.2.*"
+    }
+}
