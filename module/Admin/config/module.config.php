@@ -1,11 +1,4 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 return array(
     'router' => array(
@@ -24,7 +17,7 @@ return array(
             'admin' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'admin.mschool.lp',
+                    'route' => 'admin.mschool',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'controller'    => 'Index',
@@ -66,6 +59,18 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Admin\Controller\Auth',
                                 'action'     => 'authenticate',
+                            ),
+                        ),
+                    ),
+
+                    // ACCOUNTS
+                    'admin_accounts' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/accounts',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'index',
                             ),
                         ),
                     ),
@@ -127,7 +132,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
-            'Admin\Controller\Auth' => 'Admin\Controller\AuthController'
+            'Admin\Controller\Auth' => 'Admin\Controller\AuthController',
+            'Admin\Controller\Accounts' => 'Admin\Controller\AccountsController',
         ),
     ),
     'view_manager' => array(

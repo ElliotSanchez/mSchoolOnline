@@ -1,0 +1,17 @@
+<table class="table">
+    <thead>
+        <tr>
+            <td>Account Name</td>
+            <td>Subdomain</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->accounts as $account): ?>
+            <tr>
+                <td><? echo $account->name ?></td>
+                <td><? echo $account->subdomain ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+
+</table>
