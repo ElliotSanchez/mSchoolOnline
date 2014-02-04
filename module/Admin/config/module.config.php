@@ -63,6 +63,46 @@ return array(
                         ),
                     ),
 
+                    // USERS
+                    'users' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/users',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Users',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+
+                    'user_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/user/add',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Users',
+                                'action'     => 'add',
+                            ),
+                        ),
+                    ),
+
+                    'user_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/user/edit/[:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Users',
+                                'action'     => 'edit',
+                            ),
+                        ),
+                    ),
+
                     // ACCOUNTS
                     'accounts' => array(
                         'type' => 'Zend\Mvc\Router\Http\Literal',
@@ -306,6 +346,7 @@ return array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
             'Admin\Controller\Auth' => 'Admin\Controller\AuthController',
             'Admin\Controller\Accounts' => 'Admin\Controller\AccountsController',
+            'Admin\Controller\Users' => 'Admin\Controller\UsersController',
         ),
     ),
     'view_manager' => array(

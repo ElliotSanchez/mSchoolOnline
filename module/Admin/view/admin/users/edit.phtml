@@ -1,0 +1,111 @@
+<h2>Edit User</h2>
+
+<?php
+
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form->setAttribute('class', 'form'));
+?>
+
+<div class="row">
+    <div class="form-group <?php echo (!$form->get('first_name')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="name">First Name</label>
+            <?php
+            $firstName = $form->get('first_name');
+            echo $this->formInput($firstName->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($firstName);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group <?php echo (!$form->get('last_name')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="last_name">Last Name</label>
+            <?php
+            $lastName = $form->get('last_name');
+            echo $this->formInput($lastName->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($lastName);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group <?php echo (!$form->get('email')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="email">Email</label>
+            <?php
+            $email = $form->get('email');
+            echo $this->formInput($email->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($email);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group <?php echo (!$form->get('username')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="username">Username</label>
+            <?php
+            $username = $form->get('username');
+            echo $this->formInput($username->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($username);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group <?php echo (!$form->get('password')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="username">Password</label>
+            <?php
+            $password = $form->get('password');
+            echo $this->formInput($password->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($password);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group <?php echo (!$form->get('password_confirm')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="username">Password Confirmation</label>
+            <?php
+            $passwordConfirm = $form->get('password_confirm');
+            echo $this->formInput($passwordConfirm->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($passwordConfirm);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-md-2">
+            <label class="control-label" for=""></label>
+            <?php
+            $submit = $form->get('submit');
+            echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Update'));
+            echo $this->formElementErrors($submit );
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-2">
+        <a href="<?php echo $this->url('admin/account_teachers', array('id'=>$account->id)) ?>" class="btn btn-default btn-sm">Cancel</a>
+    </div>
+</div>
+
+<?php echo $this->form()->closeTag() ?>
+
