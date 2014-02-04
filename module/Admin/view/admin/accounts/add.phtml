@@ -1,4 +1,4 @@
-<h1>Add Account</h1>
+<h3>Add Account</h3>
 
 <?php
 
@@ -46,6 +46,12 @@ echo $this->form()->openTag($form->setAttribute('class', 'form'));
                 echo $this->formElementErrors($submit );
                 ?>
             </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 12px">
+        <div class="col-md-2">
+            <a href="<?php echo $this->url('admin/accounts') ?>" class="btn btn-default btn-sm">Cancel</a>
         </div>
     </div>
 

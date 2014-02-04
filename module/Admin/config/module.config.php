@@ -142,6 +142,35 @@ return array(
                         ),
                     ),
 
+                    'school_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]/school/add',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'school-add',
+                            ),
+                        ),
+                    ),
+
+                    'school_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:a_id]/school/[:s_id]/edit',
+                            'constraints' => array(
+                                'a_id' => '[0-9]*',
+                                's_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'school-edit',
+                            ),
+                        ),
+                    ),
+
                 ),
             ),
 

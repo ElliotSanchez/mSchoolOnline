@@ -5,6 +5,7 @@ namespace Admin\ModelAbstract;
 abstract class EntityAbstract
 {
 
+    public $id;
     public $createdAt;
     public $updatedAt;
 

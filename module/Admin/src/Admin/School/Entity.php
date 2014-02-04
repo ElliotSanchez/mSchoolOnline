@@ -1,19 +1,20 @@
 <?php
 
-namespace Admin\Account;
+namespace Admin\School;
 
 use Admin\ModelAbstract\EntityAbstract;
 
 class Entity extends EntityAbstract {
 
     public $name;
-    public $subdomain;
+
+    public $accountId;
 
     public function create($data) {
 
         parent::create($data);
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
-        $this->subdomain = (!empty($data['subdomain'])) ? $data['subdomain'] : null;
+        $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : null;
 
     }
 
@@ -23,7 +24,7 @@ class Entity extends EntityAbstract {
         if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
 
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
-        $this->subdomain = (!empty($data['subdomain'])) ? $data['subdomain'] : null;
+        $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : null;
 
         $this->exchangeDates($data);
     }
@@ -32,7 +33,7 @@ class Entity extends EntityAbstract {
 
         $data = array(
             'name' => $this->name,
-            'subdomain' => $this->subdomain,
+            'account_id' => $this->accountId,
         );
 
         return $data;

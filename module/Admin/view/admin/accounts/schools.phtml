@@ -1,8 +1,40 @@
-<h1><?php echo $account->name ?></h1>
-<div class="row">
+<?php echo $this->partial('admin/accounts/partials/header.phtml', array('active' => 'schools', 'account' => $account)); ?>
+
+<div class="row" style="padding-top: 12px">
     <div class="col-md-12 text-right">
-        <a href="<?php echo $this->url('admin/account_edit', array('id'=>$account->id)) ?>" class="btn btn-primary">Edit</a>
+        <a href="<?php echo $this->url('admin/school_add', array('id'=>$account->id)) ?>" class="btn btn-primary">Add School</a>
     </div>
 </div>
 
-<?php echo $this->partial('admin/accounts/partials/nav.phtml', array('active' => 'schools', 'account' => $account)); ?>
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-12">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($schools as $school): ?>
+                    <tr>
+                        <td>
+                            <a href="<?php echo $this->url('admin/school_edit', array('a_id' => $account->id, 's_id' => $school->id)) ?>">
+                                <?php echo $school->name ?>
+                            </a>
+                        </td>
+                        <td class="text-right">
+                            <a href="<?php echo $this->url('admin/school_edit', array('a_id' => $account->id, 's_id' => $school->id)) ?>" class="btn btn-default btn-sm">
+                                Edit
+                            </a>
+
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

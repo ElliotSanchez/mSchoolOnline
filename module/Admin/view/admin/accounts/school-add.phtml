@@ -1,6 +1,6 @@
 <?php echo $this->partial('admin/accounts/partials/header.phtml', array('active' => 'schools', 'account' => $account)); ?>
 
-<h3>Edit Account</h3>
+<h3>Add School</h3>
 
 <?php
 
@@ -24,19 +24,6 @@ echo $this->form()->openTag($form->setAttribute('class', 'form'));
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="form-group <?php echo (!$form->get('subdomain')->getMessages()) ?: ('has-error') ?>">
-            <div class="col-md-4">
-                <label class="control-label" for="subdomain">Subdomain</label>
-                <?php
-                    $subdomain = $form->get('subdomain');
-                    echo $this->formInput($subdomain ->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
-                    echo $this->formElementErrors($subdomain );
-                ?>
-            </div>
-        </div>
-    </div>
-
 
     <div class="row">
         <div class="form-group">
@@ -44,7 +31,7 @@ echo $this->form()->openTag($form->setAttribute('class', 'form'));
                 <label class="control-label" for=""></label>
                 <?php
                 $submit = $form->get('submit');
-                echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Update Account'));
+                echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Add School'));
                 echo $this->formElementErrors($submit );
                 ?>
             </div>
@@ -53,7 +40,7 @@ echo $this->form()->openTag($form->setAttribute('class', 'form'));
 
     <div class="row" style="padding-top: 12px">
         <div class="col-md-2">
-            <a href="<?php echo $this->url('admin/account_view', array('id'=>$account->id)) ?>" class="btn btn-default btn-sm">Cancel</a>
+            <a href="<?php echo $this->url('admin/account_schools', array('id'=>$account->id)) ?>" class="btn btn-default btn-sm">Cancel</a>
         </div>
     </div>
 

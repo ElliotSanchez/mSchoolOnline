@@ -23,9 +23,16 @@ class AccountsController extends AbstractActionController
     }
 
     public function schoolsAction() {
-        return new ViewModel([
-            'account' => $this->getAccount(),
-        ]);
+
+        $account = $this->getAccount();
+
+        $schools = $this->getServiceLocator()->get('SchoolService')->getForAccount($account);
+
+        return new ViewModel(array(
+            'schools' => $schools,
+            'account' => $account,
+        ));
+
     }
 
     public function usersAction() {
@@ -88,6 +95,76 @@ class AccountsController extends AbstractActionController
         }
 
         return new ViewModel([
+            'account' => $account,
+            'form' => $form,
+        ]);
+
+    }
+
+    public function schoolAddAction()
+    {
+        $account = $this->getAccount();
+
+        $form = $this->getServiceLocator()->get('SchoolAddForm');
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $data['account_id'] = $account->id;
+                $school = $this->getServiceLocator()->get('SchoolService')->create($data);
+                $this->flashMessenger()->addSuccessMessage('Added School');
+                $this->redirect()->toRoute('admin/school_edit', array('a_id' => $account->id, 's_id' => $school->id));
+            }
+
+        }
+
+        return new ViewModel([
+            'account' => $account,
+            'form' => $form,
+        ]);
+
+    }
+
+    public function schoolEditAction()
+    {
+
+        $accountService = $this->getServiceLocator()->get('AccountService');
+        $schoolService = $this->getServiceLocator()->get('SchoolService');
+
+        $account = $accountService->get($this->params('a_id'));
+        $school = $schoolService->get($this->params('s_id'));
+
+        $form = $this->getServiceLocator()->get('SchoolEditForm');
+
+        $form->bind($school);
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+
+                $school = $form->getData();
+
+                $school->accountId = $account->id; // TODO FIX THIS
+
+                $schoolService->save($school);
+
+                $this->flashMessenger()->addSuccessMessage('Updated School');
+                $this->redirect()->toRoute('admin/school_edit', array('a_id' => $account->id, 's_id' => $school->id));
+            }
+
+        }
+
+        return new ViewModel([
+            'account' => $account,
             'form' => $form,
         ]);
 
