@@ -17,7 +17,7 @@ abstract class ServiceAbstract
         return $this->table->get($id);
     }
 
-    public function save(ModelAbstract $model) {
+    public function save(EntityAbstract $model) {
         return $this->table->save($model);
     }
 

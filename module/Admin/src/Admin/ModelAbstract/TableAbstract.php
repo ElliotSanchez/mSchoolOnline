@@ -52,7 +52,7 @@ class TableAbstract
         return $row;
     }
 
-    public function save(ModelAbstract $object)
+    public function save(EntityAbstract $object)
     {
 
         $id = (int) $object->id;

@@ -12,7 +12,7 @@ abstract class EntityAbstract
 
     abstract public function toData();
 
-    protected function create(array $data) {
+    protected function create($data) {
         $this->id = (!empty($data['id'])) ? $data['id'] : null;
         $this->created_at = (!empty($data['created_at'])) ? new \DateTime($data['created_at']) : null;
         $this->updated_at = (!empty($data['updated_at'])) ? new \DateTime($data['updated_at']) : null;

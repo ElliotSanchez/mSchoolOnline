@@ -24,6 +24,12 @@ return array(
         'AccountService' => function ($sm) {
                 return new AccountService($sm->get('AccountTable'));
             },
+        'AccountAddForm' => function ($sm) {
+                return new Admin\Form\Account\Add();
+            },
+        'AccountEditForm' => function ($sm) {
+                return new Admin\Form\Account\Edit();
+            }
 
     )
 );

@@ -64,7 +64,7 @@ return array(
                     ),
 
                     // ACCOUNTS
-                    'admin_accounts' => array(
+                    'accounts' => array(
                         'type' => 'Zend\Mvc\Router\Http\Literal',
                         'options' => array(
                             'route'    => '/accounts',
@@ -74,6 +74,46 @@ return array(
                             ),
                         ),
                     ),
+
+                    'account_add' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/account/add',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'add',
+                            ),
+                        ),
+                    ),
+
+                    'account_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/edit/[:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'edit',
+                            ),
+                        ),
+                    ),
+
+                    'account_view' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'view',
+                            ),
+                        ),
+                    ),
+
                 ),
             ),
 

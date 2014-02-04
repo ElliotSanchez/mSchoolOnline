@@ -1,0 +1,55 @@
+<h1>Add Account</h1>
+
+<?php
+
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form->setAttribute('class', 'form'));
+?>
+
+    <div class="row">
+        <div class="form-group <?php echo (!$form->get('name')->getMessages()) ?: ('has-error') ?>">
+            <div class="col-md-4">
+                <label class="control-label" for="name">Name</label>
+                <?php
+                $name = $form->get('name');
+                echo $this->formInput($name->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+                echo $this->formElementErrors($name);
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group <?php echo (!$form->get('subdomain')->getMessages()) ?: ('has-error') ?>">
+            <div class="col-md-4">
+                <label class="control-label" for="subdomain">Subdomain</label>
+                <?php
+                    $subdomain = $form->get('subdomain');
+                    echo $this->formInput($subdomain ->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+                    echo $this->formElementErrors($subdomain );
+                ?>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-2">
+                <label class="control-label" for=""></label>
+                <?php
+                $submit = $form->get('submit');
+                echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Add Account'));
+                echo $this->formElementErrors($submit );
+                ?>
+            </div>
+        </div>
+    </div>
+
+<?php echo $this->form()->closeTag() ?>
+
+
+</div>

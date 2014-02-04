@@ -1,3 +1,9 @@
+<h1>Accounts</h1>
+
+<div class="col-md-12 text-right">
+    <a href="<?php echo $this->url('admin/account_add') ?>" class="btn btn-primary">Add</a>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -8,7 +14,7 @@
     <tbody>
         <?php foreach ($this->accounts as $account): ?>
             <tr>
-                <td><? echo $account->name ?></td>
+                <td><a href="<?php echo $this->url('admin/account_view', ['id'=>$account->id]) ?>"><? echo $account->name ?></td>
                 <td><? echo $account->subdomain ?></td>
             </tr>
         <?php endforeach; ?>
