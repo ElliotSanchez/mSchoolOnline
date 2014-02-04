@@ -1,28 +1,41 @@
 <?php echo $this->partial('admin/accounts/partials/header.phtml', array('active' => 'teachers', 'account' => $account)); ?>
 
 <div class="row" style="padding-top: 12px">
+    <div class="col-md-12 text-right">
+        <a href="<?php echo $this->url('admin/teacher_add', array('id'=>$account->id)) ?>" class="btn btn-primary">Add Teacher</a>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 12px">
     <div class="col-md-12">
 
         <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($schools as $school): ?>
+                <?php foreach($teachers as $teacher): ?>
                     <tr>
                         <td>
-                            <a href="<?php echo $this->url('admin/school_edit', array('a_id' => $account->id, 's_id' => $school->id)) ?>">
-                                <?php echo $school->name ?>
+                            <a href="<?php echo $this->url('admin/teacher_edit', array('a_id' => $teacher->id, 't_id' => $teacher->id)) ?>">
+                                <?php echo $teacher->firstName ?> <?php echo $teacher->lastName ?>
                             </a>
                         </td>
+                        <td>
+                            <?php echo $teacher->email ?>
+                        </td>
+                        <td>
+                            <?php echo $teacher->username ?>
+                        </td>
                         <td class="text-right">
-                            <a href="<?php echo $this->url('admin/school_edit', array('a_id' => $account->id, 's_id' => $school->id)) ?>" class="btn btn-default btn-sm">
+                            <a href="<?php echo $this->url('admin/teacher_edit', array('a_id' => $teacher->id, 't_id' => $teacher->id)) ?>" class="btn btn-default btn-sm">
                                 Edit
                             </a>
-
                         </td>
                     </tr>
                 <?php endforeach; ?>

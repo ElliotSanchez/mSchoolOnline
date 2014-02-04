@@ -186,6 +186,36 @@ return array(
                         ),
                     ),
 
+                    // TEACHERS
+                    'teacher_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]/teacher/add',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'teacher-add',
+                            ),
+                        ),
+                    ),
+
+                    'teacher_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:a_id]/teacher/[:t_id]/edit',
+                            'constraints' => array(
+                                'a_id' => '[0-9]*',
+                                't_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'teacher-edit',
+                            ),
+                        ),
+                    ),
+
                 ),
             ),
 

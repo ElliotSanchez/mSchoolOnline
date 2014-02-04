@@ -8,6 +8,9 @@ use Admin\Account\Service as AccountService;
 use Admin\School\Entity as School;
 use Admin\School\Table as SchoolTable;
 use Admin\School\Service as SchoolService;
+use Admin\Teacher\Entity as Teacher;
+use Admin\Teacher\Table as TeacherTable;
+use Admin\Teacher\Service as TeacherService;
 
 return array(
 
@@ -54,6 +57,28 @@ return array(
             },
         'SchoolEditForm' => function ($sm) {
                 return new Admin\Form\Account\SchoolEdit();
+            },
+
+        // TEACHERS
+        'TeacherTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Teacher());
+                return new TableGateway('teachers', $dbAdapter, null, $resultSetPrototype);
+            },
+        'TeacherTable' =>  function($sm) {
+                $tableGateway = $sm->get('TeacherTableGateway');
+                $table = new TeacherTable($tableGateway);
+                return $table;
+            },
+        'TeacherService' => function ($sm) {
+                return new TeacherService($sm->get('TeacherTable'));
+            },
+        'TeacherAddForm' => function ($sm) {
+                return new Admin\Form\Account\TeacherAdd($sm->get('SchoolService'));
+            },
+        'TeacherEditForm' => function ($sm) {
+                return new Admin\Form\Account\TeacherEdit($sm->get('SchoolService'));
             },
 
     )

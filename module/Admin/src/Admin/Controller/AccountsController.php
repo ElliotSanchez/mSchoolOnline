@@ -36,8 +36,12 @@ class AccountsController extends AbstractActionController
     }
 
     public function teachersAction() {
+
+        $teachers = $this->getServiceLocator()->get('TeacherService')->all();
+
         return new ViewModel([
             'account' => $this->getAccount(),
+            'teachers' => $teachers,
         ]);
     }
 
@@ -165,6 +169,81 @@ class AccountsController extends AbstractActionController
 
                 $this->flashMessenger()->addSuccessMessage('Updated School');
                 $this->redirect()->toRoute('admin/school_edit', array('a_id' => $account->id, 's_id' => $school->id));
+            }
+
+        }
+
+        return new ViewModel([
+            'account' => $account,
+            'form' => $form,
+        ]);
+
+    }
+
+    // SCHOOLS
+    public function teacherAddAction()
+    {
+        $account = $this->getAccount();
+
+        $form = $this->getServiceLocator()->get('TeacherAddForm');
+
+        $form->setAccount($account);
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $school = $this->getServiceLocator()->get('TeacherService')->create($data);
+                $this->flashMessenger()->addSuccessMessage('Added Teacher');
+                $this->redirect()->toRoute('admin/teacher_edit', array('a_id' => $account->id, 't_id' => $school->id));
+            }
+
+        }
+
+        return new ViewModel([
+            'account' => $account,
+            'form' => $form,
+        ]);
+
+    }
+
+    public function teacherEditAction()
+    {
+
+        $accountService = $this->getServiceLocator()->get('AccountService');
+        $teacherService = $this->getServiceLocator()->get('TeacherService');
+
+        $account = $accountService->get($this->params('a_id'));
+        $teacher = $teacherService->get($this->params('t_id'));
+
+        $form = $this->getServiceLocator()->get('TeacherEditForm');
+
+        $form->setAccount($account);
+        $form->bind($teacher);
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+
+                $teacher = $form->getData();
+
+                $password = $form->getInputFilter()->getRawValue('password');
+                if (strlen($password))
+                    $teacher->setPassword($password);
+
+                $teacherService->save($teacher);
+
+                $this->flashMessenger()->addSuccessMessage('Updated Teacher');
+                $this->redirect()->toRoute('admin/teacher_edit', array('a_id' => $account->id, 't_id' => $teacher->id));
             }
 
         }
