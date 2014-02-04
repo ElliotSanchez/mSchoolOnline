@@ -5,7 +5,10 @@
     <li class="<?php echo ($this->active == 'schools') ? ('active') : (null) ?>">
         <a href="<?php echo $this->url('admin/account_schools', array('id'=>$this->account->id)) ?>">Schools</a>
     </li>
-    <li class="<?php echo ($this->active == 'users') ? ('active') : (null) ?>">
-        <a href="<?php echo $this->url('admin/account_users', array('id'=>$this->account->id)) ?>">Users</a>
+    <li class="<?php echo ($this->active == 'teachers') ? ('active') : (null) ?>">
+        <a href="<?php echo $this->url('admin/account_teachers', array('id'=>$this->account->id)) ?>">Teachers</a>
+    </li>
+    <li class="<?php echo ($this->active == 'students') ? ('active') : (null) ?>">
+        <a href="<?php echo $this->url('admin/account_students', array('id'=>$this->account->id)) ?>">Students</a>
     </li>
 </ul>

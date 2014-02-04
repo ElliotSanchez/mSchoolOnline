@@ -128,20 +128,35 @@ return array(
                         ),
                     ),
 
-                    'account_users' => array(
+                    'account_teachers' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route'    => '/account/[:id]/users',
+                            'route'    => '/account/[:id]/teachers',
                             'constraints' => array(
                                 'id' => '[0-9]*',
                             ),
                             'defaults' => array(
                                 'controller' => 'Admin\Controller\Accounts',
-                                'action'     => 'users',
+                                'action'     => 'teachers',
                             ),
                         ),
                     ),
 
+                    'account_students' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]/students',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'students',
+                            ),
+                        ),
+                    ),
+
+                    // SCHOOLS
                     'school_add' => array(
                         'type' => 'Segment',
                         'options' => array(

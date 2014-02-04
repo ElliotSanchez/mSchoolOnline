@@ -35,7 +35,13 @@ class AccountsController extends AbstractActionController
 
     }
 
-    public function usersAction() {
+    public function teachersAction() {
+        return new ViewModel([
+            'account' => $this->getAccount(),
+        ]);
+    }
+
+    public function studentsAction() {
         return new ViewModel([
             'account' => $this->getAccount(),
         ]);
