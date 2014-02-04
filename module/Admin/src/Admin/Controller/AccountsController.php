@@ -46,9 +46,16 @@ class AccountsController extends AbstractActionController
     }
 
     public function studentsAction() {
+
+        $account = $this->getAccount();
+
+        $students = $this->getServiceLocator()->get('StudentService')->getForAccount($account);
+
         return new ViewModel([
-            'account' => $this->getAccount(),
+            'account' => $account,
+            'students' => $students,
         ]);
+
     }
 
     public function addAction()
@@ -244,6 +251,84 @@ class AccountsController extends AbstractActionController
 
                 $this->flashMessenger()->addSuccessMessage('Updated Teacher');
                 $this->redirect()->toRoute('admin/teacher_edit', array('a_id' => $account->id, 't_id' => $teacher->id));
+            }
+
+        }
+
+        return new ViewModel([
+            'account' => $account,
+            'form' => $form,
+        ]);
+
+    }
+
+    // STUDENTS
+    public function studentAddAction()
+    {
+        $account = $this->getAccount();
+
+        $form = $this->getServiceLocator()->get('StudentAddForm');
+
+        $form->setAccount($account);
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $student = $this->getServiceLocator()->get('StudentService')->create($data);
+                $this->flashMessenger()->addSuccessMessage('Added Student');
+                $this->redirect()->toRoute('admin/student_edit', array('a_id' => $account->id, 's_id' => $student->id));
+            }
+
+        }
+
+        return new ViewModel([
+            'account' => $account,
+            'form' => $form,
+        ]);
+
+    }
+
+    public function studentEditAction()
+    {
+
+        $accountService = $this->getServiceLocator()->get('AccountService');
+        $studentService = $this->getServiceLocator()->get('StudentService');
+
+        $account = $accountService->get($this->params('a_id'));
+        $student = $studentService->get($this->params('s_id'));
+
+        $form = $this->getServiceLocator()->get('StudentEditForm');
+
+        $form->setAccount($account);
+        $form->bind($student);
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+
+                $student = $form->getData();
+
+                $password = $form->getInputFilter()->getRawValue('password');
+
+                if (strlen($password))
+                    $student->setPassword($password);
+
+                $studentService->save($student);
+
+                $this->flashMessenger()->addSuccessMessage('Updated Student');
+                $this->redirect()->toRoute('admin/student_edit', array('a_id' => $account->id, 's_id' => $student->id));
+            } else {
+                print_r($form->getMessages());
             }
 
         }

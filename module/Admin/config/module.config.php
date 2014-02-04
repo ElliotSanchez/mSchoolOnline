@@ -216,6 +216,36 @@ return array(
                         ),
                     ),
 
+                    // STUDENTS
+                    'student_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]/student/add',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'student-add',
+                            ),
+                        ),
+                    ),
+
+                    'student_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:a_id]/student/[:s_id]/edit',
+                            'constraints' => array(
+                                'a_id' => '[0-9]*',
+                                's_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'student-edit',
+                            ),
+                        ),
+                    ),
+
                 ),
             ),
 

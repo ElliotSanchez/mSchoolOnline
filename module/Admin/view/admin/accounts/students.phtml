@@ -1,6 +1,12 @@
 <?php echo $this->partial('admin/accounts/partials/header.phtml', array('active' => 'students', 'account' => $account)); ?>
 
 <div class="row" style="padding-top: 12px">
+    <div class="col-md-12 text-right">
+        <a href="<?php echo $this->url('admin/student_add', array('id'=>$account->id)) ?>" class="btn btn-primary">Add Student</a>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 12px">
     <div class="col-md-12">
 
         <table class="table">
@@ -11,15 +17,15 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($schools as $school): ?>
+                <?php foreach($students as $student): ?>
                     <tr>
                         <td>
-                            <a href="<?php echo $this->url('admin/school_edit', array('a_id' => $account->id, 's_id' => $school->id)) ?>">
-                                <?php echo $school->name ?>
+                            <a href="<?php echo $this->url('admin/student_edit', array('a_id' => $account->id, 's_id' => $student->id)) ?>">
+                                <?php echo $student->firstName . ' ' . $student->lastName ?>
                             </a>
                         </td>
                         <td class="text-right">
-                            <a href="<?php echo $this->url('admin/school_edit', array('a_id' => $account->id, 's_id' => $school->id)) ?>" class="btn btn-default btn-sm">
+                            <a href="<?php echo $this->url('admin/student_edit', array('a_id' => $account->id, 's_id' => $student->id)) ?>" class="btn btn-default btn-sm">
                                 Edit
                             </a>
 
