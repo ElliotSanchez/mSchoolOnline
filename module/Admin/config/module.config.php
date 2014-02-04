@@ -114,6 +114,34 @@ return array(
                         ),
                     ),
 
+                    'account_schools' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]/schools',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'schools',
+                            ),
+                        ),
+                    ),
+
+                    'account_users' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]/users',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'users',
+                            ),
+                        ),
+                    ),
+
                 ),
             ),
 

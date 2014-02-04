@@ -1,0 +1,11 @@
+<ul class="nav nav-tabs">
+    <li class="<?php echo ($this->active == 'overview') ? ('active') : (null) ?>">
+        <a href="<?php echo $this->url('admin/account_view', array('id'=>$this->account->id)) ?>">Overview</a>
+    </li>
+    <li class="<?php echo ($this->active == 'schools') ? ('active') : (null) ?>">
+        <a href="<?php echo $this->url('admin/account_schools', array('id'=>$this->account->id)) ?>">Schools</a>
+    </li>
+    <li class="<?php echo ($this->active == 'users') ? ('active') : (null) ?>">
+        <a href="<?php echo $this->url('admin/account_users', array('id'=>$this->account->id)) ?>">Users</a>
+    </li>
+</ul>

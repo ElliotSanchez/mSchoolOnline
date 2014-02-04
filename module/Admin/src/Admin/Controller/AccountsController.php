@@ -17,12 +17,20 @@ class AccountsController extends AbstractActionController
 
     public function viewAction()
     {
-        $accountService = $this->getServiceLocator()->get('AccountService');
-
-        $account = $accountService->get($this->params('id'));
-
         return new ViewModel([
-            'account' => $account,
+            'account' => $this->getAccount(),
+        ]);
+    }
+
+    public function schoolsAction() {
+        return new ViewModel([
+            'account' => $this->getAccount(),
+        ]);
+    }
+
+    public function usersAction() {
+        return new ViewModel([
+            'account' => $this->getAccount(),
         ]);
     }
 
@@ -82,6 +90,14 @@ class AccountsController extends AbstractActionController
         return new ViewModel([
             'form' => $form,
         ]);
+
+    }
+
+    protected function getAccount() {
+
+        $accountService = $this->getServiceLocator()->get('AccountService');
+
+        return $accountService->get($this->params('id'));
 
     }
 
