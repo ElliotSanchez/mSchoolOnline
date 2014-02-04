@@ -16,11 +16,12 @@ CREATE TABLE `teachers` (
   `email` varchar(256) DEFAULT NULL,
   `first_name` varchar(256) DEFAULT NULL,
   `last_name` varchar(256) DEFAULT NULL,
+  `is_school_admin` tinyint(1) DEFAULT 0,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `school` (`school_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `students` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

@@ -11,6 +11,7 @@ class Entity extends EntityAbstract {
     public $email;
     public $firstName;
     public $lastName;
+    public $isSchoolAdmin;
 
     public $schoolId;
 
@@ -30,6 +31,7 @@ class Entity extends EntityAbstract {
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
         $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : null;
         $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : null;
+        $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : null;
 
         $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : null;
 
@@ -48,6 +50,7 @@ class Entity extends EntityAbstract {
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
         $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : null;
         $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : null;
+        $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : 0;
 
         $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : null;
 
@@ -61,6 +64,7 @@ class Entity extends EntityAbstract {
             'email' => $this->email,
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
+            'is_school_admin' => $this->isSchoolAdmin,
             'school_id' => $this->schoolId,
         );
 

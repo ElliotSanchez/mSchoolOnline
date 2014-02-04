@@ -54,6 +54,13 @@ class TeacherEdit extends Form
         ));
 
         $this->add(array(
+            'name' => 'is_school_admin',
+            'options' => array(
+            ),
+            'type'  => 'Checkbox',
+        ));
+
+        $this->add(array(
             'name' => 'username',
             'options' => array(
 
@@ -89,6 +96,8 @@ class TeacherEdit extends Form
 
         $firstNameInput = new Input('first_name');
         $lastNameInput = new Input('last_name');
+        $isSchoolAdmin = new Input('is_school_admin');
+        $emailInput = new Input('email');
         $passwordInput = new Input('password');
         $passwordConfirmInput = new Input('password_confirm');
         $submitInput = new Input('submit');
@@ -103,6 +112,8 @@ class TeacherEdit extends Form
 
         $inputFilter->add($firstNameInput);
         $inputFilter->add($lastNameInput);
+        $inputFilter->add($isSchoolAdmin);
+        $inputFilter->add($emailInput);
         $inputFilter->add($passwordInput);
         $inputFilter->add($passwordConfirmInput);
         $inputFilter->add($submitInput);

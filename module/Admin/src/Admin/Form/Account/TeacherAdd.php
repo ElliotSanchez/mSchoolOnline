@@ -38,6 +38,8 @@ class TeacherAdd extends Form
             'type'  => 'Text',
         ));
 
+
+
         $this->add(array(
             'name' => 'email',
             'options' => array(
@@ -51,6 +53,13 @@ class TeacherAdd extends Form
             'options' => array(
             ),
             'type'  => 'Select',
+        ));
+
+        $this->add(array(
+            'name' => 'is_school_admin',
+            'options' => array(
+            ),
+            'type'  => 'Checkbox',
         ));
 
         $this->add(array(
@@ -89,6 +98,8 @@ class TeacherAdd extends Form
 
         $firstNameInput = new Input('first_name');
         $lastNameInput = new Input('last_name');
+        $isSchoolAdmin = new Input('is_school_admin');
+        $emailInput = new Input('email');
         $passwordInput = new Input('password');
         $passwordConfirmInput = new Input('password_confirm');
         $submitInput = new Input('submit');
@@ -100,6 +111,8 @@ class TeacherAdd extends Form
 
         $inputFilter->add($firstNameInput);
         $inputFilter->add($lastNameInput);
+        $inputFilter->add($isSchoolAdmin);
+        $inputFilter->add($emailInput);
         $inputFilter->add($passwordInput);
         $inputFilter->add($passwordConfirmInput);
         $inputFilter->add($submitInput);
