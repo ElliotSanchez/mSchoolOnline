@@ -19,6 +19,37 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        // AUTH
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH, function($e) {
+
+            $match = $e->getRouteMatch();
+
+            // LOGIN PAGE
+            $name = $match->getMatchedRouteName();
+            if ($name == 'admin/login' || $name == 'admin/authenticate') {
+                return;
+            }
+
+            // USER IS AUTHENTICATED
+            $authService = new \Zend\Authentication\AuthenticationService();
+            if ($authService->hasIdentity()) {
+                return;
+            }
+
+            // USER IS NOT LOGGED IN SO REDIRECT THEM TO LOGIN
+            $router   = $e->getRouter();
+            $url      = $router->assemble(array(), array(
+                'name' => 'admin/login'
+            ));
+
+            $response = $e->getResponse();
+            $response->getHeaders()->addHeaderLine('Location', $url);
+            $response->setStatusCode(302);
+
+            return $response;
+
+        }, 100);
     }
 
     public function getConfig()

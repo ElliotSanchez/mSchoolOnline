@@ -3,6 +3,7 @@
 namespace Admin\User;
 
 use Admin\ModelAbstract\EntityAbstract;
+use Zend\Authentication\Result as AuthResult;
 
 class Entity extends EntityAbstract {
 
@@ -20,6 +21,14 @@ class Entity extends EntityAbstract {
         $bcrypt = new \Zend\Crypt\Password\Bcrypt();
 
         $this->password = $bcrypt->create($password);
+
+    }
+
+    public function validatePassword($password) {
+
+        $bcrypt = new \Zend\Crypt\Password\Bcrypt();
+
+        return $bcrypt->verify($password, $this->password);
 
     }
 

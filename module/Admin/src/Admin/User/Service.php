@@ -19,4 +19,10 @@ class Service extends ServiceAbstract {
 
     }
 
+    public function getForUsername($username) {
+
+        return $this->table->fetchWith(['username' => $username])->current();
+
+    }
+
 }
