@@ -18,6 +18,9 @@ use Admin\Student\Entity as Student;
 use Admin\Student\Table as StudentTable;
 use Admin\Student\Service as StudentService;
 
+use Zend\Authentication\AuthenticationService as ZendAuthService;
+use Admin\Authentication\Service as AdminAuthService;
+
 return array(
 
     'factories' => array(
@@ -131,5 +134,13 @@ return array(
                 return new Admin\Form\Account\StudentEdit($sm->get('SchoolService'));
             },
 
-    )
+        // ADMIN AUTH
+        'AdminAuthService' => function ($sm) {
+            return new AdminAuthService($sm->get('UserService'), new ZendAuthService());
+        }
+
+    ),
+    'invokables' => array(
+        'AdminLoginForm' => 'Admin\Form\Auth\Login',
+    ),
 );

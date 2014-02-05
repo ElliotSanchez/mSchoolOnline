@@ -52,6 +52,16 @@ return array(
                             ),
                         ),
                     ),
+                    'logout' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/logout',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Auth',
+                                'action'     => 'logout',
+                            ),
+                        ),
+                    ),
                     'authenticate' => array(
                         'type' => 'Zend\Mvc\Router\Http\Literal',
                         'options' => array(
@@ -59,6 +69,17 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Admin\Controller\Auth',
                                 'action'     => 'authenticate',
+                            ),
+                        ),
+                    ),
+
+                    'dashboard' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/dashboard',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Index',
+                                'action'     => 'index',
                             ),
                         ),
                     ),
