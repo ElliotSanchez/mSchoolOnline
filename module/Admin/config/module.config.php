@@ -3,23 +3,13 @@
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/',
-                    'defaults' => array(
-                        'controller' => 'Admin\Controller\Index',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
-
             'admin' => array(
                 'type' => 'Hostname',
                 'options' => array(
                     'route' => 'admin.mschool',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
+                        'module'        => 'Admin',
                         'controller'    => 'Index',
                         'action'        => 'index',
                     ),
@@ -36,6 +26,16 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'Index',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+                    'home' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Index',
                                 'action'     => 'index',
                             ),
                         ),

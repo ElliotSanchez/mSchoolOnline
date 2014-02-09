@@ -1,13 +1,5 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
-namespace Admin;
+namespace MSchool;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
@@ -19,6 +11,15 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        $moduleRouteListener->onRoute($e);
+
+//        $eventManager->attach(MvcEvent::EVENT_DISPATCH, function($e) {
+//
+//            $match = $e->getRouteMatch();
+//
+//            //die($match->getMatchedRouteName());
+//
+//        }, 100);
 
         // AUTH
         $eventManager->attach(MvcEvent::EVENT_DISPATCH, function($e) {
@@ -32,19 +33,18 @@ class Module
                 return;
             }
 
+            if (strpos($name, 'mschool') !== FALSE) return; // NOT PART OF THE mschool MODULE
+
             // USER IS AUTHENTICATED
             $authService = new \Zend\Authentication\AuthenticationService();
             if ($authService->hasIdentity()) {
                 return;
             }
 
-            // DETERMINE MODULE
-            $module = (strpos($name, 'mschool') !== false) ? ('mschool') : ('admin');
-
             // USER IS NOT LOGGED IN SO REDIRECT THEM TO LOGIN
             $router   = $e->getRouter();
             $url      = $router->assemble(array(), array(
-                'name' => $module.'/login',
+                'name' => 'mschool/login'
             ));
 
             $response = $e->getResponse();
@@ -54,6 +54,7 @@ class Module
             return $response;
 
         }, 100);
+
     }
 
     public function getConfig()
@@ -76,4 +77,5 @@ class Module
     {
         return include __DIR__ . '/config/service.config.php';
     }
+
 }
