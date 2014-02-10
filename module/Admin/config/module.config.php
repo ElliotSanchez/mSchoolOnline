@@ -307,6 +307,22 @@ return array(
                         ),
                     ),
 
+                    // UPLOAD
+                    'upload_students' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:a_id]/school/[:s_id]',
+                            'constraints' => array(
+                                'a_id' => '[0-9]*',
+                                's_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Upload',
+                                'action'     => 'students',
+                            ),
+                        ),
+                    ),
+
                 ),
             ),
 
@@ -368,6 +384,7 @@ return array(
             'Admin\Controller\Auth' => 'Admin\Controller\AuthController',
             'Admin\Controller\Accounts' => 'Admin\Controller\AccountsController',
             'Admin\Controller\Users' => 'Admin\Controller\UsersController',
+            'Admin\Controller\Upload' => 'Admin\Controller\UploadController',
         ),
     ),
     'view_manager' => array(

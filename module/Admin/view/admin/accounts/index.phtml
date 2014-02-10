@@ -9,6 +9,7 @@
         <tr>
             <td>Account Name</td>
             <td>Subdomain</td>
+            <td>&nbsp;</td>
         </tr>
     </thead>
     <tbody>
@@ -16,6 +17,24 @@
             <tr>
                 <td><a href="<?php echo $this->url('admin/account_view', ['id'=>$account->id]) ?>"><? echo $account->name ?></td>
                 <td><? echo $account->subdomain ?></td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <a type="button" class="btn btn-default" href="<?php echo $this->url('admin/account_schools', ['id'=>$account->id]) ?>">
+                           View
+                        </a>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="<?php echo $this->url('admin/account_schools', ['id'=>$account->id]) ?>">Schools</a></li>
+                            <li><a href="<?php echo $this->url('admin/account_teachers', ['id'=>$account->id]) ?>">Teachers</a></li>
+                            <li><a href="<?php echo $this->url('admin/account_students', ['id'=>$account->id]) ?>">Students</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Upload Students</a></li>
+                        </ul>
+                    </div>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>

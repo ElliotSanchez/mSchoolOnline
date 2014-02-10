@@ -9,6 +9,7 @@
     "homepage": "http://mschools.org/",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.2.*"
+        "zendframework/zendframework": "2.2.*",
+	"phpoffice/phpexcel": "dev-develop"
     }
 }

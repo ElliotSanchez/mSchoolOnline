@@ -134,6 +134,11 @@ return array(
                 return new Admin\Form\Account\StudentEdit($sm->get('SchoolService'));
             },
 
+        // UPLOAD
+        'StudentUploadForm' => function ($sm) {
+            return new Admin\Form\Upload\Students();
+        },
+
         // ADMIN AUTH
         'AdminAuthService' => function ($sm) {
             return new AdminAuthService($sm->get('UserService'), new ZendAuthService());

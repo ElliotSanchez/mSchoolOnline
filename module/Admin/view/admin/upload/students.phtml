@@ -1,0 +1,32 @@
+<?php echo $this->partial('admin/accounts/partials/header.phtml', array('active' => 'schools', 'account' => $account)); ?>
+
+<h3>Upload students to <?php echo $this->school->name ?></h3>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+    <?php $form->prepare(); ?>
+    <?php echo $this->form()->openTag($form->setAttribute('class', 'form-inline')); ?>
+
+    <?php $fileElement = $form->get('students-file'); ?>
+        <div class="form-group">
+            <?php echo $this->formFile($fileElement); ?>
+            <?php echo $this->formElementErrors($fileElement); ?>
+        </div>
+    <?php
+    $submit = $form->get('submit');
+    echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-sm pull-right')->setValue('Upload'));
+    echo $this->formElementErrors($submit );
+    ?>
+    <?php echo $this->form()->closeTag(); ?>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="" class="btn btn-info">Download File Template</a>
+    </div>
+</div>

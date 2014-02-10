@@ -29,6 +29,19 @@
                                 Edit
                             </a>
 
+                            <div class="btn-group text-left">
+                                <button type="button" class="btn btn-default btn-sm">
+                                    Actions
+                                </button>
+                                <button type="button" class="btn btn-default  btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="<?php echo $this->url('admin/upload_students', ['a_id'=>$account->id, 's_id' => $school->id]) ?>">Upload Students</a></li>
+                                </ul>
+                            </div>
+
                         </td>
                     </tr>
                 <?php endforeach; ?>
