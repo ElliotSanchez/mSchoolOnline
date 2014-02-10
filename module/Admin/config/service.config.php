@@ -139,6 +139,10 @@ return array(
             return new Admin\Form\Upload\Students();
         },
 
+        'PathwaysUploadForm' => function ($sm) {
+            return new Admin\Form\Upload\Pathways();
+        },
+
         // ADMIN AUTH
         'AdminAuthService' => function ($sm) {
             return new AdminAuthService($sm->get('UserService'), new ZendAuthService());

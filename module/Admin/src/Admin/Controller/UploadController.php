@@ -87,6 +87,77 @@ class UploadController extends AbstractActionController
 
     }
 
+    public function pathwaysAction()
+    {
+
+        $form = $this->getServiceLocator()->get('PathwaysUploadForm');
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $post = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray()
+            );
+
+            $form->setData($post);
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $tempFilename = $data['pathways-file']['tmp_name'];
+                $filename = $data['pathways-file']['name'];
+
+                // ********************************************************
+                // PROCESS PATHWAYS
+                // ********************************************************
+
+                if ($tempFilename) {
+                    unlink($tempFilename);
+                }
+
+                // Form is valid, save the form!
+                $this->flashMessenger()->addSuccessMessage('Uploaded pathways file ' . $filename);
+
+                return $this->redirect()->toRoute('admin/pathways_preview');
+            } else {
+                $this->flashMessenger()->addErrorMessage('Upload form was invalid. Please try again.');
+                foreach($form->getMessages() as $message) {
+                    $this->flashMessenger()->addErrorMessage($message);
+                }
+                return $this->redirect()->toRoute('admin/upload_pathways');
+            }
+        }
+
+
+        return new ViewModel(array(
+            'form' => $form,
+        ));
+
+    }
+
+    public function pathwaysFileAction() {
+
+        $filename = 'mschool_pathways_template.xlsx';
+
+        $filePath = realpath(__DIR__ . '/../../../../../data/files/'.$filename);
+
+        $response = new \Zend\Http\Response\Stream();
+        $response->setStream(fopen($filePath, 'r'));
+        $response->setStatusCode(200);
+
+        $headers = new \Zend\Http\Headers();
+        $headers->addHeaderLine('Content-Type', 'application/vnd.ms-excel; charset=UTF-8')
+            ->addHeaderLine('Content-Disposition', 'inline; filename="' . $filename)
+            ->addHeaderLine('Content-Length', filesize($filePath))
+            ->addHeaderLine('Pragma', 'no-cache');
+        //->addHeaderLine('Expires', '0');
+
+        $response->setHeaders($headers);
+        return $response;
+
+    }
+
     protected function getAccount() {
 
         $accountService = $this->getServiceLocator()->get('AccountService');

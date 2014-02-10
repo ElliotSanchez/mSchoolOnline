@@ -334,6 +334,39 @@ return array(
                         ),
                     ),
 
+                    'upload_pathways' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/upload/pathway',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Upload',
+                                'action'     => 'pathways',
+                            ),
+                        ),
+                    ),
+
+                    'upload_pathways_file_template' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/upload/pathways-file-template',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Upload',
+                                'action'     => 'pathways-file',
+                            ),
+                        ),
+                    ),
+
+                    'pathways_preview' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/pathways/preview',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Pathways',
+                                'action'     => 'preview',
+                            ),
+                        ),
+                    ),
+
                 ),
             ),
 
@@ -396,6 +429,7 @@ return array(
             'Admin\Controller\Accounts' => 'Admin\Controller\AccountsController',
             'Admin\Controller\Users' => 'Admin\Controller\UsersController',
             'Admin\Controller\Upload' => 'Admin\Controller\UploadController',
+            'Admin\Controller\Pathways' => 'Admin\Controller\PathwaysController',
         ),
     ),
     'view_manager' => array(
