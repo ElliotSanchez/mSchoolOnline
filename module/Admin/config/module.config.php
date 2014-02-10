@@ -323,6 +323,17 @@ return array(
                         ),
                     ),
 
+                    'upload_students_file_template' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/upload/students-file-template',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Upload',
+                                'action'     => 'students-file',
+                            ),
+                        ),
+                    ),
+
                 ),
             ),
 

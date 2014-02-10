@@ -65,6 +65,28 @@ class UploadController extends AbstractActionController
 
     }
 
+    public function studentsFileAction() {
+
+        $filename = 'mschool_student_upload_template.xlsx';
+
+        $filePath = realpath(__DIR__ . '/../../../../../data/files/'.$filename);
+
+        $response = new \Zend\Http\Response\Stream();
+        $response->setStream(fopen($filePath, 'r'));
+        $response->setStatusCode(200);
+
+        $headers = new \Zend\Http\Headers();
+        $headers->addHeaderLine('Content-Type', 'application/vnd.ms-excel; charset=UTF-8')
+            ->addHeaderLine('Content-Disposition', 'inline; filename="' . $filename)
+            ->addHeaderLine('Content-Length', filesize($filePath))
+            ->addHeaderLine('Pragma', 'no-cache');
+            //->addHeaderLine('Expires', '0');
+
+        $response->setHeaders($headers);
+        return $response;
+
+    }
+
     protected function getAccount() {
 
         $accountService = $this->getServiceLocator()->get('AccountService');
