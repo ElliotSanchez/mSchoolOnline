@@ -76,6 +76,39 @@ return array(
                             ),
                         ),
                     ),
+
+                    // PAGES
+                    'page_intro' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/page/intro',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pages',
+                                'action'     => 'intro',
+                            ),
+                        ),
+                    ),
+                    'page_activity' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/page/activity',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pages',
+                                'action'     => 'activity',
+                            ),
+                        ),
+                    ),
+                    'page_progress' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/page/progress',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pages',
+                                'action'     => 'progress',
+                            ),
+                        ),
+                    ),
+
                 ),
             ), // HOSTNAME ROUTE
         ), // ROUTES
@@ -104,6 +137,7 @@ return array(
         'invokables' => array(
             'MSchool\Controller\Index' => 'MSchool\Controller\IndexController',
             'MSchool\Controller\Auth' => 'MSchool\Controller\AuthController',
+            'MSchool\Controller\Pages' => 'MSchool\Controller\PagesController',
         ),
     ),
     'view_manager' => array(

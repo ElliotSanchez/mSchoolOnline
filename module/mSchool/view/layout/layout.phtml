@@ -24,11 +24,20 @@
         ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
     ; ?>
 
+    <script src="http://imsky.github.io/holder/holder.js"></script>
+
+
 </head>
 <body>
 
-<div class="container">
 
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/img/logo.png" width="200" />
+        </div>
+    </div>
     <?php
     $flash = $this->flashMessenger();
     $flash->setMessageOpenFormat('<div%s><ul><li>')
