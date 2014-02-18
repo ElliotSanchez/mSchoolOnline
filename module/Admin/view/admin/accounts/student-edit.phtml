@@ -15,6 +15,19 @@ echo $this->formHidden($form->get('account_id'));
 ?>
 
 <div class="row">
+    <div class="form-group <?php echo (!$form->get('number')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="number">Number</label>
+            <?php
+            $number = $form->get('number');
+            echo $this->formInput($number->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($number);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="form-group <?php echo (!$form->get('first_name')->getMessages()) ?: ('has-error') ?>">
         <div class="col-md-4">
             <label class="control-label" for="name">First Name</label>

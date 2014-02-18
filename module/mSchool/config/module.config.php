@@ -6,7 +6,7 @@ return array(
             'mschool' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'kipp.mschool',
+                    'route' => 'kipp.mschool.lp',
 //                    'constraints' => array(
 //                        'subdomain' => '[a-zA-Z0-9_-]*',
 //                    ),

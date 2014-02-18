@@ -29,6 +29,14 @@ class StudentAdd extends Form
         ));
 
         $this->add(array(
+            'name' => 'number',
+            'options' => array(
+
+            ),
+            'type'  => 'Text',
+        ));
+
+        $this->add(array(
             'name' => 'first_name',
             'options' => array(
 
@@ -93,6 +101,7 @@ class StudentAdd extends Form
             ),
         ));
 
+        $numberInput = new Input('number');
         $firstNameInput = new Input('first_name');
         $lastNameInput = new Input('last_name');
         $emailInput = new Input('email');
@@ -105,6 +114,7 @@ class StudentAdd extends Form
 
         $inputFilter = new InputFilter();
 
+        $inputFilter->add($numberInput);
         $inputFilter->add($firstNameInput);
         $inputFilter->add($lastNameInput);
         $inputFilter->add($emailInput);

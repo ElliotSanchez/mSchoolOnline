@@ -6,6 +6,7 @@ use Admin\ModelAbstract\EntityAbstract;
 
 class Entity extends EntityAbstract {
 
+    public $number;
     public $username;
     public $password;
     public $email;
@@ -40,6 +41,7 @@ class Entity extends EntityAbstract {
     public function create($data) {
 
         parent::create($data);
+        $this->number = (!empty($data['number'])) ? $data['number'] : null;
         $this->username = (!empty($data['username'])) ? $data['username'] : null;
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
         $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : null;
@@ -63,6 +65,7 @@ class Entity extends EntityAbstract {
 
         if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
 
+        $this->number = (!empty($data['number'])) ? $data['number'] : null;
         $this->username = (!empty($data['username'])) ? $data['username'] : null;
         $this->password = (!empty($data['password']) && strlen($data['password'])) ? $data['password'] : null;
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
@@ -83,11 +86,12 @@ class Entity extends EntityAbstract {
     public function toData() {
 
         $data = array(
+            'number' => $this->number,
             'username' => $this->username,
             'email' => $this->email,
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
-            'dob' => $this->dob->format('Y-m-d'),
+            'dob' => ($this->dob) ? ($this->dob->format('Y-m-d')) : (null),
             'gender' => $this->gender,
             'ethnicity' => $this->ethnicity,
             'iep' => $this->iep,

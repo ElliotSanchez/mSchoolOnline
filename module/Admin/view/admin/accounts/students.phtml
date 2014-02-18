@@ -13,6 +13,7 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Number</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -23,6 +24,9 @@
                             <a href="<?php echo $this->url('admin/student_edit', array('a_id' => $account->id, 's_id' => $student->id)) ?>">
                                 <?php echo $student->firstName . ' ' . $student->lastName ?>
                             </a>
+                        </td>
+                        <td>
+                            <?php echo $student->number ?>
                         </td>
                         <td class="text-right">
                             <a href="<?php echo $this->url('admin/student_edit', array('a_id' => $account->id, 's_id' => $student->id)) ?>" class="btn btn-default btn-sm">
