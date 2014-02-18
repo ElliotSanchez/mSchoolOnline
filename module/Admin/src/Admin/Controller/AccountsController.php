@@ -328,7 +328,7 @@ class AccountsController extends AbstractActionController
                 $this->flashMessenger()->addSuccessMessage('Updated Student');
                 $this->redirect()->toRoute('admin/student_edit', array('a_id' => $account->id, 's_id' => $student->id));
             } else {
-                print_r($form->getMessages());
+                //print_r($form->getMessages());
             }
 
         }

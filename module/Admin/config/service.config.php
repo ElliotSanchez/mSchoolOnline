@@ -131,10 +131,10 @@ return array(
                 return new StudentService($sm->get('StudentTable'));
             },
         'StudentAddForm' => function ($sm) {
-                return new Admin\Form\Account\StudentAdd($sm->get('SchoolService'));
+                return new Admin\Form\Account\StudentAdd($sm->get('SchoolService'), $sm->get('Zend\Db\Adapter\Adapter'));
             },
         'StudentEditForm' => function ($sm) {
-                return new Admin\Form\Account\StudentEdit($sm->get('SchoolService'));
+                return new Admin\Form\Account\StudentEdit($sm->get('SchoolService'), $sm->get('Zend\Db\Adapter\Adapter'));
             },
 
         // RESOURCES

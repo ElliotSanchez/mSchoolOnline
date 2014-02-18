@@ -6,6 +6,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Input;
 use Zend\Validator;
+use Zend\Db\Adapter\AdapterInterface;
 
 use Admin\School\Service As SchoolService;
 use Admin\Account\Entity As Account;
@@ -13,12 +14,14 @@ use Admin\Account\Entity As Account;
 class StudentAdd extends Form
 {
     protected $schoolService;
+    protected $dbAdapter;
 
     protected $account;
 
-    public function __construct(SchoolService $schoolService) {
+    public function __construct(SchoolService $schoolService, AdapterInterface $dbAdapter) {
 
         $this->schoolService = $schoolService;
+        $this->dbAdapter = $dbAdapter;
 
         parent::__construct('teacher-add');
 
@@ -108,6 +111,14 @@ class StudentAdd extends Form
         $passwordInput = new Input('password');
         $passwordConfirmInput = new Input('password_confirm');
         $submitInput = new Input('submit');
+
+        $numberInput->getValidatorChain()->attach(new Validator\Db\NoRecordExists(
+            array(
+                'table' => 'students',
+                'field' => 'number',
+                'adapter' => $this->dbAdapter,
+            )
+        ));
 
         $passwordInput->getValidatorChain()->attach(new Validator\Identical('password_confirm'));
         $passwordConfirmInput->getValidatorChain()->attach(new Validator\Identical('password'));

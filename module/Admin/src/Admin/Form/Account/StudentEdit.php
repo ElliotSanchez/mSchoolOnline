@@ -6,6 +6,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Input;
 use Zend\Validator;
+use Zend\Db\Adapter\AdapterInterface;
 
 use Admin\School\Service As SchoolService;
 use Admin\Account\Entity As Account;
@@ -13,12 +14,14 @@ use Admin\Account\Entity As Account;
 class StudentEdit extends Form
 {
     protected $schoolService;
+    protected $dbAdapter;
 
     protected $account;
 
-    public function __construct(SchoolService $schoolService) {
+    public function __construct(SchoolService $schoolService, AdapterInterface $dbAdapter) {
 
         $this->schoolService = $schoolService;
+        $this->dbAdapter = $dbAdapter;
 
         parent::__construct('student-edit');
 
@@ -109,6 +112,8 @@ class StudentEdit extends Form
         $passwordConfirmInput = new Input('password_confirm');
         $submitInput = new Input('submit');
 
+        // DUPLICATE NUMBER VALIDATOR ADDED ON bind
+
         $passwordInput->getValidatorChain()->attach(new Validator\Identical('password_confirm'));
         $passwordConfirmInput->getValidatorChain()->attach(new Validator\Identical('password'));
 
@@ -143,6 +148,26 @@ class StudentEdit extends Form
         }
 
         $this->get('school_id')->setValueOptions($schoolOptions);
+
+    }
+
+    public function bind($student, $flags = \Zend\Form\FormInterface::VALUES_NORMALIZED) {
+
+        parent::bind($student, $flags);
+
+        $this->getInputFilter()->get('number')->getValidatorChain()->attach(new Validator\Db\NoRecordExists(
+            array(
+                'table' => 'students',
+                'field' => 'number',
+                'adapter' => $this->dbAdapter,
+                'exclude' => array(
+                    'field' => 'id',
+                    'value' => $student->id
+                )
+            )
+        ));
+
+        return $this;
 
     }
 
