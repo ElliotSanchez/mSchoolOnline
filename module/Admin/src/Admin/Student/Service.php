@@ -97,7 +97,7 @@ class Service extends ServiceAbstract {
         $username =  strtolower(substr($student->firstName, 0, 1).$student->lastName);
 
         if ($this->usernameExists($username)) {
-            $username .= time();
+            $username .= $student->number;
         }
 
         return $username;
