@@ -39,13 +39,14 @@ class Service extends ServiceAbstract {
 
         $rowIterator = $objPHPExcel->getActiveSheet()->getRowIterator();
 
-        $FIRST_NAME_COL = 'A';
-        $LAST_NAME_COL = 'B';
-        $DOB_COL = 'C';
-        $GENDER_COL = 'D';
-        $GRADE_LEVEL_COL = 'E';
-        $ETHNICITY_COL = 'F';
-        $IEP_COL = 'G';
+        $NUMBER_COL = 'A';
+        $FIRST_NAME_COL = 'B';
+        $LAST_NAME_COL = 'C';
+        $DOB_COL = 'D';
+        $GENDER_COL = 'E';
+        $GRADE_LEVEL_COL = 'F';
+        $ETHNICITY_COL = 'G';
+        $IEP_COL = 'H';
 
         foreach ($rowIterator as $row) {
 
@@ -62,6 +63,8 @@ class Service extends ServiceAbstract {
             foreach ($cellIterator as $cell) {
 
                 switch ($cell->getColumn()) {
+                    case $NUMBER_COL:       $data['number'] = $cell->getValue();
+                        break;
                     case $FIRST_NAME_COL:   $data['first_name'] = $cell->getValue();
                                             break;
                     case $LAST_NAME_COL:    $data['last_name'] = $cell->getValue();
