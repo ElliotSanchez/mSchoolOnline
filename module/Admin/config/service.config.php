@@ -17,6 +17,9 @@ use Admin\Teacher\Service as TeacherService;
 use Admin\Student\Entity as Student;
 use Admin\Student\Table as StudentTable;
 use Admin\Student\Service as StudentService;
+use Admin\Resource\Entity as Resource;
+use Admin\Resource\Table as ResourceTable;
+use Admin\Resource\Service as ResourceService;
 
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
@@ -132,6 +135,28 @@ return array(
             },
         'StudentEditForm' => function ($sm) {
                 return new Admin\Form\Account\StudentEdit($sm->get('SchoolService'));
+            },
+
+        // RESOURCES
+        'ResourceTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Resource());
+                return new TableGateway('resources', $dbAdapter, null, $resultSetPrototype);
+            },
+        'ResourceTable' =>  function($sm) {
+                $tableGateway = $sm->get('ResourceTableGateway');
+                $table = new ResourceTable($tableGateway);
+                return $table;
+            },
+        'ResourceService' => function ($sm) {
+                return new ResourceService($sm->get('ResourceTable'));
+            },
+        'ResourceAddForm' => function ($sm) {
+                return new Admin\Form\Resources\Add();
+            },
+        'ResourceEditForm' => function ($sm) {
+                return new Admin\Form\Resources\Edit();
             },
 
         // UPLOAD

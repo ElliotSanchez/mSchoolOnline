@@ -1,0 +1,47 @@
+<h1>Resources</h1>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-12 text-right">
+        <a href="<?php echo $this->url('admin/resource_add') ?>" class="btn btn-primary">Add Resource</a>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-12">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>URL</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($resources as $resource): ?>
+                    <tr>
+                        <td>
+                            <a href="<?php echo $this->url('admin/resource_edit', array('id' => $resource->id)) ?>">
+                                <?php echo $resource->name ?>
+                            </a>
+                        </td>
+                        <td>
+                            <?php echo $resource->shortCode ?>
+                        </td>
+                        <td>
+                            <?php echo $resource->url?>
+                        </td>
+                        <td class="text-right">
+                            <a href="<?php echo $this->url('admin/resource_edit', array('id' => $resource->id)) ?>" class="btn btn-default btn-sm">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

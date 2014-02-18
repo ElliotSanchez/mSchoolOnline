@@ -6,7 +6,7 @@ return array(
             'admin' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'admin.mschool',
+                    'route' => 'admin.mschool.lp',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'module'        => 'Admin',
@@ -307,6 +307,46 @@ return array(
                         ),
                     ),
 
+                    // RESOURCES
+                    'resources' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/resources',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Resources',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+
+                    'resource_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/resource/add',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Resources',
+                                'action'     => 'add',
+                            ),
+                        ),
+                    ),
+
+                    'resource_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/resource/edit/[:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Resources',
+                                'action'     => 'edit',
+                            ),
+                        ),
+                    ),
+                    
                     // UPLOAD
                     'upload_students' => array(
                         'type' => 'Segment',
@@ -430,6 +470,7 @@ return array(
             'Admin\Controller\Users' => 'Admin\Controller\UsersController',
             'Admin\Controller\Upload' => 'Admin\Controller\UploadController',
             'Admin\Controller\Pathways' => 'Admin\Controller\PathwaysController',
+            'Admin\Controller\Resources' => 'Admin\Controller\ResourcesController',
         ),
     ),
     'view_manager' => array(
