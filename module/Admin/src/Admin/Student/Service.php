@@ -85,15 +85,27 @@ class Service extends ServiceAbstract {
             }
 
             $student = $this->create($data);
-            $student->username = $this->generateUserFor($student);
+            $student->username = $this->generateUsernameFor($student);
+
             $student->generatePassword();
             $this->save($student);
         }
 
     }
 
-    public function generateUserFor(Student $student) {
-        return strtolower(substr($student->firstName, 0, 1).$student->lastName);
+    public function generateUsernameFor(Student $student) {
+        $username =  strtolower(substr($student->firstName, 0, 1).$student->lastName);
+
+        if ($this->usernameExists($username)) {
+            $username .= time();
+        }
+
+        return $username;
+
+    }
+
+    public function usernameExists($username) {
+        return count($this->table->fetchWith(array('username' => $username)));
     }
 
 }
