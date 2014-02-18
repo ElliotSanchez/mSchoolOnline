@@ -120,6 +120,9 @@ class StudentAdd extends Form
             )
         ));
 
+        $emailInput->setRequired(false);
+        $emailInput->allowEmpty(true);
+
         $passwordInput->getValidatorChain()->attach(new Validator\Identical('password_confirm'));
         $passwordConfirmInput->getValidatorChain()->attach(new Validator\Identical('password'));
 
