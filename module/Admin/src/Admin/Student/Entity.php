@@ -23,7 +23,7 @@ class Entity extends EntityAbstract {
 
     public function generatePassword() {
         // THIS IS MEANT TO BE A RELATIVELY FRIENDLY INITIAL PASSWORD FOR A STUDENT
-        $this->password = substr(str_shuffle(str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789").str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789")), 0, 6);
+        $this->password = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 4) . substr(str_shuffle("0123456789"), 0, 4);
     }
 
     public function setPassword($password) {

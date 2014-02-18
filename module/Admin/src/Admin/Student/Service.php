@@ -94,7 +94,9 @@ class Service extends ServiceAbstract {
     }
 
     public function generateUsernameFor(Student $student) {
-        $username =  strtolower(substr($student->firstName, 0, 1).$student->lastName);
+        $username =  strtolower($student->firstName.$student->lastName);
+
+        $username = str_replace(' ', '', $username);
 
         if ($this->usernameExists($username)) {
             $username .= $student->number;
