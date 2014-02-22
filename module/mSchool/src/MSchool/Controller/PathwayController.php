@@ -4,6 +4,7 @@ namespace MSchool\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 class PathwayController extends AbstractActionController
 {
@@ -31,11 +32,15 @@ class PathwayController extends AbstractActionController
 
         // DETERMINE VIEW BASED ON CONTENT OF CURRENT STEP
 
-
-        return new ViewModel(array(
+        $viewModel = new ViewModel(array(
             'container' => $container,
             'step' => $step,
         ));
+
+        if ($step->isTimed() && !$container->isAtLastStep())
+            $this->getServiceLocator()->get('ViewHelperManager')->get('InlineScript')->appendFile('/assets/mschool/js/pathway-timer.js');
+
+        return $viewModel;
     }
 
     public function nextAction() {
@@ -68,6 +73,30 @@ class PathwayController extends AbstractActionController
         $session->pathwayContainer= null;
 
         return $this->redirect()->toRoute('mschool/pathway');
+
+    }
+
+    public function timerAction() {
+
+        $session = $this->getServiceLocator()->get('StudentSessionContainer');
+
+        if (!$session->pathwayContainer) {
+            return; // WHAT?
+        }
+
+        $container = $session->pathwayContainer;
+
+        $step = $container->getCurrentStep();
+
+        if ($step->isTimed())
+            $time = $step->time;
+        else
+            $time = null;
+
+        $json = new JsonModel();
+        $json->setVariable('timer', $time);
+
+        return $json;
 
     }
 

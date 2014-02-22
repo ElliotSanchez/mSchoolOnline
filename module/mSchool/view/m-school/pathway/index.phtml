@@ -33,7 +33,6 @@
     <iframe src="<?php echo $step->resource->url ?>" style="height: 100%; width: 100%"></iframe>
 </div>
 
-
 <div id="footer">
     <div class="container-fluid">
         <div class="row">
@@ -51,9 +50,13 @@
                     <a href="<?php echo $this->url('mschool/logout'); ?>" class="btn btn-primary">
                         Great job! Logout
                     </a>
+                <?php elseif ($step->isTimed()): ?>
+                    <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-success" id="pathway-next-btn" disabled>
+                        <span id="pathway-next-text">Keep working!</span><span id="pathway-next-chevron" style="display: none" class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
                 <?php else: ?>
                     <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-success">
-                        Next<span class="glyphicon glyphicon-chevron-right"></span>
+                        <span id="pathway-next-text">Next</span><span class="glyphicon glyphicon-chevron-right"></span>
                     </a>
                 <?php endif; ?>
             </div>

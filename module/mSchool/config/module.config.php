@@ -122,6 +122,17 @@ return array(
                         ),
                     ),
 
+                    'pathway_timer' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/pathway/timer',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pathway',
+                                'action'     => 'timer',
+                            ),
+                        ),
+                    ),
+
                     // PAGES
                     'page_intro' => array(
                         'type' => 'Literal',
@@ -200,6 +211,9 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
     // Placeholder for console routes
