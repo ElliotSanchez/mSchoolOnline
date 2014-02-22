@@ -42,12 +42,20 @@
             </div>
 
             <div class="col-md-10 text-right">
-                <a href="<?php echo $this->url('mschool/pathway_previous'); ?>" class="btn btn-info">
-                    <span class="glyphicon glyphicon-chevron-left">Previous</span>
-                </a>
-                <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-success">
-                    <span class="glyphicon glyphicon-chevron-right">Next</span>
-                </a>
+                <?php if (!$container->isAtFirstStep()): ?>
+                    <a href="<?php echo $this->url('mschool/pathway_previous'); ?>" class="btn btn-info">
+                        <span class="glyphicon glyphicon-chevron-left"></span>Previous
+                    </a>
+                <?php endif; ?>
+                <?php if ($container->isAtLastStep()): ?>
+                    <a href="<?php echo $this->url('mschool/logout'); ?>" class="btn btn-primary">
+                        Great job! Logout
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-success">
+                        Next<span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
