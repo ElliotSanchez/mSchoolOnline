@@ -44,4 +44,10 @@ class Container
         $this->currStep = 1;
     }
 
+    public function getPercentComplete() {
+        $numSteps = count($this->steps);
+
+        return ($numSteps > 0) ? (round($this->currStep / count($this->steps) * 100, 0) ) : (0);
+    }
+
 }

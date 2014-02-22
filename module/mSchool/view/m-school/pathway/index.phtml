@@ -4,8 +4,11 @@
             <div class="col-md-4">
                 <img src="/img/logo.png" width="200" />
             </div>
-            <div class="col-md-8">
+            <div class="col-md-2">
                 Step: <?php echo $container->currStep; ?>
+            </div>
+            <div class="col-md-6">
+                <?php echo $container->getPercentComplete() . '%'; ?>
             </div>
         </div>
     </div>
