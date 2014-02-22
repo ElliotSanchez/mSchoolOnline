@@ -19,6 +19,15 @@ class Container
             $this->currStep++;
     }
 
+    public function previous() {
+        if (!$this->isAtFirstStep())
+            $this->currStep--;
+    }
+
+    public function isAtFirstStep() {
+        return ($this->currStep == 1);
+    }
+
     public function isAtLastStep() {
         return ($this->currStep == count($this->steps));
     }

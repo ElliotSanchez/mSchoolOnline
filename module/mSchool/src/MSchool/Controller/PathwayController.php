@@ -49,6 +49,17 @@ class PathwayController extends AbstractActionController
 
     }
 
+    public function previousAction() {
+
+        // THIS JUST MOVES THE CURRENT CONTAINER A STEP BACKWARD AND REDIRECTS TO THE INDEX
+        $session = $this->getServiceLocator()->get('StudentSessionContainer');
+
+        $session->pathwayContainer->previous();
+
+        return $this->redirect()->toRoute('mschool/pathway');
+
+    }
+
     public function resetAction() {
 
         // THIS IS JUST FOR TESTING

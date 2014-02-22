@@ -100,6 +100,17 @@ return array(
                         ),
                     ),
 
+                    'pathway_previous' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/pathway/previous',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pathway',
+                                'action'     => 'previous',
+                            ),
+                        ),
+                    ),
+
                     'pathway_reset' => array(
                         'type' => 'Literal',
                         'options' => array(

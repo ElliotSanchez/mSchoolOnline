@@ -39,7 +39,12 @@
             </div>
 
             <div class="col-md-10 text-right">
-                <a href="/pathway/next" class="btn btn-success">Next</a>
+                <a href="<?php echo $this->url('mschool/pathway_previous'); ?>" class="btn btn-info">
+                    <span class="glyphicon glyphicon-chevron-left">Previous</span>
+                </a>
+                <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-success">
+                    <span class="glyphicon glyphicon-chevron-right">Next</span>
+                </a>
             </div>
         </div>
     </div>
