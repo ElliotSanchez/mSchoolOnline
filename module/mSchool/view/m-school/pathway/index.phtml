@@ -1,0 +1,46 @@
+<div id="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="/img/logo.png" width="200" />
+            </div>
+            <div class="col-md-8">
+                Step: <?php echo $container->currStep; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <?php
+    /*
+    $flash = $this->flashMessenger();
+    $flash->setMessageOpenFormat('<div%s><ul><li>')
+        ->setMessageSeparatorString('</li><li>')
+        ->setMessageCloseString('</li></ul></div>');
+
+    echo $flash->render('error',   array('alert', 'alert-danger'));
+    echo $flash->render('info',    array('alert', 'alert-info'));
+    echo $flash->render('default', array('alert', 'alert-warning'));
+    echo $flash->render('success', array('alert', 'alert-success'));
+    */
+    ?>
+
+
+<div id="step_content">
+    <iframe src="<?php echo $step->resource->url ?>" style="height: 100%; width: 100%"></iframe>
+</div>
+
+
+<div id="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 text-right">
+                <a href="/pathway/reset" class="btn btn-danger">Reset</a>
+            </div>
+
+            <div class="col-md-10 text-right">
+                <a href="/pathway/next" class="btn btn-success">Next</a>
+            </div>
+        </div>
+    </div>
+</div>

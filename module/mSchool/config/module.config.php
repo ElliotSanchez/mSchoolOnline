@@ -6,7 +6,7 @@ return array(
             'mschool' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'kipp.mschool.lp',
+                    'route' => 'kipp.mschool',
 //                    'constraints' => array(
 //                        'subdomain' => '[a-zA-Z0-9_-]*',
 //                    ),
@@ -77,6 +77,40 @@ return array(
                         ),
                     ),
 
+                    // PATHWAY
+                    'pathway' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/pathway',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pathway',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+
+                    'pathway_next' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/pathway/next',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pathway',
+                                'action'     => 'next',
+                            ),
+                        ),
+                    ),
+
+                    'pathway_reset' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/pathway/reset',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pathway',
+                                'action'     => 'reset',
+                            ),
+                        ),
+                    ),
+
                     // PAGES
                     'page_intro' => array(
                         'type' => 'Literal',
@@ -138,6 +172,7 @@ return array(
             'MSchool\Controller\Index' => 'MSchool\Controller\IndexController',
             'MSchool\Controller\Auth' => 'MSchool\Controller\AuthController',
             'MSchool\Controller\Pages' => 'MSchool\Controller\PagesController',
+            'MSchool\Controller\Pathway' => 'MSchool\Controller\PathwayController',
         ),
     ),
     'view_manager' => array(

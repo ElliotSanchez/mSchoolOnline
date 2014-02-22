@@ -21,6 +21,9 @@ class Module
 //
 //        }, 100);
 
+        // SESSION
+        $this->bootstrapSession($e);
+
         // AUTH
         $eventManager->attach(MvcEvent::EVENT_DISPATCH, function($e) {
 
@@ -76,6 +79,24 @@ class Module
     public function getServiceConfig()
     {
         return include __DIR__ . '/config/service.config.php';
+    }
+
+    public function bootstrapSession($e) {
+
+        $container = new \Zend\Session\Container('student');
+
+//        $session = $e->getApplication()
+//            ->getServiceManager()
+//            ->get('Zend\Session\SessionManager');
+//        $session->start();
+//
+//        $container = new Container('initialized');
+//        if (!isset($container->init)) {
+//            $session->regenerateId(true);
+//            $container->init = 1;
+//        }
+
+
     }
 
 }

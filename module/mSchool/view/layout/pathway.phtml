@@ -14,7 +14,8 @@
     <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
         ->prependStylesheet($this->basePath() . '/css/style.css')
         ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
-        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+        ->appendStylesheet($this->basePath() . '/css/pathway.css') ?>
 
     <!-- Scripts -->
     <?php echo $this->headScript()
@@ -30,28 +31,8 @@
 </head>
 <body>
 
+<?php echo $this->content; ?>
 
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <img src="/img/logo.png" width="200" />
-        </div>
-    </div>
-    <?php
-    $flash = $this->flashMessenger();
-    $flash->setMessageOpenFormat('<div%s><ul><li>')
-        ->setMessageSeparatorString('</li><li>')
-        ->setMessageCloseString('</li></ul></div>');
-
-    echo $flash->render('error',   array('alert', 'alert-danger'));
-    echo $flash->render('info',    array('alert', 'alert-info'));
-    echo $flash->render('default', array('alert', 'alert-warning'));
-    echo $flash->render('success', array('alert', 'alert-success'));
-    ?>
-
-    <?php echo $this->content; ?>
-</div> <!-- /container -->
 <?php echo $this->inlineScript() ?>
 </body>
 </html>

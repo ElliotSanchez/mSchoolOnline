@@ -1,5 +1,7 @@
 <?php
 
+namespace MSchool;
+
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Admin\User\Entity as User;
@@ -24,6 +26,16 @@ use Admin\Authentication\Service as AdminAuthService;
 return array(
 
     'factories' => array(
+        // SESSION
+        'StudentSessionContainer' => function ($sm) {
+              return new \Zend\Session\Container('student');
+            },
+
+        // PATHWAY
+        'PathwayService' => function ($sm) {
+                return new Pathway\Service($sm->get('ResourceService'));
+            },
+
         // USERS
 //        'UserTableGateway' => function ($sm) {
 //                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');

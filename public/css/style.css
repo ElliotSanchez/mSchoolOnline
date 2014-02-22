@@ -1,8 +1,12 @@
-body {
-    padding-top: 60px;
-    padding-bottom: 40px;
+html, body {
+    height: 100%
 }
 
+body {
+
+}
+
+/*
 .zf-green {
     color: #68b604;
 }
@@ -35,3 +39,5 @@ div.container a.brand {
     margin-left: 0;
     padding: 8px 20px 12px 40px;
 }
+
+*/
