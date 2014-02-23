@@ -43,7 +43,7 @@ class Service extends ServiceAbstract
         $select->where(array('student_id' => $student->id));
         $select->where(array('pathway_date' => $date->format('Y-m-d')));
         $select->where(array('is_active' => 1));
-//        $select->order('`order` ASC');
+        $select->order('step ASC');
 
         $results = $this->table->fetchWith($select);
 
@@ -66,7 +66,7 @@ class Service extends ServiceAbstract
         $select->where(array('student_id' => $student->id));
         $select->where(array('pathway_date' => null));
         $select->where(array('is_active' => 1));
-//        $select->order('`order` ASC');
+        $select->order('step ASC');
 
         return $this->table->fetchWith($select);
     }

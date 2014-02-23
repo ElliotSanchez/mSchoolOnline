@@ -8,7 +8,7 @@ use Admin\ModelAbstract\EntityAbstract;
 class Entity extends EntityAbstract {
 
     public $pathwayDate;
-    public $order;
+    public $step;
     public $timer;
     public $isActive;
     public $uploadSetId;
@@ -20,7 +20,7 @@ class Entity extends EntityAbstract {
 
         parent::create($data);
         $this->pathwayDate = (!empty($data['pathway_date'])) ? (new \DateTime($data['pathway_date'])) : null;
-        $this->order = (!empty($data['order'])) ? $data['order'] : null;
+        $this->step = (!empty($data['order'])) ? $data['order'] : null;
         $this->timer = (!empty($data['timer'])) ? $data['timer'] : null;
         $this->isActive = (!empty($data['is_active'])) ? $data['is_active'] : null;
         $this->uploadSetId = (!empty($data['upload_set_id'])) ? $data['upload_set_id'] : null;
@@ -36,7 +36,7 @@ class Entity extends EntityAbstract {
         if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
 
         $this->pathwayDate = (!empty($data['pathway_date'])) ? (new \DateTime($data['pathway_date'])) : null;
-        $this->order = (!empty($data['order'])) ? $data['order'] : null;
+        $this->step = (!empty($data['order'])) ? $data['order'] : null;
         $this->timer = (!empty($data['timer'])) ? $data['timer'] : null;
         $this->isActive = (!empty($data['is_active'])) ? $data['is_active'] : null;
         $this->uploadSetId = (!empty($data['upload_set_id'])) ? $data['upload_set_id'] : null;
@@ -53,7 +53,7 @@ class Entity extends EntityAbstract {
             'student_id' => $this->studentId,
             'resource_id' => $this->resourceId,
             'pathway_date' => ($this->pathwayDate instanceof \DateTime) ? ($this->pathwayDate->format('Y-m-d')) : (null),
-            'order' => $this->order,
+            'order' => $this->step,
             'timer' => $this->timer,
             'is_active' => $this->isActive,
             'upload_set_id' => $this->uploadSetId,
