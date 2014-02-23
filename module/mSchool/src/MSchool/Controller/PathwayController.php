@@ -17,10 +17,12 @@ class PathwayController extends AbstractActionController
 
         $pathwayService = $this->getServiceLocator()->get('PathwayService');
 
+        $student = $this->getServiceLocator()->get('StudentService')->get(1);
+
         if (!$session->pathwayContainer) {
 
             // BUILD DAILY PATHWAY
-            $container = $pathwayService->getStudentPathwayForDate();
+            $container = $pathwayService->getStudentPathwayFor($student, new \DateTime());
 
             $session->pathwayContainer = $container;
 

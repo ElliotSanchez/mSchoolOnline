@@ -34,24 +34,41 @@ class Service extends ServiceAbstract
 
     }
 
-    public function getStudentPathwayForDate() {
+    public function getStudentPathwayFor(Student $student, \DateTime $date) {
 
         $container = new Container();
 
-        // STEP 1
-        $step1 = new Step($this->resourceService->get(1), null);
-        $container->addStep($step1);
+        $select = $this->table->getSql()->select();
 
-        // STEP 2
-        $step2 = new Step($this->resourceService->get(19), null);
-        $container->addStep($step2);
+        $select->where(array('student_id' => $student->id));
+        $select->where(array('pathway_date' => $date->format('Y-m-d')));
+        $select->where(array('is_active' => 1));
+//        $select->order('`order` ASC');
 
-        // STEP 3
-        $step3 = new Step($this->resourceService->get(20), null);
-        $container->addStep($step3);
+        $results = $this->table->fetchWith($select);
+
+        if (count($results) < 1) {
+            $results = $this->getDefaultPathwayFor($student, $date);
+        }
+
+        foreach ($results as $pathway) {
+            $step = new Step($this->resourceService->get($pathway->resourceId), null);
+            $container->addStep($step);
+        }
 
         return $container;
 
+    }
+
+    public function getDefaultPathwayFor(Student $student, \DateTime $date) {
+        $select = $this->table->getSql()->select();
+
+        $select->where(array('student_id' => $student->id));
+        $select->where(array('pathway_date' => null));
+        $select->where(array('is_active' => 1));
+//        $select->order('`order` ASC');
+
+        return $this->table->fetchWith($select);
     }
 
     public function importPathwaysFromFile($filename) {
