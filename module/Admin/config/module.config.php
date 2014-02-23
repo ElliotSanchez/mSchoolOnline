@@ -6,7 +6,7 @@ return array(
             'admin' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'admin.mschool.lp',
+                    'route' => 'admin.mschool',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'module'        => 'Admin',
@@ -495,5 +495,10 @@ return array(
             'routes' => array(
             ),
         ),
+    ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'AuthPlugin' => 'Admin\Controller\Plugin\Auth',
+        )
     ),
 );

@@ -171,7 +171,11 @@ return array(
         // ADMIN AUTH
         'AdminAuthService' => function ($sm) {
             return new AdminAuthService($sm->get('UserService'), new ZendAuthService());
-        }
+        },
+        // AUTH SESSION
+        'AuthSessionContainer' => function ($sm) {
+            return new \Zend\Session\Container('mschool');
+        },
 
     ),
     'invokables' => array(
