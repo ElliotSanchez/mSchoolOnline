@@ -170,7 +170,7 @@ return array(
 
         // ADMIN AUTH
         'AdminAuthService' => function ($sm) {
-            return new AdminAuthService($sm->get('UserService'), new ZendAuthService());
+            return new AdminAuthService($sm->get('UserService'), new ZendAuthService(), $sm->get('AuthSessionContainer'));
         },
         // AUTH SESSION
         'AuthSessionContainer' => function ($sm) {

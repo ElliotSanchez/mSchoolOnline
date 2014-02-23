@@ -33,11 +33,6 @@ class AuthController extends AbstractActionController
                 $authService = $adminAuthService->getZendAuthService();
 
                 if ($authService->hasIdentity()) {
-
-                    // TODO SAVE USER IN AUTH CONTROLLER
-                    $container = $this->getServiceLocator()->get('AuthSessionContainer');
-                    $container->user = $user;
-
                     return $this->redirect()->toUrl('dashboard');
                 } else {
                     $this->flashMessenger()->addErrorMessage('Incorrect username or password');
@@ -59,14 +54,7 @@ class AuthController extends AbstractActionController
     }
 
     public function logoutAction() {
-        $authService = new \Zend\Authentication\AuthenticationService();
-
-        $authService->clearIdentity();
-
-        // TODO DO THIS IN THE SERVICE
-        $sessionContainer = $this->getServiceLocator()->get('AuthSessionContainer');
-        $sessionContainer->getManager()->getStorage()->clear('mschool');
-
+        $this->getServiceLocator()->get('AdminAuthService')->logout();
         return $this->redirect()->toRoute('admin/login');
     }
 }
