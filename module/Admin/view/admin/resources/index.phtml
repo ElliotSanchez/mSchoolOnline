@@ -15,6 +15,7 @@
                     <th>Name</th>
                     <th>Code</th>
                     <th>URL</th>
+                    <th>Resources</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -31,6 +32,9 @@
                         </td>
                         <td>
                             <?php echo $resource->url?>
+                        </td>
+                        <td>
+                            <?php echo ($resource->isExternal) ? ('External') : (''); ?>
                         </td>
                         <td class="text-right">
                             <a href="<?php echo $this->url('admin/resource_edit', array('id' => $resource->id)) ?>" class="btn btn-default btn-sm">

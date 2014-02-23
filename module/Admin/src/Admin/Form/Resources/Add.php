@@ -42,6 +42,14 @@ class Add extends Form
         ));
 
         $this->add(array(
+            'name' => 'is_external',
+            'options' => array(
+
+            ),
+            'type'  => 'Checkbox',
+        ));
+
+        $this->add(array(
             'name' => 'submit',
             'options' => array(
 
@@ -54,6 +62,7 @@ class Add extends Form
         $nameInput = new Input('name');
         $shortCodeInput = new Input('short_code');
         $urlInput = new Input('url');
+        $isExternalInput = new Input('is_external');
 
         $nameInput->setAllowEmpty(true);
 
@@ -64,6 +73,7 @@ class Add extends Form
         $inputFilter->add($nameInput);
         $inputFilter->add($shortCodeInput);
         $inputFilter->add($urlInput);
+        $inputFilter->add($isExternalInput);
 
         $this->setInputFilter($inputFilter);
 

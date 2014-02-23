@@ -50,6 +50,19 @@ echo $this->form()->openTag($form->setAttribute('class', 'form'));
     </div>
 
     <div class="row">
+        <div class="checkbox <?php echo (!$form->get('is_external')->getMessages()) ?: ('has-error') ?>">
+            <div class="col-md-4">
+                <label class="control-label" for="is_external">Is External</label>
+                <?php
+                $isExternal = $form->get('is_external');
+                echo $this->formCheckbox($isExternal->setAttribute('class', ''));
+                echo $this->formElementErrors($isExternal);
+                ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="form-group">
             <div class="col-md-2">
                 <label class="control-label" for=""></label>
