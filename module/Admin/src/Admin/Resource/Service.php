@@ -19,4 +19,10 @@ class Service extends ServiceAbstract {
 
     }
 
+    public function getWithShortCode($code) {
+
+        return $this->table->fetchWith(array('short_code' => $code))->current();
+
+    }
+
 }

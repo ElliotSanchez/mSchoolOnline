@@ -4,21 +4,10 @@ namespace MSchool;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
-use Admin\User\Entity as User;
-use Admin\User\Table as UserTable;
-use Admin\User\Service as UserService;
-use Admin\Account\Entity as Account;
-use Admin\Account\Table as AccountTable;
-use Admin\Account\Service as AccountService;
-use Admin\School\Entity as School;
-use Admin\School\Table as SchoolTable;
-use Admin\School\Service as SchoolService;
-use Admin\Teacher\Entity as Teacher;
-use Admin\Teacher\Table as TeacherTable;
-use Admin\Teacher\Service as TeacherService;
-use Admin\Student\Entity as Student;
-use Admin\Student\Table as StudentTable;
-use Admin\Student\Service as StudentService;
+
+use MSchool\Pathway\Entity as Pathway;
+use MSchool\Pathway\Table as PathwayTable;
+use MSchool\Pathway\Service as PathwayService;
 
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
@@ -32,9 +21,21 @@ return array(
             },
 
         // PATHWAY
-        'PathwayService' => function ($sm) {
-                return new Pathway\Service($sm->get('ResourceService'));
+        'PathwayTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Pathway());
+                return new TableGateway('pathways', $dbAdapter, null, $resultSetPrototype);
             },
+        'PathwayTable' =>  function($sm) {
+                $tableGateway = $sm->get('PathwayTableGateway');
+                $table = new PathwayTable($tableGateway);
+                return $table;
+            },
+        'PathwayService' => function ($sm) {
+                return new PathwayService($sm->get('PathwayTable'), $sm->get('ResourceService'), $sm->get('StudentService'));
+            },
+
 
         // USERS
 //        'UserTableGateway' => function ($sm) {

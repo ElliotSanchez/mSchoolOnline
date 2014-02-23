@@ -21,6 +21,12 @@ class Service extends ServiceAbstract {
 
     }
 
+    public function getWithStudentNumber($number) {
+
+        return $this->table->fetchWith(array('number' => $number))->current();
+
+    }
+
     public function getForAccount(Account $account) {
 
         return $this->table->fetchWith(array('account_id' => $account->id));

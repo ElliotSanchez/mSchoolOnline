@@ -112,6 +112,10 @@ class UploadController extends AbstractActionController
                 // PROCESS PATHWAYS
                 // ********************************************************
 
+                $pathwayService = $this->getServiceLocator()->get('PathwayService');
+
+                $pathwayService->importPathwaysFromFile($tempFilename);
+
                 if ($tempFilename) {
                     unlink($tempFilename);
                 }

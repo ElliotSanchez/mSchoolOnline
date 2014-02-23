@@ -77,6 +77,10 @@ class TableAbstract
         return $object;
     }
 
+    public function update($data, $where) {
+        return $this->tableGateway->update($data, $where);
+    }
+
     public function delete($id)
     {
         $this->tableGateway->delete(array('id' => (int) $id));
