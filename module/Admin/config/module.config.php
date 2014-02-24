@@ -6,7 +6,7 @@ return array(
             'admin' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'admin.mschool',
+                    'route' => 'admin.mschool.lp',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'module'        => 'Admin',
@@ -16,20 +16,20 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                                'controller' => 'Index',
-                                'action'     => 'index',
-                            ),
-                        ),
-                    ),
+//                    'default' => array(
+//                        'type'    => 'Segment',
+//                        'options' => array(
+//                            'route'    => '/[:controller[/:action]]',
+//                            'constraints' => array(
+//                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+//                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+//                            ),
+//                            'defaults' => array(
+//                                'controller' => 'Index',
+//                                'action'     => 'index',
+//                            ),
+//                        ),
+//                    ),
                     'home' => array(
                         'type' => 'Zend\Mvc\Router\Http\Literal',
                         'options' => array(

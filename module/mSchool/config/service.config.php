@@ -65,7 +65,7 @@ return array(
 //        }
 
     ),
-//    'invokables' => array(
-//        'LoginForm' => 'MSchool\Form\Auth\Login',
-//    ),
+    'invokables' => array(
+        'StudentLoginForm' => 'MSchool\Form\Auth\StudentLogin',
+    ),
 );

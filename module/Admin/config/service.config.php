@@ -23,6 +23,8 @@ use Admin\Resource\Service as ResourceService;
 
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
+use Admin\Authentication\TeacherService as TeacherAuthService;
+use Admin\Authentication\StudentService as StudentAuthService;
 
 return array(
 
@@ -172,6 +174,13 @@ return array(
         'AdminAuthService' => function ($sm) {
             return new AdminAuthService($sm->get('UserService'), new ZendAuthService(), $sm->get('AuthSessionContainer'));
         },
+        'TeacherAuthService' => function ($sm) {
+            return new TeacherAuthService($sm->get('TeacherService'), new ZendAuthService(), $sm->get('AuthSessionContainer'));
+        },
+        'StudentAuthService' => function ($sm) {
+            return new StudentAuthService($sm->get('StudentService'), new ZendAuthService(), $sm->get('AuthSessionContainer'));
+        },
+
         // AUTH SESSION
         'AuthSessionContainer' => function ($sm) {
             return new \Zend\Session\Container('mschool');

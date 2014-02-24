@@ -6,12 +6,12 @@ return array(
             'mschool' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'school.mschool',
+                    'route' => 'school.mschool.lp',
 //                    'constraints' => array(
 //                        'subdomain' => '[a-zA-Z0-9_-]*',
 //                    ),
                     'defaults' => array(
-                        '__NAMESPACE__' => 'MSchool\Controller',
+//                        '__NAMESPACE__' => 'MSchool\Controller',  // REMOVE OF THIS LINE IS IMPORTANT; OTHER WISE THE MSchool MODULE HAS TROUBLE
                         'module'        => 'MSchool',
                         'controller'    => 'Index',
                         'action'        => 'index',
@@ -19,20 +19,20 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                                'controller' => 'Index',
-                                'action'     => 'index',
-                            ),
-                        ),
-                    ),
+//                    'default' => array(
+//                        'type'    => 'Segment',
+//                        'options' => array(
+//                            'route'    => '/[:controller[/:action]]',
+//                            'constraints' => array(
+//                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+//                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+//                            ),
+//                            'defaults' => array(
+//                                'controller' => 'Index',
+//                                'action'     => 'index',
+//                            ),
+//                        ),
+//                    ),
 
                     'home' => array(
                         'type' => 'Zend\Mvc\Router\Http\Literal',

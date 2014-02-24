@@ -3,8 +3,9 @@
 namespace Admin\Student;
 
 use Admin\ModelAbstract\EntityAbstract;
+use Admin\User\UserAbstract as UserAbstract;
 
-class Entity extends EntityAbstract {
+class Entity extends UserAbstract {
 
     public $number;
     public $username;
@@ -33,9 +34,12 @@ class Entity extends EntityAbstract {
         $this->password = $password;
 
 //        $bcrypt = new \Zend\Crypt\Password\Bcrypt();
-//
 //        $this->password = $bcrypt->create($password);
 
+    }
+
+    public function validatePassword($password) {
+        return $this->password == $password;
     }
 
     public function create($data) {

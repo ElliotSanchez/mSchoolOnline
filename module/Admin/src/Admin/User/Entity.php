@@ -4,8 +4,9 @@ namespace Admin\User;
 
 use Admin\ModelAbstract\EntityAbstract;
 use Zend\Authentication\Result as AuthResult;
+use Admin\User\UserAbstract as UserAbstract;
 
-class Entity extends EntityAbstract {
+class Entity extends UserAbstract {
 
     public $username;
     public $password;
@@ -15,22 +16,6 @@ class Entity extends EntityAbstract {
     public $isSchoolAdmin;
 
     public $schoolId;
-
-    public function setPassword($password) {
-
-        $bcrypt = new \Zend\Crypt\Password\Bcrypt();
-
-        $this->password = $bcrypt->create($password);
-
-    }
-
-    public function validatePassword($password) {
-
-        $bcrypt = new \Zend\Crypt\Password\Bcrypt();
-
-        return $bcrypt->verify($password, $this->password);
-
-    }
 
     public function create($data) {
 

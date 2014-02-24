@@ -3,15 +3,15 @@
 namespace Admin\Authentication;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result as AuthResult;
-use Admin\User\Entity as AdminUser;
+use Admin\User\UserAbstract as UserAbstract;
 
-class Adapter implements AdapterInterface
+class Adapter extends UserAbstract implements AdapterInterface
 {
     private $user;
     private $username;
     private $password;
 
-    public function __construct(AdminUser $user, $username, $password)
+    public function __construct(UserAbstract $user, $username, $password)
     {
         $this->user = $user;
         $this->username = $username;
