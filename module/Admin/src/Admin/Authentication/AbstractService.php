@@ -43,6 +43,10 @@ abstract class AbstractService {
         return $this->authService;
     }
 
+    public function getCurrentUser() {
+        return $this->sessionContainer->user;
+    }
+
     public function logout() {
         $this->authService->clearIdentity();
         $this->sessionContainer->getManager()->getStorage()->clear('mschool');

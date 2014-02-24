@@ -56,6 +56,18 @@ return array(
                             ),
                         ),
                     ),
+                    'teacher_login' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/teacher/login',
+                            'defaults' => array(
+                                'controller' => 'Mschool\Controller\Auth',
+                                'action'     => 'teacher-login',
+                            ),
+                        ),
+                    ),
+
+
                     'logout' => array(
                         'type' => 'Zend\Mvc\Router\Http\Literal',
                         'options' => array(

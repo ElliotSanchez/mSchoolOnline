@@ -9,7 +9,6 @@ class AuthController extends AbstractActionController
 {
     public function loginAction()
     {
-//        die('mschool:auth:login');
 
         $form = $this->getServiceLocator()->get('StudentLoginForm');
 
@@ -55,11 +54,64 @@ class AuthController extends AbstractActionController
         ));
     }
 
+    public function teacherLoginAction()
+    {
+
+        $form = $this->getServiceLocator()->get('TeacherLoginForm');
+
+        $this->layout('layout/auth');
+
+        if ($this->request->isPost()) {
+
+            $form->prepare();
+
+            $form->setData($this->request->getPost());
+
+            if ($form->isValid()) {
+                $inputFilter = $form->getInputFilter();
+
+                $username = $inputFilter->getRawValue('username');
+                $password = $inputFilter->getRawValue('password');
+
+                $teacherAuthService = $this->getServiceLocator()->get('TeacherAuthService');
+
+                $user = $teacherAuthService->authenticate($username, $password);
+
+                $authService = $teacherAuthService->getZendAuthService();
+
+                if ($authService->hasIdentity()) {
+                    return $this->redirect()->toUrl('mschool/teacher_dashboard');
+                } else {
+                    $this->flashMessenger()->addErrorMessage('Incorrect username or password');
+                    return $this->redirect()->toRoute('mschool/teacher_login');
+                }
+
+            } else {
+                $this->flashMessenger()->addErrorMessage('Please enter both username and password');
+                foreach($form->getMessages() as $message) {
+                    $this->flashMessenger()->addErrorMessage($message);
+                }
+                return $this->redirect()->toRoute('mschool/teacher_login');
+            }
+        }
+
+        return new ViewModel(array(
+            'form' => $form,
+        ));
+    }
+
     public function logoutAction() {
-        $authService = new \Zend\Authentication\AuthenticationService();
+        $authService = $this->getServiceLocator()->get('AdminAuthService');
 
-        $authService->clearIdentity();
+        $user = $authService->getCurrentUser();
 
-        return $this->redirect()->toRoute('mschool/login');
+        $authService->logout();
+
+        if ($user instanceof \Admin\Teacher\Entity) {
+            return $this->redirect()->toRoute('mschool/teacher_login');
+        } else {
+            return $this->redirect()->toRoute('mschool/login');
+        }
+
     }
 }

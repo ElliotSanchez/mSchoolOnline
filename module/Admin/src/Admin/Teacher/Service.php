@@ -19,6 +19,12 @@ class Service extends ServiceAbstract {
 
     }
 
+    public function getForUsername($username) {
+
+        return $this->table->fetchWith(['username' => $username])->current();
+
+    }
+
     public function getForAccount(Account $account) {
 
         return $this->table->fetchWith(array('account_id' => $account->id));

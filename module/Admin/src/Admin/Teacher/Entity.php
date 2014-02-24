@@ -2,9 +2,9 @@
 
 namespace Admin\Teacher;
 
-use Admin\ModelAbstract\EntityAbstract;
+use Admin\User\UserAbstract as UserAbstract;
 
-class Entity extends EntityAbstract {
+class Entity extends UserAbstract {
 
     public $username;
     public $password;

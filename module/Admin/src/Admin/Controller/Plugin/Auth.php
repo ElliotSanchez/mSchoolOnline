@@ -39,7 +39,7 @@ class Auth extends AbstractPlugin
 
         $match = $e->getRouteMatch();
         $name = $match->getMatchedRouteName();
-        if (in_array($name, array('admin/login', 'admin/authenticate', 'mschool/login', 'mschool/authenticate'))) {
+        if (in_array($name, array('admin/login', 'admin/authenticate', 'mschool/login', 'mschool/authenticate', 'mschool/teacher_login'))) {
             return;
         }
 
