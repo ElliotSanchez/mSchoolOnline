@@ -157,6 +157,17 @@ return array(
                         ),
                     ),
 
+                    'teacher_students' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/teacher/students',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Teacher',
+                                'action'     => 'students',
+                            ),
+                        ),
+                    ),
+
                     // PAGES
                     'page_intro' => array(
                         'type' => 'Literal',
@@ -231,8 +242,8 @@ return array(
         'template_map' => array(
             'mschool/layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'mschool/index/index' => __DIR__ . '/../view/mschool/index/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'mschool/error/404'               => __DIR__ . '/../view/error/404.phtml',
+            'mschool/error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

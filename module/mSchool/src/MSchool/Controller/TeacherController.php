@@ -13,9 +13,24 @@ class TeacherController extends AbstractActionController
 
         $this->layout('mschool/layout/layout');
 
-        $session = $this->getServiceLocator()->get('StudentSessionContainer');
+        return new ViewModel(array(
+        ));
+
+    }
+
+    public function studentsAction()
+    {
+
+        $this->layout('mschool/layout/layout');
+
+        $studentService = $this->getServiceLocator()->get('StudentService');
+
+        $class = null;
+
+        $students = $studentService->getStudentsInClass($class);
 
         return new ViewModel(array(
+
         ));
 
     }
