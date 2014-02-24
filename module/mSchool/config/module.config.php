@@ -145,6 +145,18 @@ return array(
                         ),
                     ),
 
+                    // TEACHER
+                    'teacher_dashboard' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/teacher/dashboard',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Teacher',
+                                'action'     => 'dashboard',
+                            ),
+                        ),
+                    ),
+
                     // PAGES
                     'page_intro' => array(
                         'type' => 'Literal',
@@ -207,6 +219,7 @@ return array(
             'MSchool\Controller\Auth' => 'MSchool\Controller\AuthController',
             'MSchool\Controller\Pages' => 'MSchool\Controller\PagesController',
             'MSchool\Controller\Pathway' => 'MSchool\Controller\PathwayController',
+            'MSchool\Controller\Teacher' => 'MSchool\Controller\TeacherController',
         ),
     ),
     'view_manager' => array(
@@ -216,7 +229,7 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'mschool/layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'mschool/index/index' => __DIR__ . '/../view/mschool/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
