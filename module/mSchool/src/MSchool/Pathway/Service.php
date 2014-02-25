@@ -52,7 +52,7 @@ class Service extends ServiceAbstract
         }
 
         foreach ($results as $pathway) {
-            $step = new Step($this->resourceService->get($pathway->resourceId), null);
+            $step = new Step($this->resourceService->get($pathway->resourceId), $pathway->timer);
             $container->addStep($step);
         }
 
@@ -82,7 +82,7 @@ class Service extends ServiceAbstract
         $STUDENT_NAME_COL = 'A';
         $STUDENT_NUM_COL = 'B';
         $PATHWAY_DATE = 'C';
-        $ORDER_COL = 'D';
+        $STEP_COL = 'D';
         $RESOURCE_COL = 'E';
         $TIMER_COL = 'F';
 
@@ -102,7 +102,7 @@ class Service extends ServiceAbstract
                         break;
                     case $PATHWAY_DATE:     $pathwayDateString = $cell->getValue();
                         break;
-                    case $ORDER_COL:        $pathwayOrder = $cell->getValue();
+                    case $STEP_COL:         $stepOrder = $cell->getValue();
                         break;
                     case $RESOURCE_COL:     $resourceIdentifier = $cell->getValue();
                         break;
@@ -135,7 +135,7 @@ class Service extends ServiceAbstract
                 'student_id' => $student->id,
                 'resource_id' => $resource->id,
                 'pathway_date' => ($pathwayDate instanceof \DateTime) ? ($pathwayDate->format('Y-m-d')) : ($pathwayDate),
-                'order' => $pathwayOrder,
+                'step' => $stepOrder,
                 'timer' => $pathwayTimer,
                 'is_active' => 1,
                 'upload_set_id' => $uploadSetId,

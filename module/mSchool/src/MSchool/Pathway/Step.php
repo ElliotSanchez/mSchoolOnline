@@ -10,7 +10,7 @@ class Step
 
     public function __construct($resource, $time) {
         $this->resource = $resource;
-        $this->time = 3;
+        $this->time = $time;
     }
 
     public function isTimed() {
