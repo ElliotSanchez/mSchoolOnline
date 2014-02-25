@@ -17,7 +17,7 @@ class PathwayController extends AbstractActionController
 
         $pathwayService = $this->getServiceLocator()->get('PathwayService');
 
-        $student = $this->getServiceLocator()->get('StudentService')->get(1);
+        $student = $adminAuthService = $this->getServiceLocator()->get('StudentAuthService')->getCurrentUser();
 
         if (!$session->pathwayContainer) {
 
