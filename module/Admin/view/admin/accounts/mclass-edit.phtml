@@ -1,0 +1,64 @@
+<?php echo $this->partial('admin/accounts/partials/header.phtml', array('active' => 'mclasses', 'account' => $account)); ?>
+
+<h2>Edit Class</h2>
+
+<?php
+
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form->setAttribute('class', 'form'));
+
+echo $this->formHidden($this->form->get('account_id'));
+
+?>
+
+<div class="row">
+    <div class="form-group <?php echo (!$form->get('name')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="name">Name</label>
+            <?php
+            $name = $form->get('name');
+            echo $this->formInput($name->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($name);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group <?php echo (!$form->get('school_id')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="name">School</label>
+            <?php
+            $school = $form->get('school_id');
+            echo $this->formSelect($school->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($school);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-md-2">
+            <label class="control-label" for=""></label>
+            <?php
+            $submit = $form->get('submit');
+            echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Update'));
+            echo $this->formElementErrors($submit );
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-2">
+        <a href="<?php echo $this->url('admin/account_mclasses', array('id'=>$account->id)) ?>" class="btn btn-default btn-sm">Cancel</a>
+    </div>
+</div>
+
+<?php echo $this->form()->closeTag() ?>
+

@@ -17,6 +17,9 @@ use Admin\Teacher\Service as TeacherService;
 use Admin\Student\Entity as Student;
 use Admin\Student\Table as StudentTable;
 use Admin\Student\Service as StudentService;
+use Admin\Mclass\Entity as Mclass;
+use Admin\Mclass\Table as MclassTable;
+use Admin\Mclass\Service as MclassService;
 use Admin\Resource\Entity as Resource;
 use Admin\Resource\Table as ResourceTable;
 use Admin\Resource\Service as ResourceService;
@@ -137,6 +140,28 @@ return array(
             },
         'StudentEditForm' => function ($sm) {
                 return new Admin\Form\Account\StudentEdit($sm->get('SchoolService'), $sm->get('Zend\Db\Adapter\Adapter'));
+            },
+
+        // MCLASSES
+        'MclassTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Mclass());
+                return new TableGateway('mclasses', $dbAdapter, null, $resultSetPrototype);
+            },
+        'MclassTable' =>  function($sm) {
+                $tableGateway = $sm->get('MclassTableGateway');
+                $table = new MclassTable($tableGateway);
+                return $table;
+            },
+        'MclassService' => function ($sm) {
+                return new MclassService($sm->get('MclassTable'));
+            },
+        'MclassAddForm' => function ($sm) {
+                return new Admin\Form\Account\Mclass\Add($sm->get('SchoolService'));
+            },
+        'MclassEditForm' => function ($sm) {
+                return new Admin\Form\Account\Mclass\Edit($sm->get('SchoolService'));
             },
 
         // RESOURCES

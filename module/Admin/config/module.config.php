@@ -217,6 +217,20 @@ return array(
                         ),
                     ),
 
+                    'account_mclasses' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]/classes',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'mclasses',
+                            ),
+                        ),
+                    ),
+
                     // SCHOOLS
                     'school_add' => array(
                         'type' => 'Segment',
@@ -303,6 +317,36 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Admin\Controller\Accounts',
                                 'action'     => 'student-edit',
+                            ),
+                        ),
+                    ),
+
+                    // MCLASSES
+                    'mclass_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]/mclass/add',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'mclass-add',
+                            ),
+                        ),
+                    ),
+
+                    'mclass_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:a_id]/mclass/[:m_id]/edit',
+                            'constraints' => array(
+                                'a_id' => '[0-9]*',
+                                'm_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'mclass-edit',
                             ),
                         ),
                     ),

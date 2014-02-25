@@ -340,6 +340,92 @@ class AccountsController extends AbstractActionController
 
     }
 
+    // CLASSES
+    public function mclassesAction() {
+
+        $account = $this->getAccount();
+
+        $classes = $this->getServiceLocator()->get('MclassService')->getForAccount($account);
+
+        return new ViewModel([
+            'account' => $account,
+            'classes' => $classes,
+        ]);
+
+    }
+
+    public function mclassAddAction()
+    {
+        $account = $this->getAccount();
+
+        $form = $this->getServiceLocator()->get('MclassAddForm');
+
+        $form->setAccount($account);
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $mclass = $this->getServiceLocator()->get('MclassService')->create($data);
+                $this->flashMessenger()->addSuccessMessage('Added Class');
+                $this->redirect()->toRoute('admin/mclass_edit', array('a_id' => $account->id, 'm_id' => $mclass->id));
+            }
+
+        }
+
+        return new ViewModel([
+            'account' => $account,
+            'form' => $form,
+        ]);
+
+    }
+
+    public function mclassEditAction()
+    {
+
+        $accountService = $this->getServiceLocator()->get('AccountService');
+        $mclassService = $this->getServiceLocator()->get('MclassService');
+
+        $account = $accountService->get($this->params('a_id'));
+        $mclass = $mclassService->get($this->params('m_id'));
+
+        $form = $this->getServiceLocator()->get('MclassEditForm');
+
+        $form->setAccount($account);
+        $form->bind($mclass);
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+
+                $mclass = $form->getData();
+
+                $mclassService->save($mclass);
+
+                $this->flashMessenger()->addSuccessMessage('Updated Class');
+                $this->redirect()->toRoute('admin/mclass_edit', array('a_id' => $account->id, 'm_id' => $mclass->id));
+            } else {
+                //print_r($form->getMessages());
+            }
+
+        }
+
+        return new ViewModel([
+            'account' => $account,
+            'form' => $form,
+        ]);
+
+    }
+
     protected function getAccount() {
 
         $accountService = $this->getServiceLocator()->get('AccountService');

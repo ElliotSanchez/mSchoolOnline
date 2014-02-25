@@ -11,4 +11,7 @@
     <li class="<?php echo ($this->active == 'students') ? ('active') : (null) ?>">
         <a href="<?php echo $this->url('admin/account_students', array('id'=>$this->account->id)) ?>">Students</a>
     </li>
+    <li class="<?php echo ($this->active == 'mclasses') ? ('active') : (null) ?>">
+        <a href="<?php echo $this->url('admin/account_mclasses', array('id'=>$this->account->id)) ?>">Classes</a>
+    </li>
 </ul>

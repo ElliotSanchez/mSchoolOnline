@@ -1,0 +1,42 @@
+<?php echo $this->partial('admin/accounts/partials/header.phtml', array('active' => 'mclasses', 'account' => $account)); ?>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-12 text-right">
+        <a href="<?php echo $this->url('admin/mclass_add', array('id'=>$account->id)) ?>" class="btn btn-primary">Add Class</a>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-12">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>School</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($classes as $class): ?>
+                    <tr>
+                        <td>
+                            <a href="<?php echo $this->url('admin/mclass_edit', array('a_id' => $account->id, 'm_id' => $class->id)) ?>">
+                                <?php echo $class->name ?>
+                            </a>
+                        </td>
+                        <td>SCHOOL</td>
+                        <td class="text-right">
+                            <a href="<?php echo $this->url('admin/mclass_edit', array('a_id' => $account->id, 'm_id' => $class->id)) ?>" class="btn btn-default btn-sm">
+                                Edit
+                            </a>
+
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
