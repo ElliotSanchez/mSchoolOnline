@@ -6,7 +6,7 @@ return array(
             'admin' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'admin.mschool.lp',
+                    'route' => 'admin.mschool',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'module'        => 'Admin',
@@ -390,6 +390,46 @@ return array(
                             ),
                         ),
                     ),
+
+                    // PATHWAYS
+                    'pathways' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/pathways',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Pathways',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+
+                    'pathway_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/pathway/add',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Pathways',
+                                'action'     => 'add',
+                            ),
+                        ),
+                    ),
+
+                    'pathway_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/pathway/edit/[:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Pathways',
+                                'action'     => 'edit',
+                            ),
+                        ),
+                    ),
                     
                     // UPLOAD
                     'upload_students' => array(
@@ -515,6 +555,9 @@ return array(
             'Admin\Controller\Upload' => 'Admin\Controller\UploadController',
             'Admin\Controller\Pathways' => 'Admin\Controller\PathwaysController',
             'Admin\Controller\Resources' => 'Admin\Controller\ResourcesController',
+            'Admin\Controller\Pathway' => 'Admin\Controller\PathwayController',
+            'Admin\Controller\Plan' => 'Admin\Controller\PlanController',
+            'Admin\Controller\Step' => 'Admin\Controller\StepController',
         ),
     ),
     'view_manager' => array(

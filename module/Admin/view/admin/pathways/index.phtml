@@ -1,0 +1,45 @@
+<h1>Pathways</h1>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-12 text-right">
+        <a href="<?php echo $this->url('admin/pathway_add') ?>" class="btn btn-primary">Add Pathway</a>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-12">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Short Code</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($pathways as $pathway): ?>
+                    <tr>
+                        <td>
+                            <a href="<?php echo $this->url('admin/pathway_edit', array('id' => $pathway->id)) ?>">
+                                <?php echo $pathway->name ?>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="<?php echo $this->url('admin/pathway_edit', array('id' => $pathway->id)) ?>">
+                                <?php echo $pathway->shortCode ?>
+                            </a>
+                        </td>
+                        <td class="text-right">
+                            <a href="<?php echo $this->url('admin/pathway_edit', array('id' => $pathway->id)) ?>" class="btn btn-default btn-sm">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

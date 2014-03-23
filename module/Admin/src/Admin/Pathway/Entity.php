@@ -6,13 +6,15 @@ use Admin\ModelAbstract\EntityAbstract;
 
 class Entity extends EntityAbstract {
 
-    public $code;
+    public $name;
+    public $shortCode;
     public $isActive;
 
     public function create($data) {
 
         parent::create($data);
-        $this->code = (!empty($data['code'])) ? $data['code'] : null;
+        $this->name = (!empty($data['name'])) ? $data['name'] : null;
+        $this->shortCode = (!empty($data['short_code'])) ? $data['short_code'] : null;
         $this->isActive = (!empty($data['is_active'])) ? $data['is_active'] : null;
     }
 
@@ -20,7 +22,8 @@ class Entity extends EntityAbstract {
     {
         if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
 
-        $this->code = (!empty($data['code'])) ? $data['code'] : null;
+        $this->name = (!empty($data['name'])) ? $data['name'] : null;
+        $this->shortCode = (!empty($data['short_code'])) ? $data['short_code'] : null;
         $this->isActive = (!empty($data['is_active'])) ? $data['is_active'] : null;
 
         $this->exchangeDates($data);
@@ -29,7 +32,8 @@ class Entity extends EntityAbstract {
     public function toData() {
 
         $data = array(
-            'code' => $this->code,
+            'name' => $this->name,
+            'short_code' => $this->shortCode,
             'is_active' => $this->isActive,
         );
 

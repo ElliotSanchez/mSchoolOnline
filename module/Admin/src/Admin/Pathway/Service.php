@@ -12,6 +12,8 @@ class Service extends ServiceAbstract
 
         $pathway = new Pathway();
 
+        if (!isset($data['is_active'])) $data['is_active'] = 1;
+
         $pathway->create($data);
 
         $pathway = $this->table->save($pathway);

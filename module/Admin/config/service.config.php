@@ -262,6 +262,12 @@ return array(
         'PathwayService' => function ($sm) {
                 return new PathwayService($sm->get('PathwayTable'));
             },
+        'PathwayAddForm' => function ($sm) {
+                return new Admin\Form\Pathway\Add();
+            },
+        'PathwayEditForm' => function ($sm) {
+                return new Admin\Form\Pathway\Edit();
+            },
 
         // PLAN STEPS
         'PathwayPlanTableGateway' => function ($sm) {
