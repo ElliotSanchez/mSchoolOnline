@@ -26,7 +26,15 @@ use Admin\Resource\Service as ResourceService;
 use Admin\StudentLogin\Entity as StudentLogin;
 use Admin\StudentLogin\Table as StudentLoginTable;
 use Admin\StudentLogin\Service as StudentLoginService;
-
+use Admin\Step\Entity as Step;
+use Admin\Step\Table as StepTable;
+use Admin\Step\Service as StepService;
+use Admin\Plan\Entity as Plan;
+use Admin\Plan\Table as PlanTable;
+use Admin\Plan\Service as PlanService;
+use Admin\Pathway\Entity as Pathway;
+use Admin\Pathway\Table as PathwayTable;
+use Admin\Pathway\Service as PathwayService;
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
 use Admin\Authentication\TeacherService as TeacherAuthService;
@@ -189,6 +197,91 @@ return array(
                 return new Admin\Form\Resources\Edit();
             },
 
+        /* >>>>>>>>>> */
+
+        // STEPS
+        'StepTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Step());
+                return new TableGateway('steps', $dbAdapter, null, $resultSetPrototype);
+            },
+        'StepTable' =>  function($sm) {
+                $tableGateway = $sm->get('StepTableGateway');
+                $table = new StepTable($tableGateway);
+                return $table;
+            },
+        'StepService' => function ($sm) {
+                return new StepService($sm->get('StepTable'));
+            },
+
+        // PLANS
+        'PlanTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Plan());
+                return new TableGateway('plans', $dbAdapter, null, $resultSetPrototype);
+            },
+        'PlanTable' =>  function($sm) {
+                $tableGateway = $sm->get('PlanTableGateway');
+                $table = new PlanTable($tableGateway);
+                return $table;
+            },
+        'PlanService' => function ($sm) {
+                return new PlanService($sm->get('PlanTable'));
+            },
+
+        // PLAN STEPS
+        'PlanStepTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new PlanStep());
+                return new TableGateway('plan_steps', $dbAdapter, null, $resultSetPrototype);
+            },
+        'PlanStepTable' =>  function($sm) {
+                $tableGateway = $sm->get('PlanStepTableGateway');
+                $table = new PlanStepTable($tableGateway);
+                return $table;
+            },
+        'PlanStepService' => function ($sm) {
+                return new PlanStepService($sm->get('PlanStepTable'));
+            },
+
+        // PATHWAYS
+        'PathwayTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Pathway());
+                return new TableGateway('pathways', $dbAdapter, null, $resultSetPrototype);
+            },
+        'PathwayTable' =>  function($sm) {
+                $tableGateway = $sm->get('PathwayTableGateway');
+                $table = new PathwayTable($tableGateway);
+                return $table;
+            },
+        'PathwayService' => function ($sm) {
+                return new PathwayService($sm->get('PathwayTable'));
+            },
+
+        // PLAN STEPS
+        'PathwayPlanTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new PathwayPlan());
+                return new TableGateway('pathway_plans', $dbAdapter, null, $resultSetPrototype);
+            },
+        'PathwayPlanTable' =>  function($sm) {
+                $tableGateway = $sm->get('PathwayPlanTableGateway');
+                $table = new PathwayPlanTable($tableGateway);
+                return $table;
+            },
+        'PathwayPlanService' => function ($sm) {
+                return new PathwayPlanService($sm->get('PathwayPlanTable'));
+            },
+        
+        /* <<<<<<<<<< */
+        
+        
         // UPLOAD
         'StudentUploadForm' => function ($sm) {
             return new Admin\Form\Upload\Students();
@@ -214,7 +307,7 @@ return array(
             return new \Zend\Session\Container('mschool');
         },
 
-        // STUDENTS
+        // STUDENT LOGINS
         'StudentLoginTableGateway' => function ($sm) {
                 $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                 $resultSetPrototype = new ResultSet();
