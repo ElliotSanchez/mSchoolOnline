@@ -23,6 +23,9 @@ use Admin\Mclass\Service as MclassService;
 use Admin\Resource\Entity as Resource;
 use Admin\Resource\Table as ResourceTable;
 use Admin\Resource\Service as ResourceService;
+use Admin\StudentLogin\Entity as StudentLogin;
+use Admin\StudentLogin\Table as StudentLoginTable;
+use Admin\StudentLogin\Service as StudentLoginService;
 
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
@@ -203,13 +206,29 @@ return array(
             return new TeacherAuthService($sm->get('TeacherService'), new ZendAuthService(), $sm->get('AuthSessionContainer'));
         },
         'StudentAuthService' => function ($sm) {
-            return new StudentAuthService($sm->get('StudentService'), new ZendAuthService(), $sm->get('AuthSessionContainer'));
+            return new StudentAuthService($sm->get('StudentService'), new ZendAuthService(), $sm->get('AuthSessionContainer'), $sm->get('StudentLoginService'));
         },
 
         // AUTH SESSION
         'AuthSessionContainer' => function ($sm) {
             return new \Zend\Session\Container('mschool');
         },
+
+        // STUDENTS
+        'StudentLoginTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new StudentLogin());
+                return new TableGateway('student_logins', $dbAdapter, null, $resultSetPrototype);
+            },
+        'StudentLoginTable' =>  function($sm) {
+                $tableGateway = $sm->get('StudentLoginTableGateway');
+                $table = new StudentLoginTable($tableGateway);
+                return $table;
+            },
+        'StudentLoginService' => function ($sm) {
+                return new StudentLoginService($sm->get('StudentLoginTable'));
+            },
 
     ),
     'invokables' => array(

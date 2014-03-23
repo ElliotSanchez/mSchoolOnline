@@ -27,11 +27,11 @@ class AuthController extends AbstractActionController
                 $username = $inputFilter->getRawValue('username');
                 $password = $inputFilter->getRawValue('password');
 
-                $adminAuthService = $this->getServiceLocator()->get('StudentAuthService');
+                $studentAuthService = $this->getServiceLocator()->get('StudentAuthService');
 
-                $user = $adminAuthService->authenticate($username, $password);
+                $user = $studentAuthService->authenticate($username, $password);
 
-                $authService = $adminAuthService->getZendAuthService();
+                $authService = $studentAuthService->getZendAuthService();
 
                 if ($authService->hasIdentity()) {
                     return $this->redirect()->toUrl('pathway');
