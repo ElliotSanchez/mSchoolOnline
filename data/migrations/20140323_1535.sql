@@ -13,7 +13,9 @@ CREATE TABLE `steps` (
 
 CREATE TABLE `plans` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL DEFAULT '',
   `short_code` varchar(256) NOT NULL DEFAULT '',
+  `is_active` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)

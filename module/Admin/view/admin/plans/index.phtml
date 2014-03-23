@@ -1,0 +1,45 @@
+<h1>Plans</h1>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-12 text-right">
+        <a href="<?php echo $this->url('admin/plan_add') ?>" class="btn btn-primary">Add Plan</a>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-12">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Short Code</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($plans as $plans): ?>
+                    <tr>
+                        <td>
+                            <a href="<?php echo $this->url('admin/plan_edit', array('id' => $plans->id)) ?>">
+                                <?php echo $plans->name ?>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="<?php echo $this->url('admin/plan_edit', array('id' => $plans->id)) ?>">
+                                <?php echo $plans->shortCode ?>
+                            </a>
+                        </td>
+                        <td class="text-right">
+                            <a href="<?php echo $this->url('admin/plan_edit', array('id' => $plans->id)) ?>" class="btn btn-default btn-sm">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

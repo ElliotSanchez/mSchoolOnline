@@ -12,6 +12,8 @@ class Service extends ServiceAbstract
 
         $plan = new Plan();
 
+        if (!isset($data['is_active'])) $data['is_active'] = 1;
+
         $plan->create($data);
 
         $plan = $this->table->save($plan);

@@ -230,6 +230,12 @@ return array(
         'PlanService' => function ($sm) {
                 return new PlanService($sm->get('PlanTable'));
             },
+        'PlanAddForm' => function ($sm) {
+                return new Admin\Form\Plan\Add();
+            },
+        'PlanEditForm' => function ($sm) {
+                return new Admin\Form\Plan\Edit();
+            },
 
         // PLAN STEPS
         'PlanStepTableGateway' => function ($sm) {

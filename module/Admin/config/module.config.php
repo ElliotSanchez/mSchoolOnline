@@ -430,6 +430,46 @@ return array(
                             ),
                         ),
                     ),
+
+                    // PLANS
+                    'plans' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/plans',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Plans',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+
+                    'plan_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/plan/add',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Plans',
+                                'action'     => 'add',
+                            ),
+                        ),
+                    ),
+
+                    'plan_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/plan/edit/[:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Plans',
+                                'action'     => 'edit',
+                            ),
+                        ),
+                    ),
                     
                     // UPLOAD
                     'upload_students' => array(
@@ -553,10 +593,10 @@ return array(
             'Admin\Controller\Accounts' => 'Admin\Controller\AccountsController',
             'Admin\Controller\Users' => 'Admin\Controller\UsersController',
             'Admin\Controller\Upload' => 'Admin\Controller\UploadController',
-            'Admin\Controller\Pathways' => 'Admin\Controller\PathwaysController',
+            //'Admin\Controller\Pathways' => 'Admin\Controller\PathwaysController',
             'Admin\Controller\Resources' => 'Admin\Controller\ResourcesController',
-            'Admin\Controller\Pathway' => 'Admin\Controller\PathwayController',
-            'Admin\Controller\Plan' => 'Admin\Controller\PlanController',
+            'Admin\Controller\Pathways' => 'Admin\Controller\PathwaysController',
+            'Admin\Controller\Plans' => 'Admin\Controller\PlansController',
             'Admin\Controller\Step' => 'Admin\Controller\StepController',
         ),
     ),

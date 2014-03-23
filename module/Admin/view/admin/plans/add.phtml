@@ -1,0 +1,62 @@
+<h3>Add Plan</h3>
+
+<?php
+
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form->setAttribute('class', 'form'));
+?>
+
+    <?php $element = $form->get('name'); ?>
+    <div class="row">
+        <div class="form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>">
+            <div class="col-md-4">
+                <label class="control-label" for="name">Name</label>
+                <?php
+                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+                echo $this->formElementErrors($element);
+                ?>
+            </div>
+        </div>
+    </div>
+
+    <?php $element = $form->get('short_code'); ?>
+    <div class="row">
+        <div class="form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>">
+            <div class="col-md-4">
+                <label class="control-label" for="short_code">Short Code</label>
+                <?php
+                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+                echo $this->formElementErrors($element);
+                ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-2">
+                <label class="control-label" for=""></label>
+                <?php
+                $submit = $form->get('submit');
+                echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Add'));
+                echo $this->formElementErrors($submit );
+                ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 12px">
+        <div class="col-md-2">
+            <a href="<?php echo $this->url('admin/plans', array('id'=>$account->id)) ?>" class="btn btn-default btn-sm">Cancel</a>
+        </div>
+    </div>
+
+<?php echo $this->form()->closeTag() ?>
+
+
+</div>
+
