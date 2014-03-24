@@ -212,7 +212,13 @@ return array(
                 return $table;
             },
         'StepService' => function ($sm) {
-                return new StepService($sm->get('StepTable'));
+                return new StepService($sm->get('StepTable'), $sm->get('ResourceService'));
+            },
+        'StepAddForm' => function ($sm) {
+                return new Admin\Form\Step\Add();
+            },
+        'StepEditForm' => function ($sm) {
+                return new Admin\Form\Step\Edit();
             },
 
         // PLANS

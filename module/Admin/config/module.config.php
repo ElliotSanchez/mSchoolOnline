@@ -470,6 +470,46 @@ return array(
                             ),
                         ),
                     ),
+
+                    // STEPS
+                    'steps' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => '/steps',
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Steps',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
+
+                    'step_add' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/step/add',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Steps',
+                                'action'     => 'add',
+                            ),
+                        ),
+                    ),
+
+                    'step_edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/step/edit/[:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Steps',
+                                'action'     => 'edit',
+                            ),
+                        ),
+                    ),
                     
                     // UPLOAD
                     'upload_students' => array(
@@ -597,7 +637,7 @@ return array(
             'Admin\Controller\Resources' => 'Admin\Controller\ResourcesController',
             'Admin\Controller\Pathways' => 'Admin\Controller\PathwaysController',
             'Admin\Controller\Plans' => 'Admin\Controller\PlansController',
-            'Admin\Controller\Step' => 'Admin\Controller\StepController',
+            'Admin\Controller\Steps' => 'Admin\Controller\StepsController',
         ),
     ),
     'view_manager' => array(

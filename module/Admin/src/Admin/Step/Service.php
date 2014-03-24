@@ -5,6 +5,7 @@ namespace Admin\Step;
 use Admin\ModelAbstract\ServiceAbstract as ServiceAbstract;
 use Admin\Resource\Service as ResourceService;
 use Admin\Step\Entity as Step;
+use Admin\Step\Table as StepTable;
 
 class Service extends ServiceAbstract
 {
@@ -19,6 +20,8 @@ class Service extends ServiceAbstract
     public function create($data) {
 
         $step = new Step();
+
+        if (!isset($data['is_active'])) $data['is_active'] = 1;
 
         $step->create($data);
 
