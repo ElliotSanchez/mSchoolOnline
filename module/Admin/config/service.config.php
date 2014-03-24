@@ -286,6 +286,9 @@ return array(
         'PathwayPlanAddForm' => function ($sm) {
                 return new Admin\Form\Pathway\PlanAdd($sm->get('PlanService'));
             },
+        'PathwayPlanRemoveForm' => function ($sm) {
+                return new Admin\Form\Pathway\PlanRemove();
+            },
 
         // PLAN STEPS
         'PathwayPlanTableGateway' => function ($sm) {

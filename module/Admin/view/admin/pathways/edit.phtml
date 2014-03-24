@@ -89,13 +89,34 @@ echo $this->form()->openTag($form->setAttribute('class', 'form'));
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($plans as $plan): ?>
+        <?php foreach ($pathwayPlans as $pathwayPlan): ?>
             <tr>
-                <td><?php echo $plan->name ?></td>
-                <td><?php echo $plan->shortCode ?></td>
-                <td><a href="" class="btn btn-danger">Remove</a></td>
+                <td><?php echo $pathwayPlan->plan->name ?></td>
+                <td><?php echo $pathwayPlan->plan->shortCode ?></td>
+                <td class="text-right">
+                    <?php
+                        $form = $this->removePlanForm;
+                        $form->prepare();
+                        $form->setPathwayPlan($pathwayPlan);
+                        $form->setAttribute('method', 'post');
+                        $form->setAttribute('action', $this->url('admin/pathway_remove_plan', array('id' => $pathway->id)));
+                        echo $this->form()->openTag($form->setAttribute('class', 'form'));
+                        echo $this->formHidden($form->get('pathwayplan_id'));
+                        echo $this->formInput($removePlanForm->get('submit')->setAttribute('class', 'btn btn-danger')->setValue('Remove Plan'));
+                        echo $this->form()->closeTag();
+                    ?>
+                </td>
             </tr>
         <?php endforeach; ?>
+
+        <?php if (!count($pathwayPlans)): ?>
+            <tr>
+                <td colspan="3">
+                    There are no plans associated with this pathway.
+                </td>
+
+            </tr>
+        <?php endif; ?>
     </tbody>
 </table>
 

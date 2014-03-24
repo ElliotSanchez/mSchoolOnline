@@ -51,8 +51,10 @@ class PathwaysController extends AbstractActionController
 
         // FORMS
         $form = $this->getServiceLocator()->get('PathwayEditForm');
-        $addPlanForm = $this->getServiceLocator()->get('PathwayPlanAddForm');
         $form->bind($pathway);
+
+        $addPlanForm = $this->getServiceLocator()->get('PathwayPlanAddForm');
+        $removePlanForm = $this->getServiceLocator()->get('PathwayPlanRemoveForm');
 
         $request = $this->getRequest();
 
@@ -74,13 +76,14 @@ class PathwaysController extends AbstractActionController
 
         }
 
-        $plans = $pathwayPlanService->plansForPathway($pathway);
+        $pathwayPlans = $pathwayPlanService->getPathwayPlan($pathway);
 
         return new ViewModel([
             'pathway' => $pathway,
-            'plans' => $plans,
+            'pathwayPlans' => $pathwayPlans,
             'form' => $form,
             'addPlanForm' => $addPlanForm,
+            'removePlanForm' => $removePlanForm,
         ]);
 
     }
@@ -127,6 +130,51 @@ class PathwaysController extends AbstractActionController
 
         if ($failed) {
             $this->flashMessenger()->addErrorMessage('Unable to add Plan to Pathway');
+        }
+
+        $this->redirect()->toRoute('admin/pathway_edit', array('id' => $pathway->id));
+
+        return;
+
+    }
+
+    public function removePlanAction() {
+
+        $pathwayService = $this->getServiceLocator()->get('PathwayService');
+        $pathwayPlanService = $this->getServiceLocator()->get('PathwayPlanService');
+
+        $pathway= $pathwayService->get($this->params('id'));
+
+        $removePlanForm = $this->getServiceLocator()->get('PathwayPlanRemoveForm');
+
+        // FORM PROCESSING
+        $request = $this->getRequest();
+
+        $failed = false;
+
+        if ($request->isPost()) {
+
+            $removePlanForm->setData($request->getPost());
+
+            if ($removePlanForm->isValid()) {
+
+                $pathwayPlanId = $removePlanForm->getInputFilter()->getRawValue('pathwayplan_id');
+
+                $pathwayPlanService->removePathwayPlan($pathwayPlanService->get($pathwayPlanId));
+
+                $this->flashMessenger()->addSuccessMessage('Removed Plan from Pathway');
+                $this->redirect()->toRoute('admin/pathway_edit', array('id' => $pathway->id));
+                return;
+            } else {
+                $failed = true;
+            }
+
+        } else {
+            $failed = true;
+        }
+
+        if ($failed) {
+            $this->flashMessenger()->addErrorMessage('Unable to remove Plan from Pathway');
         }
 
         $this->redirect()->toRoute('admin/pathway_edit', array('id' => $pathway->id));

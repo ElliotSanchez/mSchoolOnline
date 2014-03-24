@@ -9,6 +9,9 @@ class Entity extends EntityAbstract {
     public $pathwayId;
     public $planId;
 
+    public $pathway;
+    public $plan;
+
     public function create($data) {
 
         parent::create($data);

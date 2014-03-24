@@ -445,6 +445,19 @@ return array(
                         ),
                     ),
 
+                    'pathway_remove_plan' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/pathway/[:id]/remove-plan',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Pathways',
+                                'action'     => 'remove-plan',
+                            ),
+                        ),
+                    ),
 
                     // PLANS
                     'plans' => array(

@@ -34,18 +34,20 @@ class Service extends ServiceAbstract
 
     }
 
-    public function plansForPathway(Pathway $pathway) {
+    public function getPathwayPlan(Pathway $pathway) {
 
-        $pathwayPlans = $this->table->fetchWith(array('pathway_id' => $pathway->id));
+        $pathwayPlans = iterator_to_array($this->table->fetchWith(array('pathway_id' => $pathway->id)));
 
-        $ids = array();
-
-        foreach ($pathwayPlans as $pathwayPlan) {
-            $ids[] = $pathwayPlan->id;
+        foreach ($pathwayPlans as &$pathwayPlan) {
+            $pathwayPlan->plan = $this->planService->get($pathwayPlan->planId);
         }
 
-        return $this->planService->get($ids);
+        return $pathwayPlans;
 
+    }
+
+    public function removePathwayPlan(PathwayPlan $pathwayPlan) {
+        return $this->table->delete($pathwayPlan->id);
     }
 
 }
