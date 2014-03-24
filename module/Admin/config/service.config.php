@@ -35,6 +35,9 @@ use Admin\Plan\Service as PlanService;
 use Admin\Pathway\Entity as Pathway;
 use Admin\Pathway\Table as PathwayTable;
 use Admin\Pathway\Service as PathwayService;
+use Admin\PathwayPlan\Entity as PathwayPlan;
+use Admin\PathwayPlan\Table as PathwayPlanTable;
+use Admin\PathwayPlan\Service as PathwayPlanService;
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
 use Admin\Authentication\TeacherService as TeacherAuthService;
@@ -280,6 +283,9 @@ return array(
         'PathwayEditForm' => function ($sm) {
                 return new Admin\Form\Pathway\Edit();
             },
+        'PathwayPlanAddForm' => function ($sm) {
+                return new Admin\Form\Pathway\PlanAdd($sm->get('PlanService'));
+            },
 
         // PLAN STEPS
         'PathwayPlanTableGateway' => function ($sm) {
@@ -294,7 +300,7 @@ return array(
                 return $table;
             },
         'PathwayPlanService' => function ($sm) {
-                return new PathwayPlanService($sm->get('PathwayPlanTable'));
+                return new PathwayPlanService($sm->get('PathwayPlanTable'), $sm->get('PathwayService'), $sm->get('PlanService'));
             },
         
         /* <<<<<<<<<< */

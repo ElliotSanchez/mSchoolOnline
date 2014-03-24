@@ -70,3 +70,70 @@ echo $this->form()->openTag($form->setAttribute('class', 'form'));
 
 <?php echo $this->form()->closeTag() ?>
 
+<hr />
+
+<h3>Pathway Plans</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <p>Changes to this Pathway's do not affect current assignments to students.</p>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Short Code</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($plans as $plan): ?>
+            <tr>
+                <td><?php echo $plan->name ?></td>
+                <td><?php echo $plan->shortCode ?></td>
+                <td><a href="" class="btn btn-danger">Remove</a></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<?php
+    /* ******************************************** */
+?>
+
+<?php
+
+$addPlanForm = $this->addPlanForm;
+$addPlanForm->prepare();
+
+$addPlanForm->setAttribute('method', 'post');
+
+$addPlanForm->setAttribute('action', $this->url('admin/pathway_add_plan', array('id' => $pathway->id)));
+
+echo $this->form()->openTag($addPlanForm->setAttribute('class', 'form'));
+?>
+
+<?php $element = $addPlanForm->get('plan_id'); ?>
+<div class="row">
+    <div class="form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <?php
+            echo $this->formSelect($element->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($element);
+            ?>
+        </div>
+
+        <div class="col-md-2">
+            <?php
+            $submit = $addPlanForm->get('submit');
+            echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Add Plan'));
+            echo $this->formElementErrors($submit );
+            ?>
+        </div>
+    </div>
+</div>
+
+<?php echo $this->form()->closeTag() ?>
+

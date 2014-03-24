@@ -6,7 +6,7 @@ return array(
             'admin' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'admin.mschool',
+                    'route' => 'admin.mschool.lp',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'module'        => 'Admin',
@@ -430,6 +430,21 @@ return array(
                             ),
                         ),
                     ),
+
+                    'pathway_add_plan' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/pathway/[:id]/add-plan',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Pathways',
+                                'action'     => 'add-plan',
+                            ),
+                        ),
+                    ),
+
 
                     // PLANS
                     'plans' => array(
