@@ -38,6 +38,9 @@ use Admin\Pathway\Service as PathwayService;
 use Admin\PathwayPlan\Entity as PathwayPlan;
 use Admin\PathwayPlan\Table as PathwayPlanTable;
 use Admin\PathwayPlan\Service as PathwayPlanService;
+use Admin\PlanStep\Entity as PlanStep;
+use Admin\PlanStep\Table as PlanStepTable;
+use Admin\PlanStep\Service as PlanStepService;
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
 use Admin\Authentication\TeacherService as TeacherAuthService;
@@ -245,6 +248,12 @@ return array(
         'PlanEditForm' => function ($sm) {
                 return new Admin\Form\Plan\Edit();
             },
+        'PlanStepAddForm' => function ($sm) {
+                return new Admin\Form\Plan\StepAdd($sm->get('StepService'));
+            },
+        'PlanStepRemoveForm' => function ($sm) {
+                return new Admin\Form\Plan\StepRemove();
+            },
 
         // PLAN STEPS
         'PlanStepTableGateway' => function ($sm) {
@@ -259,7 +268,7 @@ return array(
                 return $table;
             },
         'PlanStepService' => function ($sm) {
-                return new PlanStepService($sm->get('PlanStepTable'));
+                return new PlanStepService($sm->get('PlanStepTable'), $sm->get('PlanService'), $sm->get('StepService'));
             },
 
         // PATHWAYS
@@ -290,7 +299,7 @@ return array(
                 return new Admin\Form\Pathway\PlanRemove();
             },
 
-        // PLAN STEPS
+        // PATHWAY PLANS
         'PathwayPlanTableGateway' => function ($sm) {
                 $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                 $resultSetPrototype = new ResultSet();

@@ -45,12 +45,15 @@ class PlansController extends AbstractActionController
     public function editAction() {
 
         $planService = $this->getServiceLocator()->get('PlanService');
+        $planStepService = $this->getServiceLocator()->get('PlanStepService');
 
         $plan = $planService->get($this->params('id'));
 
         $form = $this->getServiceLocator()->get('PlanEditForm');
-
         $form->bind($plan);
+
+        $addStepForm = $this->getServiceLocator()->get('PlanStepAddForm');
+        $removeStepForm = $this->getServiceLocator()->get('PlanStepRemoveForm');
 
         $request = $this->getRequest();
 
@@ -72,10 +75,112 @@ class PlansController extends AbstractActionController
 
         }
 
+        $planSteps = $planStepService->getPlanSteps($plan);
+
         return new ViewModel([
+            'plan' => $plan,
+            'planSteps' => $planSteps,
             'form' => $form,
+            'addStepForm' => $addStepForm,
+            'removeStepForm' => $removeStepForm,
         ]);
 
     }
+
+    public function addStepAction() {
+
+        $planService = $this->getServiceLocator()->get('PlanService');
+        $planStepService = $this->getServiceLocator()->get('PlanStepService');
+
+        $plan = $planService->get($this->params('id'));
+
+        $addStepForm = $this->getServiceLocator()->get('PlanStepAddForm');
+
+        // FORM PROCESSING
+        $request = $this->getRequest();
+
+        $failed = false;
+
+        if ($request->isPost()) {
+
+            $addStepForm->setData($request->getPost());
+
+            if ($addStepForm->isValid()) {
+
+                $stepId = $addStepForm->getInputFilter()->getRawValue('step_id');
+
+                $planStepService->create(array(
+                    'plan_id' => $plan->id,
+                    'step_id' => $stepId,
+                ));
+
+                //$planService->save($plan);
+
+                $this->flashMessenger()->addSuccessMessage('Added Step to Plan');
+                $this->redirect()->toRoute('admin/plan_edit', array('id' => $plan->id));
+                return;
+            } else {
+                $failed = true;
+            }
+
+        } else {
+            $failed = true;
+        }
+
+        if ($failed) {
+            $this->flashMessenger()->addErrorMessage('Unable to add Step to Plan');
+        }
+
+        $this->redirect()->toRoute('admin/plan_edit', array('id' => $plan->id));
+
+        return;
+
+    }
+
+    public function removeStepAction() {
+
+        $planService = $this->getServiceLocator()->get('PlanService');
+        $planStepService = $this->getServiceLocator()->get('PlanStepService');
+
+        $plan= $planService->get($this->params('id'));
+
+        $removeStepForm = $this->getServiceLocator()->get('PlanStepRemoveForm');
+
+        // FORM PROCESSING
+        $request = $this->getRequest();
+
+        $failed = false;
+
+        if ($request->isPost()) {
+
+            $removeStepForm->setData($request->getPost());
+
+            if ($removeStepForm->isValid()) {
+
+                $planStepId = $removeStepForm->getInputFilter()->getRawValue('planstep_id');
+
+                $planStepService->removePlanStep($planStepService->get($planStepId));
+
+                $this->flashMessenger()->addSuccessMessage('Removed Step from Plan');
+                $this->redirect()->toRoute('admin/plan_edit', array('id' => $plan->id));
+                return;
+            } else {
+                $failed = true;
+            }
+
+        } else {
+            $failed = true;
+        }
+
+        if ($failed) {
+            $this->flashMessenger()->addErrorMessage('Unable to remove Step from Plan');
+        }
+
+        $this->redirect()->toRoute('admin/plan_edit', array('id' => $plan->id));
+
+        return;
+
+    }
+
 
 }

@@ -70,3 +70,92 @@ echo $this->form()->openTag($form->setAttribute('class', 'form'));
 
 <?php echo $this->form()->closeTag() ?>
 
+<?php // ********************************* ?>
+
+<hr />
+
+<h3>Plan Steps</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <p>Changes to this Plan's do not affect current assignments to students.</p>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Short Code</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($planSteps as $planStep): ?>
+        <tr>
+            <td><?php echo $planStep->step->name ?></td>
+            <td><?php echo $planStep->step->shortCode ?></td>
+            <td class="text-right">
+                <?php
+                $form = $this->removeStepForm;
+                $form->prepare();
+                $form->setPlanStep($planStep);
+                $form->setAttribute('method', 'post');
+                $form->setAttribute('action', $this->url('admin/plan_remove_step', array('id' => $plan->id)));
+                echo $this->form()->openTag($form->setAttribute('class', 'form'));
+                echo $this->formHidden($form->get('planstep_id'));
+                echo $this->formInput($removeStepForm->get('submit')->setAttribute('class', 'btn btn-danger')->setValue('Remove Step'));
+                echo $this->form()->closeTag();
+                ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+
+    <?php if (!count($planSteps)): ?>
+        <tr>
+            <td colspan="3">
+                There are no steps associated with this plan.
+            </td>
+
+        </tr>
+    <?php endif; ?>
+    </tbody>
+</table>
+
+<?php
+/* ******************************************** */
+?>
+
+<?php
+
+$addStepForm = $this->addStepForm;
+$addStepForm->prepare();
+
+$addStepForm->setAttribute('method', 'post');
+
+$addStepForm->setAttribute('action', $this->url('admin/plan_add_step', array('id' => $plan->id)));
+
+echo $this->form()->openTag($addStepForm->setAttribute('class', 'form'));
+?>
+
+<?php $element = $addStepForm->get('step_id'); ?>
+<div class="row">
+    <div class="form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <?php
+            echo $this->formSelect($element->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($element);
+            ?>
+        </div>
+
+        <div class="col-md-2">
+            <?php
+            $submit = $addStepForm->get('submit');
+            echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Add Step'));
+            echo $this->formElementErrors($submit );
+            ?>
+        </div>
+    </div>
+</div>
+
+<?php echo $this->form()->closeTag() ?>

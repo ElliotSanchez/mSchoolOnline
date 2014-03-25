@@ -9,6 +9,9 @@ class Entity extends EntityAbstract {
     public $planId;
     public $stepId;
 
+    public $plan;
+    public $step;
+
     public function create($data) {
 
         parent::create($data);

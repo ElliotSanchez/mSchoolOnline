@@ -6,7 +6,7 @@ return array(
             'admin' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'admin.mschool.lp',
+                    'route' => 'admin.mschool',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'module'        => 'Admin',
@@ -495,6 +495,34 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Admin\Controller\Plans',
                                 'action'     => 'edit',
+                            ),
+                        ),
+                    ),
+
+                    'plan_add_step' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/plan/[:id]/add-step',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Plans',
+                                'action'     => 'add-step',
+                            ),
+                        ),
+                    ),
+
+                    'plan_remove_step' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/plan/[:id]/remove-step',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Plans',
+                                'action'     => 'remove-step',
                             ),
                         ),
                     ),
