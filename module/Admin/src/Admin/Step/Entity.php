@@ -44,7 +44,7 @@ class Entity extends EntityAbstract {
     public function toData() {
 
         $data = array(
-            'resource_id' => null, // TODO $this->resourceId,
+            'resource_id' => $this->resourceId,
             'name' => $this->name,
             'short_code' => $this->shortCode,
             'timer' => $this->timer,

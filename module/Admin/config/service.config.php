@@ -221,10 +221,10 @@ return array(
                 return new StepService($sm->get('StepTable'), $sm->get('ResourceService'));
             },
         'StepAddForm' => function ($sm) {
-                return new Admin\Form\Step\Add();
+                return new Admin\Form\Step\Add($sm->get('ResourceService'));
             },
         'StepEditForm' => function ($sm) {
-                return new Admin\Form\Step\Edit();
+                return new Admin\Form\Step\Edit($sm->get('ResourceService'));
             },
 
         // PLANS

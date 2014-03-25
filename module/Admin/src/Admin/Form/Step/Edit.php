@@ -6,11 +6,12 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Input;
 use Zend\Validator AS ZendValidator;
+use Admin\Resource\Service as ResourceService;
 
 class Edit extends Form
 {
 
-    public function __construct() {
+    public function __construct(ResourceService $resourceService) {
 
         parent::__construct('step-edit');
 
@@ -36,6 +37,22 @@ class Edit extends Form
 
             ),
             'type'  => 'Text',
+        ));
+
+        // RESOURCE
+        $resourceOptions = array();
+
+        foreach($resourceService->all() as $resource) {
+            $resourceOptions[$resource->id] = $resource->shortCode;
+        }
+
+        $this->add(array(
+            'name' => 'resource_id',
+            'options' => array(
+                'empty_option' => 'Select Resource',
+                'value_options' => $resourceOptions,
+            ),
+            'type' => 'Select',
         ));
 
         $this->add(array(
