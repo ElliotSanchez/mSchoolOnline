@@ -41,6 +41,13 @@ class Module
             );
         }
 
+        // CURRENT USER
+        $sharedManager->attach(__NAMESPACE__, 'dispatch', function($e) use ($sm) {
+            $controller = $e->getTarget();
+            $controller->layout()->currentUser = $sm->get('AdminAuthService')->getCurrentUser();
+        }, 100);
+
+
         // AUTH
 //        $eventManager->attach(MvcEvent::EVENT_DISPATCH, function($e) {
 //

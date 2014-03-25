@@ -10,6 +10,8 @@ class AccountsController extends AbstractActionController
     public function indexAction()
     {
 
+        $this->layout()->pageTitle = 'Accounts';
+
         return new ViewModel(array(
             'accounts' => $this->getServiceLocator()->get('AccountService')->all(),
         ));
@@ -17,6 +19,8 @@ class AccountsController extends AbstractActionController
 
     public function viewAction()
     {
+        $this->layout()->pageTitle = 'Account';
+
         return new ViewModel([
             'account' => $this->getAccount(),
         ]);
@@ -27,6 +31,8 @@ class AccountsController extends AbstractActionController
         $account = $this->getAccount();
 
         $schools = $this->getServiceLocator()->get('SchoolService')->getForAccount($account);
+
+        $this->layout()->pageTitle = 'Account > Schools';
 
         return new ViewModel(array(
             'schools' => $schools,
@@ -39,6 +45,8 @@ class AccountsController extends AbstractActionController
 
         $teachers = $this->getServiceLocator()->get('TeacherService')->all();
 
+        $this->layout()->pageTitle = 'Account > Schools';
+
         return new ViewModel([
             'account' => $this->getAccount(),
             'teachers' => $teachers,
@@ -50,6 +58,8 @@ class AccountsController extends AbstractActionController
         $account = $this->getAccount();
 
         $students = $this->getServiceLocator()->get('StudentService')->getForAccount($account);
+
+        $this->layout()->pageTitle = 'Account > Students';
 
         return new ViewModel([
             'account' => $account,
@@ -76,6 +86,8 @@ class AccountsController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Accounts > Add';
 
         return new ViewModel([
             'form' => $form,
@@ -111,6 +123,8 @@ class AccountsController extends AbstractActionController
 
         }
 
+        $this->layout()->pageTitle = 'Account > Edit';
+
         return new ViewModel([
             'account' => $account,
             'form' => $form,
@@ -139,6 +153,8 @@ class AccountsController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Account > Schools > Add';
 
         return new ViewModel([
             'account' => $account,
@@ -180,6 +196,8 @@ class AccountsController extends AbstractActionController
 
         }
 
+        $this->layout()->pageTitle = 'Account > Schools > Edit';
+
         return new ViewModel([
             'account' => $account,
             'form' => $form,
@@ -211,6 +229,8 @@ class AccountsController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Account > School > Teacher > Add';
 
         return new ViewModel([
             'account' => $account,
@@ -255,6 +275,8 @@ class AccountsController extends AbstractActionController
 
         }
 
+        $this->layout()->pageTitle = 'Account > School > Teacher > Edit';
+
         return new ViewModel([
             'account' => $account,
             'form' => $form,
@@ -286,6 +308,8 @@ class AccountsController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Account > School > Student > Add';
 
         return new ViewModel([
             'account' => $account,
@@ -333,6 +357,8 @@ class AccountsController extends AbstractActionController
 
         }
 
+        $this->layout()->pageTitle = 'Account > School > Teacher > Edit';
+
         return new ViewModel([
             'account' => $account,
             'form' => $form,
@@ -346,6 +372,8 @@ class AccountsController extends AbstractActionController
         $account = $this->getAccount();
 
         $classes = $this->getServiceLocator()->get('MclassService')->getForAccount($account);
+
+        $this->layout()->pageTitle = 'Account > School > Classes';
 
         return new ViewModel([
             'account' => $account,
@@ -377,6 +405,8 @@ class AccountsController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Account > School > Class > Add';
 
         return new ViewModel([
             'account' => $account,
@@ -418,6 +448,8 @@ class AccountsController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Account > School > Class > Edit';
 
         return new ViewModel([
             'account' => $account,

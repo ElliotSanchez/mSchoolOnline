@@ -9,6 +9,8 @@ class PathwaysController extends AbstractActionController
 {
     public function indexAction()
     {
+        $this->layout()->pageTitle = 'Pathways';
+
         return new ViewModel(array(
             'pathways' => $this->getServiceLocator()->get('PathwayService')->all(),
         ));
@@ -35,6 +37,8 @@ class PathwaysController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Pathway > Add';
 
         return new ViewModel([
             'form' => $form,
@@ -77,6 +81,8 @@ class PathwaysController extends AbstractActionController
         }
 
         $pathwayPlans = $pathwayPlanService->getPathwayPlan($pathway);
+
+        $this->layout()->pageTitle = 'Pathway > Edit';
 
         return new ViewModel([
             'pathway' => $pathway,

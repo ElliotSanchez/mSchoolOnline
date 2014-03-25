@@ -56,6 +56,7 @@ class UploadController extends AbstractActionController
 
         }
 
+        $this->layout()->pageTitle = 'Account > School > Students > Upload';
 
         return new ViewModel(array(
             'account' => $account,

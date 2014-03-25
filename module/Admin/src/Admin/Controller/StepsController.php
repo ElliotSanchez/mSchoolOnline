@@ -9,6 +9,8 @@ class StepsController extends AbstractActionController
 {
     public function indexAction()
     {
+        $this->layout()->pageTitle = 'Steps';
+
         return new ViewModel(array(
             'steps' => $this->getServiceLocator()->get('StepService')->all(),
         ));
@@ -35,6 +37,8 @@ class StepsController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Steps > Add';
 
         return new ViewModel([
             'form' => $form,
@@ -71,6 +75,8 @@ class StepsController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Steps > Edit';
 
         return new ViewModel([
             'form' => $form,

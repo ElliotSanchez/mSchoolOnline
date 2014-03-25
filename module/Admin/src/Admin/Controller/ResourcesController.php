@@ -9,6 +9,9 @@ class ResourcesController extends AbstractActionController
 {
     public function indexAction()
     {
+
+        $this->layout()->pageTitle = 'Resources';
+
         return new ViewModel(array(
             'resources' => $this->getServiceLocator()->get('ResourceService')->all(),
         ));
@@ -36,6 +39,8 @@ class ResourcesController extends AbstractActionController
 
         }
 
+        $this->layout()->pageTitle = 'Resources > Add';
+
         return new ViewModel([
             'form' => $form,
         ]);
@@ -43,6 +48,8 @@ class ResourcesController extends AbstractActionController
     }
 
     public function editAction() {
+
+        $this->layout()->pageTitle = 'Resources > Edit';
 
         $resourceService = $this->getServiceLocator()->get('ResourceService');
 

@@ -9,6 +9,8 @@ class UsersController extends AbstractActionController
 {
     public function indexAction()
     {
+        $this->layout()->pageTitle = 'Users';
+
         return new ViewModel(array(
             'users' => $this->getServiceLocator()->get('UserService')->all(),
         ));
@@ -35,6 +37,8 @@ class UsersController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Steps > Add';
 
         return new ViewModel([
             'form' => $form,
@@ -73,6 +77,8 @@ class UsersController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Steps > Edit';
 
         return new ViewModel([
             'form' => $form,

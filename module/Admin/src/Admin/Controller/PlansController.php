@@ -9,6 +9,8 @@ class PlansController extends AbstractActionController
 {
     public function indexAction()
     {
+        $this->layout()->pageTitle = 'Plans';
+
         return new ViewModel(array(
             'plans' => $this->getServiceLocator()->get('PlanService')->all(),
         ));
@@ -35,6 +37,8 @@ class PlansController extends AbstractActionController
             }
 
         }
+
+        $this->layout()->pageTitle = 'Plans > Add';
 
         return new ViewModel([
             'form' => $form,
@@ -76,6 +80,8 @@ class PlansController extends AbstractActionController
         }
 
         $planSteps = $planStepService->getPlanSteps($plan);
+
+        $this->layout()->pageTitle = 'Plans > Edit';
 
         return new ViewModel([
             'plan' => $plan,
