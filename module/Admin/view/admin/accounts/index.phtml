@@ -15,9 +15,9 @@
     <tbody>
         <?php foreach ($this->accounts as $account): ?>
             <tr>
-                <td><a href="<?php echo $this->url('admin/account_view', ['id'=>$account->id]) ?>"><? echo $account->name ?></td>
-                <td><? echo $account->subdomain ?></td>
-                <td class="text-right">
+                <td><a href="<?php echo $this->url('admin/account_view', ['id'=>$account->id]) ?>"><?php echo $account->name ?></a></td>
+                <td><?php echo $account->subdomain ?></td>
+                <td class="text-left">
                     <div class="btn-group">
                         <a type="button" class="btn btn-default" href="<?php echo $this->url('admin/account_schools', ['id'=>$account->id]) ?>">
                            View
