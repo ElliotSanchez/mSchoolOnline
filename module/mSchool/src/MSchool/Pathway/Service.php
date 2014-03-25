@@ -79,12 +79,15 @@ class Service extends ServiceAbstract
 
         $rowIterator = $objPHPExcel->getActiveSheet()->getRowIterator();
 
-        $STUDENT_NAME_COL = 'A';
-        $STUDENT_NUM_COL = 'B';
-        $PATHWAY_DATE = 'C';
-        $STEP_COL = 'D';
-        $RESOURCE_COL = 'E';
-        $TIMER_COL = 'F';
+        $STUDENT_FNAME_COL = 'A';
+        $STUDENT_LNAME_COL = 'B';
+        $STUDENT_NUM_COL = 'C';
+        $SEQUENCE_DEFAULT = 'D';
+        $SEQUENCE_1 = 'E';
+        $SEQUENCE_2 = 'F';
+        $SEQUENCE_3 = 'G';
+        $SEQUENCE_4 = 'H';
+        $SEQUENCE_5 = 'I';
 
         foreach ($rowIterator as $row) {
 
@@ -96,18 +99,25 @@ class Service extends ServiceAbstract
             foreach ($cellIterator as $cell) {
 
                 switch ($cell->getColumn()) {
-                    case $STUDENT_NAME_COL: $studentName = $cell->getValue();
+                    case $STUDENT_FNAME_COL: $studentFName = $cell->getValue();
+                        break;
+                    case $STUDENT_LNAME_COL: $studentLName = $cell->getValue();
                         break;
                     case $STUDENT_NUM_COL:  $studentNumber = $cell->getValue();
                         break;
-                    case $PATHWAY_DATE:     $pathwayDateString = $cell->getValue();
+                    case $SEQUENCE_DEFAULT: $sequenceDefaultCode = $cell->getValue();
                         break;
-                    case $STEP_COL:         $stepOrder = $cell->getValue();
+                    case $SEQUENCE_1:       $sequence1 = $cell->getValue();
                         break;
-                    case $RESOURCE_COL:     $resourceIdentifier = $cell->getValue();
+                    case $SEQUENCE_2:       $sequence2 = $cell->getValue();
                         break;
-                    case $TIMER_COL:        $pathwayTimer = $cell->getValue();
+                    case $SEQUENCE_3:       $sequence3 = $cell->getValue();
                         break;
+                    case $SEQUENCE_4:       $sequence4 = $cell->getValue();
+                        break;
+                    case $SEQUENCE_5:       $sequence5 = $cell->getValue();
+                        break;
+
                     default:                break;
                 }
             }
@@ -116,37 +126,39 @@ class Service extends ServiceAbstract
             $student = $this->studentService->getWithStudentNumber($studentNumber);
 
             // FIND RESOURCE
-            $resource = $this->resourceService->getWithShortCode($resourceIdentifier); // THIS MAY BE OTHER THINGS LATER
+            //$resource = $this->resourceService->getWithShortCode($resourceIdentifier); // THIS MAY BE OTHER THINGS LATER
 
-            echo $student->firstName . ' ' . $student->lastName . ' ' . $resource->url . '<br>';
+            //echo $student->firstName . ' ' . $student->lastName . ' ' . $resource->url . '<br>';
 
             // DETERMINE DATE OR DEFAULT
             $pathwayDate = null; // ASSUME DEFAULT
 
-            if (strlen($pathwayDateString)) {
-                try {
-                    $pathwayDate = new \DateTime($pathwayDateString);
-                } catch(Exception $e) {
-                    // PARSING FAILED SO LEAVE IT AS DEFAULT
-                }
-            }
 
-            $data = array(
-                'student_id' => $student->id,
-                'resource_id' => $resource->id,
-                'pathway_date' => ($pathwayDate instanceof \DateTime) ? ($pathwayDate->format('Y-m-d')) : ($pathwayDate),
-                'step' => $stepOrder,
-                'timer' => $pathwayTimer,
-                'is_active' => 1,
-                'upload_set_id' => $uploadSetId,
-            );
+
+//            if (strlen($pathwayDateString)) {
+//                try {
+//                    $pathwayDate = new \DateTime($pathwayDateString);
+//                } catch(Exception $e) {
+//                    // PARSING FAILED SO LEAVE IT AS DEFAULT
+//                }
+//            }
+
+//            $data = array(
+//                'student_id' => $student->id,
+//                'resource_id' => $resource->id,
+//                'pathway_date' => ($pathwayDate instanceof \DateTime) ? ($pathwayDate->format('Y-m-d')) : ($pathwayDate),
+//                'step' => $stepOrder,
+//                'timer' => $pathwayTimer,
+//                'is_active' => 1,
+//                'upload_set_id' => $uploadSetId,
+//            );
 
             // INACTIVATE OLD PATHWAYS FOR DATES IN FILE
             // TODO DO THIS IN AGGREGATE INSTEAD OF PER ROW
-            $this->inactivatePathwaysFor($student, $pathwayDate, $uploadSetId);
+//            $this->inactivatePathwaysFor($student, $pathwayDate, $uploadSetId);
 
             // CREATE PATHWAY
-            $this->create($data);
+//            $this->create($data);
 
         }
 

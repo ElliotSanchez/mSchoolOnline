@@ -113,9 +113,9 @@ class UploadController extends AbstractActionController
                 // PROCESS PATHWAYS
                 // ********************************************************
 
-                $pathwayService = $this->getServiceLocator()->get('PathwayService');
+                $pathwayService = $this->getServiceLocator()->get('SequenceService');
 
-                $pathwayService->importPathwaysFromFile($tempFilename);
+                $pathwayService->importSequencesFromFile($tempFilename);
 
                 if ($tempFilename) {
                     unlink($tempFilename);
@@ -134,6 +134,7 @@ class UploadController extends AbstractActionController
             }
         }
 
+        $this->layout()->activeMenu = 'pathway';
 
         return new ViewModel(array(
             'form' => $form,

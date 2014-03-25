@@ -22,4 +22,20 @@ class Service extends ServiceAbstract
 
     }
 
+    public function getMappedPathways() {
+
+        $pathways = $this->all();
+
+        $map = array();
+
+        foreach ($pathways as $pathway) {
+            $map[$pathway->shortCode] = $pathway;
+        }
+
+        return $map;
+
+    }
+
+
+
 }

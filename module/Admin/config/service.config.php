@@ -41,6 +41,10 @@ use Admin\PathwayPlan\Service as PathwayPlanService;
 use Admin\PlanStep\Entity as PlanStep;
 use Admin\PlanStep\Table as PlanStepTable;
 use Admin\PlanStep\Service as PlanStepService;
+use Admin\StudentStep\Entity as StudentStep;
+use Admin\StudentStep\Table as StudentStepTable;
+use Admin\StudentStep\Service as StudentStepService;
+use Admin\Sequence\Service as SequenceService;
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
 use Admin\Authentication\TeacherService as TeacherAuthService;
@@ -314,7 +318,35 @@ return array(
         'PathwayPlanService' => function ($sm) {
                 return new PathwayPlanService($sm->get('PathwayPlanTable'), $sm->get('PathwayService'), $sm->get('PlanService'));
             },
-        
+
+        // STUDENT STEPS
+        'StudentStepTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new StudentStep());
+                return new TableGateway('student_steps', $dbAdapter, null, $resultSetPrototype);
+            },
+        'StudentStepTable' =>  function($sm) {
+                $tableGateway = $sm->get('StudentStepTableGateway');
+                $table = new StudentStepTable($tableGateway);
+                return $table;
+            },
+        'StudentStepService' => function ($sm) {
+                return new StudentStepService($sm->get('StudentStepTable'));
+            },
+
+        'SequenceService' => function ($sm) {
+                return new SequenceService(
+                    $sm->get('PathwayService'),
+                    $sm->get('PlanService'),
+                    $sm->get('StepService'),
+                    $sm->get('PathwayPlanService'),
+                    $sm->get('PlanStepService'),
+                    $sm->get('StudentStepService'),
+                    $sm->get('ResourceService'),
+                    $sm->get('StudentService'));
+            },
+
         /* <<<<<<<<<< */
         
         

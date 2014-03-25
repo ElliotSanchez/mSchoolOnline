@@ -80,7 +80,7 @@
         </form>
     </div>
     <ul class='nav nav-stacked'>
-        <li class='active'>
+        <li class=''>
             <a href="<?php echo $this->url('admin/home') ?>">
                 <i class='icon-dashboard'></i>
                 <?php echo $this->translate('Home') ?>
@@ -108,7 +108,7 @@
             </ul>
         </li>
 
-        <li class=''>
+        <li class='<?php echo ($this->activeMenu == 'pathway') ? ('active') : ('') ?>'>
             <a class="dropdown-collapse" href="#">
                 <i class='icon-cogs'></i>
                 <span>Pathways</span>

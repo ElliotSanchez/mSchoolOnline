@@ -22,4 +22,18 @@ class Service extends ServiceAbstract
 
     }
 
+    public function getMappedPlans() {
+
+        $plans = $this->all();
+
+        $map = array();
+
+        foreach ($plans as $plan) {
+            $map[$plan->shortCode] = $plan;
+        }
+
+        return $map;
+
+    }
+
 }
