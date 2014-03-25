@@ -38,7 +38,7 @@ class UsersController extends AbstractActionController
 
         }
 
-        $this->layout()->pageTitle = 'Steps > Add';
+        $this->layout()->pageTitle = 'Users > Add';
 
         return new ViewModel([
             'form' => $form,
@@ -78,7 +78,7 @@ class UsersController extends AbstractActionController
 
         }
 
-        $this->layout()->pageTitle = 'Steps > Edit';
+        $this->layout()->pageTitle = 'Users > Edit';
 
         return new ViewModel([
             'form' => $form,
