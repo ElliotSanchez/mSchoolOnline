@@ -22,6 +22,9 @@ class Entity extends UserAbstract {
     public $accountId;
     public $schoolId;
 
+    public function getFullName() {
+        return $this->firstName . ' ' . $this->lastName;
+    }
     public function generatePassword() {
         // THIS IS MEANT TO BE A RELATIVELY FRIENDLY INITIAL PASSWORD FOR A STUDENT
         $this->password = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 4) . substr(str_shuffle("0123456789"), 0, 4);

@@ -6,7 +6,7 @@ return array(
             'admin' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'admin.mschool',
+                    'route' => 'admin.mschool.lp',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'module'        => 'Admin',
@@ -627,6 +627,21 @@ return array(
                         ),
                     ),
 
+                    // STUDENT SEQUENCES
+                    'student_sequences' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/student/[:id]/sequences',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Students',
+                                'action'     => 'sequences',
+                            ),
+                        ),
+                    ),
+
                 ),
             ),
 
@@ -694,6 +709,7 @@ return array(
             'Admin\Controller\Pathways' => 'Admin\Controller\PathwaysController',
             'Admin\Controller\Plans' => 'Admin\Controller\PlansController',
             'Admin\Controller\Steps' => 'Admin\Controller\StepsController',
+            'Admin\Controller\Students' => 'Admin\Controller\StudentsController',
         ),
     ),
     'view_manager' => array(

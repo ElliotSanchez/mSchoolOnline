@@ -14,8 +14,10 @@ use Admin\Student\Service as StudentService;
 use Admin\Student\Entity as Student;
 use MSchool\Pathway\Entity as Pathway;
 use MSchool\Pathway\Table as PathwayTable;
+use Zend\Db\Sql\Sql;
+use Zend\Db\Adapter\Adapter as Adapter;
 
-class Service
+class Service implements \Zend\Db\Adapter\AdapterAwareInterface
 {
 
     protected $pathwayService;
@@ -29,6 +31,8 @@ class Service
 
     protected $pathwayCache;
     protected $planCache;
+
+    protected $adapter;
 
     public function __construct(PathwayService $pathwayService, PlanService $planService, StepService $stepService, PathwayPlanService $pathwayPlanService, PlanStepService $planStepService, StudentStepService $studentStepService, ResourceService $resourceService, StudentService $studentService) {
         $this->pathwayService = $pathwayService;
@@ -207,6 +211,38 @@ class Service
         }
 
     }
+
+    public function getStudentSequenceOverview(Student $student) {
+
+        //SELECT s.first_name, s.last_name, s.number, pw.short_code AS 'Pathway', pl.short_code AS 'Plan', st.name AS 'Step'
+        //FROM student_steps AS ss
+        //INNER JOIN students AS s ON s.id = ss.student_id
+        //INNER JOIN plans AS pl ON ss.plan_id = pl.id
+        //INNER JOIN steps AS st ON ss.step_id = st.id
+        //LEFT JOIN pathways AS pw ON ss.pathway_id = pw.id
+
+
+        $sql = new Sql($this->adapter);
+        $select = $sql->select(array());
+        $select->from(array('ss' => 'student_steps'))
+            ->join(array('s'=> 'students'),  's.id = ss.student_id', array('student_first_name' => 'first_name', 'student_last_name' => 'last_name', 'student_number' => 'number'))
+            ->join(array('pl'=> 'plans'),  'ss.plan_id = pl.id', array('plan_name' => 'name', 'plan_short_code' => 'short_code'))
+            ->join(array('st'=> 'steps'),  'ss.step_id = st.id', array('step_short_code' => 'short_code'))
+            ->join(array('pw'=> 'pathways'),  'ss.pathway_id = pw.id', array('pathway_name' => 'name', 'pathway_short_code' => 'short_code'), \Zend\Db\Sql\Select::JOIN_LEFT);
+
+        $select->where(array('ss.student_id' => $student->id));
+
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $this->adapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
+
+        return iterator_to_array($results);
+
+    }
+
+    public function setDbAdapter(Adapter $adapter) {
+        $this->adapter = $adapter;
+    }
+
 
 //    public function inactivatePathwaysFor(Student $student, \DateTime $dateTime = null, $uploadSetId) {
 //

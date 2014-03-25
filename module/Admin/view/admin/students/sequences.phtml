@@ -1,0 +1,36 @@
+
+
+<div class="box bordered-box blue-border" style="margin-bottom:0;">
+    <div class="box-header blue-background">
+        <div class="title">Sequences</div>
+        <div class="actions">
+
+        </div>
+    </div>
+    <div class="box-content box-no-padding">
+        <div class="responsive-table">
+            <div class="scrollable-area">
+                <table class="table">
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Pathway Code</th>
+                        <th>Plan</th>
+                        <th>Plan Code</th>
+                        <th>Step Code</th>
+                    </tr>
+
+                    <?php foreach($this->sequence_overview as $row): ?>
+                        <tr>
+                            <td><?php echo $row['pathway_name'] ?></td>
+                            <td><?php echo $row['pathway_short_code'] ?></td>
+                            <td><?php echo $row['plan_name'] ?></td>
+                            <td><?php echo $row['plan_short_code'] ?></td>
+                            <td><?php echo $row['step_short_code'] ?></td>
+                        </tr>
+
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

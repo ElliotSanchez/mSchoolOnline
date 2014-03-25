@@ -395,4 +395,13 @@ return array(
     'invokables' => array(
         'AdminLoginForm' => 'Admin\Form\Auth\Login',
     ),
+
+    'initializers' => array(
+        function ($instance, $sm) {
+            if ($instance instanceof \Zend\Db\Adapter\AdapterAwareInterface) {
+                $instance->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
+            }
+        }
+    ),
+
 );
