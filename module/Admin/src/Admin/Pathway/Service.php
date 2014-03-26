@@ -29,7 +29,7 @@ class Service extends ServiceAbstract
         $map = array();
 
         foreach ($pathways as $pathway) {
-            $map[$pathway->shortCode] = $pathway;
+            $map[strtolower($pathway->shortCode)] = $pathway;
         }
 
         return $map;

@@ -29,7 +29,7 @@ class Service extends ServiceAbstract
         $map = array();
 
         foreach ($plans as $plan) {
-            $map[$plan->shortCode] = $plan;
+            $map[strtolower($plan->shortCode)] = $plan;
         }
 
         return $map;

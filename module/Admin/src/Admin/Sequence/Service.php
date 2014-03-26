@@ -102,20 +102,21 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                         break;
                     case $SEQUENCE_DEFAULT: $sequenceDefaultCode = $cell->getValue();
                         break;
-                    case $SEQUENCE_1:       $sequence1Code = $cell->getValue();
+                    case $SEQUENCE_1:       $sequence1Code = strtolower($cell->getValue());
                         break;
-                    case $SEQUENCE_2:       $sequence2Code = $cell->getValue();
+                    case $SEQUENCE_2:       $sequence2Code = strtolower($cell->getValue());
                         break;
-                    case $SEQUENCE_3:       $sequence3Code = $cell->getValue();
+                    case $SEQUENCE_3:       $sequence3Code = strtolower($cell->getValue());
                         break;
-                    case $SEQUENCE_4:       $sequence4Code = $cell->getValue();
+                    case $SEQUENCE_4:       $sequence4Code = strtolower($cell->getValue());
                         break;
-                    case $SEQUENCE_5:       $sequence5Code = $cell->getValue();
+                    case $SEQUENCE_5:       $sequence5Code = strtolower($cell->getValue());
                         break;
 
                     default:                break;
                 }
             }
+
 
             // FIND STUDENT
             $student = $this->studentService->getWithStudentNumber($studentNumber);
@@ -128,13 +129,29 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 //                }
 //            }
 
+            $newSequenceData = array('student_id' => $student->id);
 
-            $sequence = $this->create(array(
-                'student_id' => $student->id,
-            ));
-
-            $this->assignSteps($sequence, $sequence1Code, $student);
+            if ($sequence1Code) {
+                $sequence = $this->create($newSequenceData);
+                $this->assignSteps($sequence, $sequence1Code, $student);
             }
+            if ($sequence2Code) {
+                $sequence = $this->create($newSequenceData);
+                $this->assignSteps($sequence, $sequence2Code, $student);
+            }
+            if ($sequence3Code) {
+                $sequence = $this->create($newSequenceData);
+                $this->assignSteps($sequence, $sequence3Code, $student);
+            }
+            if ($sequence4Code) {
+                $sequence = $this->create($newSequenceData);
+                $this->assignSteps($sequence, $sequence4Code, $student);
+            }
+            if ($sequence5Code) {
+                $sequence = $this->create($newSequenceData);
+                $this->assignSteps($sequence, $sequence5Code, $student);
+            }
+
             // FIND RESOURCE
             //$resource = $this->resourceService->getWithShortCode($resourceIdentifier); // THIS MAY BE OTHER THINGS LATER
 
@@ -142,7 +159,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
             // DETERMINE DATE OR DEFAULT
 //            $pathwayDate = null; // ASSUME DEFAULT
-
 
 
 //            if (strlen($pathwayDateString)) {
@@ -170,13 +186,16 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             // CREATE PATHWAY
 //            $this->create($data);
 
-        die('>'.__LINE__);
 
+        }
+        die('>'.__LINE__);
     }
 
     public function assignSteps(Sequence $sequence, $shortCode, $student) {
 
-        //echo $student->id . ' => ' . $shortCode . '<br>';
+        echo 'Student: ' . $student->id . '<br>';
+        echo '- sequence: ' . $sequence->id . '<br>';
+        echo '- shortcode: ' . $shortCode . '<br>';
 
         if (isset($this->pathwayCache[$shortCode])) {
 
@@ -246,10 +265,12 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $select = $sql->select(array());
         $select->from(array('ss' => 'student_steps'))
             ->join(array('s'=> 'students'),  's.id = ss.student_id', array('student_first_name' => 'first_name', 'student_last_name' => 'last_name', 'student_number' => 'number'))
-            ->join(array('sq' => 'sequences'), 's.id = sq.student_id', array('sequence_id' => 'id'))
+            ->join(array('sq' => 'sequences'), 'ss.sequence_id = sq.id', array('sequence_id' => 'id'))
             ->join(array('pl'=> 'plans'),  'ss.plan_id = pl.id', array('plan_name' => 'name', 'plan_short_code' => 'short_code'))
             ->join(array('st'=> 'steps'),  'ss.step_id = st.id', array('step_short_code' => 'short_code'))
-            ->join(array('pw'=> 'pathways'),  'ss.pathway_id = pw.id', array('pathway_name' => 'name', 'pathway_short_code' => 'short_code'), \Zend\Db\Sql\Select::JOIN_LEFT);
+            ->join(array('pw'=> 'pathways'),  'ss.pathway_id = pw.id', array('pathway_name' => 'name', 'pathway_short_code' => 'short_code'), \Zend\Db\Sql\Select::JOIN_LEFT)
+            ->order(array('sq.id ASC', 'ss.id'))
+        ;
 
         $select->where(array('ss.student_id' => $student->id));
 
