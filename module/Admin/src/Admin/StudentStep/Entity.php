@@ -11,6 +11,7 @@ class Entity extends EntityAbstract {
     //public $isActive;
 
     public $studentId;
+    public $sequenceId;
     public $pathwayId;
     public $planId;
     public $stepId;
@@ -24,6 +25,7 @@ class Entity extends EntityAbstract {
 //        $this->isActive = (!empty($data['is_active'])) ? $data['is_active'] : null;
 
         $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : null;
+        $this->sequenceId = (!empty($data['sequence_id'])) ? $data['sequence_id'] : null;
         $this->pathwayId = (!empty($data['pathway_id'])) ? $data['pathway_id'] : null;
         $this->planId = (!empty($data['plan_id'])) ? $data['plan_id'] : null;
         $this->stepId = (!empty($data['step_id'])) ? $data['step_id'] : null;
@@ -42,7 +44,7 @@ class Entity extends EntityAbstract {
 //        $this->isActive = (!empty($data['is_active'])) ? $data['is_active'] : null;
 
         $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : null;
-        $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : null;
+        $this->sequenceId = (!empty($data['sequence_id'])) ? $data['sequence_id'] : null;
         $this->pathwayId = (!empty($data['pathway_id'])) ? $data['pathway_id'] : null;
         $this->planId = (!empty($data['plan_id'])) ? $data['plan_id'] : null;
         $this->stepId = (!empty($data['step_id'])) ? $data['step_id'] : null;
@@ -56,6 +58,7 @@ class Entity extends EntityAbstract {
 
         $data = array(
             'student_id' => $this->studentId,
+            'sequence_id' => $this->sequenceId,
             'pathway_id' => $this->pathwayId,
             'plan_id' => $this->planId,
             'step_id' => $this->stepId,

@@ -26,6 +26,9 @@ use Admin\Resource\Service as ResourceService;
 use Admin\StudentLogin\Entity as StudentLogin;
 use Admin\StudentLogin\Table as StudentLoginTable;
 use Admin\StudentLogin\Service as StudentLoginService;
+use Admin\Sequence\Entity as Sequence;
+use Admin\Sequence\Table as SequenceTable;
+use Admin\Sequence\Service as SequenceService;
 use Admin\Step\Entity as Step;
 use Admin\Step\Table as StepTable;
 use Admin\Step\Service as StepService;
@@ -44,7 +47,6 @@ use Admin\PlanStep\Service as PlanStepService;
 use Admin\StudentStep\Entity as StudentStep;
 use Admin\StudentStep\Table as StudentStepTable;
 use Admin\StudentStep\Service as StudentStepService;
-use Admin\Sequence\Service as SequenceService;
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
 use Admin\Authentication\TeacherService as TeacherAuthService;
@@ -209,6 +211,31 @@ return array(
 
         /* >>>>>>>>>> */
 
+        // SEQUENCE
+        'SequenceTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Sequence());
+                return new TableGateway('sequences', $dbAdapter, null, $resultSetPrototype);
+            },
+        'SequenceTable' =>  function($sm) {
+                $tableGateway = $sm->get('SequenceTableGateway');
+                $table = new SequenceTable($tableGateway);
+                return $table;
+            },
+        'SequenceService' => function ($sm) {
+                return new SequenceService(
+                    $sm->get('SequenceTable'),
+                    $sm->get('PathwayService'),
+                    $sm->get('PlanService'),
+                    $sm->get('StepService'),
+                    $sm->get('PathwayPlanService'),
+                    $sm->get('PlanStepService'),
+                    $sm->get('StudentStepService'),
+                    $sm->get('ResourceService'),
+                    $sm->get('StudentService'));
+            },
+
         // STEPS
         'StepTableGateway' => function ($sm) {
                 $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
@@ -333,18 +360,6 @@ return array(
             },
         'StudentStepService' => function ($sm) {
                 return new StudentStepService($sm->get('StudentStepTable'));
-            },
-
-        'SequenceService' => function ($sm) {
-                return new SequenceService(
-                    $sm->get('PathwayService'),
-                    $sm->get('PlanService'),
-                    $sm->get('StepService'),
-                    $sm->get('PathwayPlanService'),
-                    $sm->get('PlanStepService'),
-                    $sm->get('StudentStepService'),
-                    $sm->get('ResourceService'),
-                    $sm->get('StudentService'));
             },
 
         /* <<<<<<<<<< */

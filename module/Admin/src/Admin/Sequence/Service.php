@@ -2,7 +2,9 @@
 
 namespace Admin\Sequence;
 
-//use Admin\ModelAbstract\ServiceAbstract as ServiceAbstract;
+use Admin\ModelAbstract\ServiceAbstract as ServiceAbstract;
+use Admin\Sequence\Entity as Sequence;
+use Admin\Sequence\Table as SequenceTable;
 use Admin\Pathway\Service as PathwayService;
 use Admin\Plan\Service as PlanService;
 use Admin\Step\Service as StepService;
@@ -17,7 +19,7 @@ use MSchool\Pathway\Table as PathwayTable;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Adapter\Adapter as Adapter;
 
-class Service implements \Zend\Db\Adapter\AdapterAwareInterface
+class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareInterface
 {
 
     protected $pathwayService;
@@ -34,7 +36,8 @@ class Service implements \Zend\Db\Adapter\AdapterAwareInterface
 
     protected $adapter;
 
-    public function __construct(PathwayService $pathwayService, PlanService $planService, StepService $stepService, PathwayPlanService $pathwayPlanService, PlanStepService $planStepService, StudentStepService $studentStepService, ResourceService $resourceService, StudentService $studentService) {
+    public function __construct(SequenceTable $sequenceTable, PathwayService $pathwayService, PlanService $planService, StepService $stepService, PathwayPlanService $pathwayPlanService, PlanStepService $planStepService, StudentStepService $studentStepService, ResourceService $resourceService, StudentService $studentService) {
+        parent::__construct($sequenceTable);
         $this->pathwayService = $pathwayService;
         $this->planService = $planService;
         $this->stepService = $stepService;
@@ -44,6 +47,19 @@ class Service implements \Zend\Db\Adapter\AdapterAwareInterface
         $this->resourceService = $resourceService;
         $this->studentService = $studentService;
     }
+
+    public function create($data) {
+
+        $sequence = new Sequence();
+
+        $sequence->create($data);
+
+        $sequence = $this->table->save($sequence);
+
+        return $sequence;
+
+    }
+
 
     public function importSequencesFromFile($filename) {
 
@@ -74,8 +90,6 @@ class Service implements \Zend\Db\Adapter\AdapterAwareInterface
             $cellIterator->setIterateOnlyExistingCells(false); // Loop all cells, even if it is not set
 
             if(1 == $row->getRowIndex ()) continue; //skip first row
-
-
 
             foreach ($cellIterator as $cell) {
 
@@ -115,7 +129,11 @@ class Service implements \Zend\Db\Adapter\AdapterAwareInterface
 //            }
 
 
-            $this->assignSteps($sequence1Code, $student);
+            $sequence = $this->create(array(
+                'student_id' => $student->id,
+            ));
+
+            $this->assignSteps($sequence, $sequence1Code, $student);
             }
             // FIND RESOURCE
             //$resource = $this->resourceService->getWithShortCode($resourceIdentifier); // THIS MAY BE OTHER THINGS LATER
@@ -156,9 +174,9 @@ class Service implements \Zend\Db\Adapter\AdapterAwareInterface
 
     }
 
-    public function assignSteps($shortCode, $student) {
+    public function assignSteps(Sequence $sequence, $shortCode, $student) {
 
-        echo $student->id . ' => ' . $shortCode . '<br>';
+        //echo $student->id . ' => ' . $shortCode . '<br>';
 
         if (isset($this->pathwayCache[$shortCode])) {
 
@@ -177,6 +195,7 @@ class Service implements \Zend\Db\Adapter\AdapterAwareInterface
                     $this->studentStepService->create(array(
                         'step_order' => 1,
                         'student_id' => $student->id,
+                        'sequence_id' => $sequence->id,
                         'pathway_id' => $pathway->id,
                         'plan_id' => $pathwayPlan->plan->id,
                         'step_id' => $step->id,
@@ -200,6 +219,7 @@ class Service implements \Zend\Db\Adapter\AdapterAwareInterface
                 $this->studentStepService->create(array(
                     'step_order' => 1,
                     'student_id' => $student->id,
+                    'sequence_id' => $sequence->id,
                     'pathway_id' => null,
                     'plan_id' => $plan->id,
                     'step_id' => $step->id,
