@@ -246,6 +246,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $select = $sql->select(array());
         $select->from(array('ss' => 'student_steps'))
             ->join(array('s'=> 'students'),  's.id = ss.student_id', array('student_first_name' => 'first_name', 'student_last_name' => 'last_name', 'student_number' => 'number'))
+            ->join(array('sq' => 'sequences'), 's.id = sq.student_id', array('sequence_id' => 'id'))
             ->join(array('pl'=> 'plans'),  'ss.plan_id = pl.id', array('plan_name' => 'name', 'plan_short_code' => 'short_code'))
             ->join(array('st'=> 'steps'),  'ss.step_id = st.id', array('step_short_code' => 'short_code'))
             ->join(array('pw'=> 'pathways'),  'ss.pathway_id = pw.id', array('pathway_name' => 'name', 'pathway_short_code' => 'short_code'), \Zend\Db\Sql\Select::JOIN_LEFT);

@@ -10,6 +10,7 @@
             <div class="scrollable-area">
                 <table class="table">
                     <tr>
+                        <th>Sequence</th>
                         <th>Pathway</th>
                         <th>Pathway Code</th>
                         <th>Plan</th>
@@ -19,6 +20,7 @@
 
                     <?php foreach($this->sequence_overview as $row): ?>
                         <tr>
+                            <td><?php echo $row['sequence_id'] ?></td>
                             <td><?php echo $row['pathway_name'] ?></td>
                             <td><?php echo $row['pathway_short_code'] ?></td>
                             <td><?php echo $row['plan_name'] ?></td>
