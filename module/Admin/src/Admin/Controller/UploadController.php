@@ -88,6 +88,7 @@ class UploadController extends AbstractActionController
 
     }
 
+    // TODO RENAME THIS TO SEQUENCES
     public function pathwaysAction()
     {
 
@@ -122,9 +123,9 @@ class UploadController extends AbstractActionController
                 }
 
                 // Form is valid, save the form!
-                $this->flashMessenger()->addSuccessMessage('Uploaded pathways file ' . $filename);
-
-                return $this->redirect()->toRoute('admin/pathways_preview');
+                $this->flashMessenger()->addSuccessMessage('Uploaded sequences file ' . $filename);
+                return $this->redirect()->toRoute('admin/upload_pathways');
+                //return $this->redirect()->toRoute('admin/pathways_preview');
             } else {
                 $this->flashMessenger()->addErrorMessage('Upload form was invalid. Please try again.');
                 foreach($form->getMessages() as $message) {
@@ -134,6 +135,7 @@ class UploadController extends AbstractActionController
             }
         }
 
+        $this->layout()->pageTitle = 'Sequences Upload';
         $this->layout()->activeMenu = 'pathway';
 
         return new ViewModel(array(
