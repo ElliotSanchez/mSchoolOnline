@@ -63,8 +63,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
     public function importSequencesFromFile($filename) {
 
-        $uploadSetId = time();
-
         $objPHPExcel = \PHPExcel_IOFactory::load($filename);
 
         $rowIterator = $objPHPExcel->getActiveSheet()->getRowIterator();
@@ -91,6 +89,14 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
             if(1 == $row->getRowIndex ()) continue; //skip first row
 
+            $sequenceDefaultCode = null;
+            $sequence1Code = null;
+            $sequence2Code = null;
+            $sequence3Code = null;
+            $sequence4Code = null;
+            $sequence5Code = null;
+
+            // EXTRACT ROW DATA
             foreach ($cellIterator as $cell) {
 
                 switch ($cell->getColumn()) {
@@ -100,7 +106,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                         break;
                     case $STUDENT_NUM_COL:  $studentNumber = $cell->getValue();
                         break;
-                    case $SEQUENCE_DEFAULT: $sequenceDefaultCode = $cell->getValue();
+                    case $SEQUENCE_DEFAULT: $sequenceDefaultCode = strtolower($cell->getValue());
                         break;
                     case $SEQUENCE_1:       $sequence1Code = strtolower($cell->getValue());
                         break;
@@ -112,90 +118,61 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                         break;
                     case $SEQUENCE_5:       $sequence5Code = strtolower($cell->getValue());
                         break;
-
                     default:                break;
                 }
             }
 
-
             // FIND STUDENT
             $student = $this->studentService->getWithStudentNumber($studentNumber);
 
-//            if ($sequenceDefaultCode) {
-//                if (isset($pathways[$sequenceDefaultCode])) {
-//                    // TODO SET DEFAULT PATHWAY SEQUENCE
-//                } else if (isset($plans[$sequenceDefaultCode])) {
-//                    // TODO SET DEFAULT PLAN SEQUENCE
-//                }
-//            }
+            // BUILD OUT SEQUENCES
+            if ($student) {
 
-            $newSequenceData = array('student_id' => $student->id);
+                // COMMON SEQUENCE DATA
+                $newSequenceData = array('student_id' => $student->id);
 
-            if ($sequence1Code) {
-                $sequence = $this->create($newSequenceData);
-                $this->assignSteps($sequence, $sequence1Code, $student);
+                if ($sequenceDefaultCode) {
+                    $this->inactivateDefaultSequences($student);
+                    $defaultSequenceData = $newSequenceData; // DUPLICATE DATA
+                    $defaultSequenceData['is_default'] = true;
+                    $sequence = $this->create($defaultSequenceData);
+                    $this->assignSteps($sequence, $sequenceDefaultCode, $student);
+                }
+
+                if ($sequence1Code) {
+                    $sequence = $this->create($newSequenceData);
+                    $this->assignSteps($sequence, $sequence1Code, $student);
+                }
+                if ($sequence2Code) {
+                    $sequence = $this->create($newSequenceData);
+                    $this->assignSteps($sequence, $sequence2Code, $student);
+                }
+                if ($sequence3Code) {
+                    $sequence = $this->create($newSequenceData);
+                    $this->assignSteps($sequence, $sequence3Code, $student);
+                }
+                if ($sequence4Code) {
+                    $sequence = $this->create($newSequenceData);
+                    $this->assignSteps($sequence, $sequence4Code, $student);
+                }
+                if ($sequence5Code) {
+                    $sequence = $this->create($newSequenceData);
+                    $this->assignSteps($sequence, $sequence5Code, $student);
+                }
+
+            } else {
+                // TODO LOG ERROR OR THROW ERROR
             }
-            if ($sequence2Code) {
-                $sequence = $this->create($newSequenceData);
-                $this->assignSteps($sequence, $sequence2Code, $student);
-            }
-            if ($sequence3Code) {
-                $sequence = $this->create($newSequenceData);
-                $this->assignSteps($sequence, $sequence3Code, $student);
-            }
-            if ($sequence4Code) {
-                $sequence = $this->create($newSequenceData);
-                $this->assignSteps($sequence, $sequence4Code, $student);
-            }
-            if ($sequence5Code) {
-                $sequence = $this->create($newSequenceData);
-                $this->assignSteps($sequence, $sequence5Code, $student);
-            }
-
-            // FIND RESOURCE
-            //$resource = $this->resourceService->getWithShortCode($resourceIdentifier); // THIS MAY BE OTHER THINGS LATER
-
-            //echo $student->firstName . ' ' . $student->lastName . ' ' . $resource->url . '<br>';
-
-            // DETERMINE DATE OR DEFAULT
-//            $pathwayDate = null; // ASSUME DEFAULT
-
-
-//            if (strlen($pathwayDateString)) {
-//                try {
-//                    $pathwayDate = new \DateTime($pathwayDateString);
-//                } catch(Exception $e) {
-//                    // PARSING FAILED SO LEAVE IT AS DEFAULT
-//                }
-//            }
-
-//            $data = array(
-//                'student_id' => $student->id,
-//                'resource_id' => $resource->id,
-//                'pathway_date' => ($pathwayDate instanceof \DateTime) ? ($pathwayDate->format('Y-m-d')) : ($pathwayDate),
-//                'step' => $stepOrder,
-//                'timer' => $pathwayTimer,
-//                'is_active' => 1,
-//                'upload_set_id' => $uploadSetId,
-//            );
-
-            // INACTIVATE OLD PATHWAYS FOR DATES IN FILE
-            // TODO DO THIS IN AGGREGATE INSTEAD OF PER ROW
-//            $this->inactivatePathwaysFor($student, $pathwayDate, $uploadSetId);
-
-            // CREATE PATHWAY
-//            $this->create($data);
-
 
         }
-        die('>'.__LINE__);
+
     }
 
     public function assignSteps(Sequence $sequence, $shortCode, $student) {
 
-        echo 'Student: ' . $student->id . '<br>';
-        echo '- sequence: ' . $sequence->id . '<br>';
-        echo '- shortcode: ' . $shortCode . '<br>';
+//        echo 'Student: ' . $student->id . '<br>';
+//        echo '- sequence: ' . $sequence->id . '<br>';
+//        echo '- shortcode: ' . $shortCode . '<br>';
 
         if (isset($this->pathwayCache[$shortCode])) {
 
@@ -265,10 +242,11 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $select = $sql->select(array());
         $select->from(array('ss' => 'student_steps'))
             ->join(array('s'=> 'students'),  's.id = ss.student_id', array('student_first_name' => 'first_name', 'student_last_name' => 'last_name', 'student_number' => 'number'))
-            ->join(array('sq' => 'sequences'), 'ss.sequence_id = sq.id', array('sequence_id' => 'id'))
+            ->join(array('sq' => 'sequences'), 'ss.sequence_id = sq.id', array('sequence_id' => 'id', 'sequence_is_default' => 'is_default'))
             ->join(array('pl'=> 'plans'),  'ss.plan_id = pl.id', array('plan_name' => 'name', 'plan_short_code' => 'short_code'))
             ->join(array('st'=> 'steps'),  'ss.step_id = st.id', array('step_short_code' => 'short_code'))
             ->join(array('pw'=> 'pathways'),  'ss.pathway_id = pw.id', array('pathway_name' => 'name', 'pathway_short_code' => 'short_code'), \Zend\Db\Sql\Select::JOIN_LEFT)
+//            ->where('ss.is_default = 0')
             ->order(array('sq.id ASC', 'ss.id'))
         ;
 
@@ -286,23 +264,15 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
     }
 
 
-//    public function inactivatePathwaysFor(Student $student, \DateTime $dateTime = null, $uploadSetId) {
-//
-//        $dateTimeString = ($dateTime) ? ($dateTime->format('Y-m-d')) : (null);
-//
-//        $where = new \Zend\Db\Sql\Where();
-//
-//        $where->equalTo('student_id', $student->id)
-//            ->equalTo('is_active', 1)
-//            ->lessThan('upload_set_id', $uploadSetId);
-//
-//        if ($dateTimeString == null)
-//            $where->isNull('pathway_date');
-//        else
-//            $where->equalTo('pathway_date', $dateTimeString);
-//
-//        return $this->table->update(array('is_active' => 0), $where);
-//
-//    }
+    public function inactivateDefaultSequences(Student $student) {
+
+        $where = new \Zend\Db\Sql\Where();
+
+        $where->equalTo('student_id', $student->id)
+            ->equalTo('is_default', 1);
+
+        return $this->table->update(array('is_default' => 0), $where);
+
+    }
 
 }
