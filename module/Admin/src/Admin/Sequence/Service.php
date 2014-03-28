@@ -397,7 +397,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         foreach ($results as $row) {
             $step = $this->stepService->get($row->stepId);
             $step->resource= $this->resourceService->get($step->resourceId);
-            $steps[$step->id] = $step;
+            $steps[] = $step;
         }
 
         return $steps;
