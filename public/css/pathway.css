@@ -5,7 +5,7 @@ html {
 body {
 
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    /* DEMO margin-bottom: 60px; */
 }
 #header {
     position: absolute;
@@ -27,7 +27,7 @@ body {
 #step_content {
     min-height: 100%;
     height: 100%;
-    padding-bottom: 60px;
+    /* DEMO padding-bottom: 60px; */
 }
 
 #step_content iframe {
