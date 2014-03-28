@@ -15,14 +15,15 @@ class PathwayController extends AbstractActionController
 
         $session = $this->getServiceLocator()->get('StudentSessionContainer');
 
-        $pathwayService = $this->getServiceLocator()->get('PathwayService');
+        //$pathwayService = $this->getServiceLocator()->get('PathwayService');
+
+        $sequenceService = $this->getServiceLocator()->get('SequenceService');
 
         $student = $adminAuthService = $this->getServiceLocator()->get('StudentAuthService')->getCurrentUser();
 
         if (!$session->pathwayContainer) {
 
-            // BUILD DAILY PATHWAY
-            $container = $pathwayService->getStudentPathwayFor($student, new \DateTime());
+            $container = $sequenceService->getStudentSequenceContainerFor($student, new \DateTime());
 
             $session->pathwayContainer = $container;
 

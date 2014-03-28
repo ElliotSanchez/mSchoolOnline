@@ -14,8 +14,9 @@ use Admin\PlanStep\Service as PlanStepService;
 use Admin\StudentStep\Service as StudentStepService;
 use Admin\Student\Service as StudentService;
 use Admin\Student\Entity as Student;
-use MSchool\Pathway\Entity as Pathway;
-use MSchool\Pathway\Table as PathwayTable;
+use Admin\Progression\Entity as Progression;
+use Admin\Progression\Service as ProgressionService;
+use MSchool\Pathway\Container as Container;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Adapter\Adapter as Adapter;
 
@@ -30,13 +31,14 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
     protected $studentStepService;
     protected $resourceService;
     protected $studentService;
+    protected $progressionService;
 
     protected $pathwayCache;
     protected $planCache;
 
     protected $adapter;
 
-    public function __construct(SequenceTable $sequenceTable, PathwayService $pathwayService, PlanService $planService, StepService $stepService, PathwayPlanService $pathwayPlanService, PlanStepService $planStepService, StudentStepService $studentStepService, ResourceService $resourceService, StudentService $studentService) {
+    public function __construct(SequenceTable $sequenceTable, PathwayService $pathwayService, PlanService $planService, StepService $stepService, PathwayPlanService $pathwayPlanService, PlanStepService $planStepService, StudentStepService $studentStepService, ResourceService $resourceService, StudentService $studentService, ProgressionService $progressionService) {
         parent::__construct($sequenceTable);
         $this->pathwayService = $pathwayService;
         $this->planService = $planService;
@@ -46,6 +48,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $this->studentStepService = $studentStepService;
         $this->resourceService = $resourceService;
         $this->studentService = $studentService;
+        $this->progressionService = $progressionService;
     }
 
     public function create($data) {
@@ -179,6 +182,8 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             $pathway = $this->pathwayCache[$shortCode];
             $pathwayPlans = $this->pathwayPlanService->getPathwayPlan($pathway);
 
+            $planGroup = 1;
+
             foreach ($pathwayPlans as $pathwayPlan) {
 
                 $planSteps = $this->planStepService->getPlanSteps($pathwayPlan->plan);
@@ -195,9 +200,12 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                         'pathway_id' => $pathway->id,
                         'plan_id' => $pathwayPlan->plan->id,
                         'step_id' => $step->id,
+                        'plan_group' => $planGroup,
                     ));
 
                 }
+
+                $planGroup++;
 
             }
 
@@ -206,6 +214,8 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             $plan = $this->planCache[$shortCode];
 
             $planSteps = $this->planStepService->getPlanSteps($plan);
+
+            $planGroup = 1;
 
             foreach ($planSteps as $planStep) {
 
@@ -219,6 +229,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                     'pathway_id' => null,
                     'plan_id' => $plan->id,
                     'step_id' => $step->id,
+                    'plan_group' => $planGroup,
                 ));
 
             }
@@ -263,7 +274,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $this->adapter = $adapter;
     }
 
-
     public function inactivateDefaultSequences(Student $student) {
 
         $where = new \Zend\Db\Sql\Where();
@@ -272,6 +282,125 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             ->equalTo('is_default', 1);
 
         return $this->table->update(array('is_default' => 0), $where);
+
+    }
+
+    public function getStudentSequenceContainerFor(Student $student, \DateTime $date) {
+
+        // TODO HANDLE COMPLETED DEFAULT SEQUENCE (LOOP BACK)
+
+        // FIND INCOMPLETE & NOT DEFAULT
+        $sequence = $this->getCurrentSequence($student);
+
+        if (!$sequence) {
+            $sequence = $this->getStudentsDefaultSequence($student);
+        }
+
+        $progression = $this->getLastProgressionForSequence($sequence, $date);
+
+        // TODO CREATE NEW PROGRESSION
+        if (!$progression) {
+            $progression = $this->progressionService->create(array(
+                'sequence_id' => $sequence->id,
+                // 'plan_id' ???
+                'activity_date' => $date->format('Y-m-d'),
+                'plan_group' => 1,
+                'is_complete' => 0,
+            ));
+        }
+
+        $date->setTime(0, 0, 0); // JUST TO BE SURE WE ARE ONLY COMPARING DATES
+
+        if ($date > $progression->activityDate) {
+            // TODO MOVE TO NEXT PLAN
+            // GET NEXT PLAN GROUP
+            $nextPlanGroup = $progression->planGroup + 1;
+
+            // GET STEPS IN PLAN GROUP
+            $steps = $this->getStepsInPlanGroup($sequence, $nextPlanGroup);
+
+        } else {
+            // TODO GET ACTIVE PLAN
+            // GET STEPS IN PLAN GROUP
+            $steps = $this->getStepsInPlanGroup($sequence, $progression->planGroup);
+        }
+
+        // POPULATE CONTAINER
+        $container = new Container();
+
+        foreach ($steps as $step) {
+            $container->addStep($step);
+        }
+
+        // TODO MOVE CONTAINER'S TO NEXT INCOMPLETE STEP
+
+        return $container;
+
+    }
+
+    public function getCurrentSequence(Student $student) {
+        // TODO
+        return null;
+    }
+
+    public function getLastProgressionForSequence(Sequence $sequence) {
+
+        $select = $this->progressionService->table->getSql()->select();
+
+        $select->where(array(
+            'sequence_id' => $sequence->id,
+        ))->order(array('activity_date DESC'))->limit(1);
+
+        $results = $this->progressionService->table->fetchWith($select);
+
+        if (count($results)) {
+            $objects = iterator_to_array($results);
+            return $objects[0];
+        } else {
+            return null;
+        }
+
+    }
+
+    public function getStudentsDefaultSequence(Student $student) {
+
+        $select = $this->table->getSql()->select();
+        $select->where(array(
+                'student_id = ?' => $student->id,
+                'is_default = 1'
+            ))->limit(1);
+
+        $results = $this->table->fetchWith($select);
+
+        if (count($results)) {
+            $objects = iterator_to_array($results);
+            return $objects[0];
+        } else {
+            return null;
+        }
+    }
+
+    protected function getStepsInPlanGroup($sequence, $planGroup) {
+
+        // QUERY STUDENT STEPS
+        $select = $this->studentStepService->table->getSql()->select();
+        $select->where(array(
+            'sequence_id = ?' => $sequence->id,
+            'plan_group = ?' => $planGroup,
+        ))->order(array('id ASC')); // TODO SHOULD BE sequences.step_order
+
+        $results = iterator_to_array($this->studentStepService->table->fetchWith($select));
+
+        // FETCH STEPS
+        $steps = array();
+
+        foreach ($results as $row) {
+            $step = $this->stepService->get($row->stepId);
+            $step->resource= $this->resourceService->get($step->resourceId);
+            $steps[$step->id] = $step;
+        }
+
+        return $steps;
 
     }
 

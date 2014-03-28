@@ -18,7 +18,6 @@ class StudentsController extends AbstractActionController
 
         $sequenceOverview = $sequenceService->getStudentSequenceOverview($student);
 
-
         $this->layout()->pageTitle = $student->getFullName();
 
         return new ViewModel(array(

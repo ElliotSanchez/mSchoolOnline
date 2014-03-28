@@ -15,6 +15,7 @@ class Entity extends EntityAbstract {
     public $pathwayId;
     public $planId;
     public $stepId;
+    public $planGroup;
     //public $resourceId;
 
     public function create($data) {
@@ -29,6 +30,7 @@ class Entity extends EntityAbstract {
         $this->pathwayId = (!empty($data['pathway_id'])) ? $data['pathway_id'] : null;
         $this->planId = (!empty($data['plan_id'])) ? $data['plan_id'] : null;
         $this->stepId = (!empty($data['step_id'])) ? $data['step_id'] : null;
+        $this->planGroup = (!empty($data['plan_group'])) ? $data['plan_group'] : null;
 
 //        $this->resourceId = (!empty($data['resource_id'])) ? $data['resource_id'] : null;
 
@@ -48,6 +50,7 @@ class Entity extends EntityAbstract {
         $this->pathwayId = (!empty($data['pathway_id'])) ? $data['pathway_id'] : null;
         $this->planId = (!empty($data['plan_id'])) ? $data['plan_id'] : null;
         $this->stepId = (!empty($data['step_id'])) ? $data['step_id'] : null;
+        $this->planGroup = (!empty($data['plan_group'])) ? $data['plan_group'] : null;
 
 //        $this->resourceId = (!empty($data['resource_id'])) ? $data['resource_id'] : null;
 
@@ -63,6 +66,7 @@ class Entity extends EntityAbstract {
             'plan_id' => $this->planId,
             'step_id' => $this->stepId,
             'step_order' => $this->stepOrder,
+            'plan_group' => $this->planGroup,
 //            'timer' => $this->timer,
 //            'is_active' => $this->isActive,
 //            'resource_id' => $this->resourceId,

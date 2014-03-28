@@ -13,6 +13,11 @@ class Entity extends EntityAbstract {
 
     public $studentId;
     public $resourceId;
+    public $resource;
+
+    public function isTimed() {
+        return is_numeric($this->timer);
+    }
 
     public function create($data) {
 

@@ -47,6 +47,9 @@ use Admin\PlanStep\Service as PlanStepService;
 use Admin\StudentStep\Entity as StudentStep;
 use Admin\StudentStep\Table as StudentStepTable;
 use Admin\StudentStep\Service as StudentStepService;
+use Admin\Progression\Entity as Progression;
+use Admin\Progression\Table as ProgressionTable;
+use Admin\Progression\Service as ProgressionService;
 use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
 use Admin\Authentication\TeacherService as TeacherAuthService;
@@ -233,7 +236,8 @@ return array(
                     $sm->get('PlanStepService'),
                     $sm->get('StudentStepService'),
                     $sm->get('ResourceService'),
-                    $sm->get('StudentService'));
+                    $sm->get('StudentService'),
+                    $sm->get('ProgressionService'));
             },
 
         // STEPS
@@ -360,6 +364,22 @@ return array(
             },
         'StudentStepService' => function ($sm) {
                 return new StudentStepService($sm->get('StudentStepTable'));
+            },
+
+        // PROGRESSIONS
+        'ProgressionTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Progression());
+                return new TableGateway('progressions', $dbAdapter, null, $resultSetPrototype);
+            },
+        'ProgressionTable' =>  function($sm) {
+                $tableGateway = $sm->get('ProgressionTableGateway');
+                $table = new ProgressionTable($tableGateway);
+                return $table;
+            },
+        'ProgressionService' => function ($sm) {
+                return new ProgressionService($sm->get('ProgressionTable'));
             },
 
         /* <<<<<<<<<< */

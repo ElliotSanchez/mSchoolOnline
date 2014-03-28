@@ -38,18 +38,18 @@ class Service extends ServiceAbstract
 
         $container = new Container();
 
-        $select = $this->table->getSql()->select();
-
-        $select->where(array('student_id' => $student->id));
-        $select->where(array('pathway_date' => $date->format('Y-m-d')));
-        $select->where(array('is_active' => 1));
-        $select->order('step ASC');
-
-        $results = $this->table->fetchWith($select);
-
-        if (count($results) < 1) {
-            $results = $this->getDefaultPathwayFor($student, $date);
-        }
+//        $select = $this->table->getSql()->select();
+//
+//        $select->where(array('student_id' => $student->id));
+//        $select->where(array('pathway_date' => $date->format('Y-m-d')));
+//        $select->where(array('is_active' => 1));
+//        $select->order('step ASC');
+//
+//        $results = $this->table->fetchWith($select);
+//
+//        if (count($results) < 1) {
+//            $results = $this->getDefaultPathwayFor($student, $date);
+//        }
 
         foreach ($results as $pathway) {
             $step = new Step($this->resourceService->get($pathway->resourceId), $pathway->timer);
