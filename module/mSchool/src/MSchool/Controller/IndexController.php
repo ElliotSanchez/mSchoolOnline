@@ -9,6 +9,9 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+
+        $this->layout('mschool/layout/layout');
+
         return new ViewModel();
     }
 }

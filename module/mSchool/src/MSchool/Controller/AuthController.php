@@ -34,7 +34,7 @@ class AuthController extends AbstractActionController
                 $authService = $studentAuthService->getZendAuthService();
 
                 if ($authService->hasIdentity()) {
-                    return $this->redirect()->toUrl('pathway');
+                    return $this->redirect()->toRoute('mschool/home');
                 } else {
                     $this->flashMessenger()->addErrorMessage('Incorrect username or password');
                     return $this->redirect()->toRoute('mschool/login');
