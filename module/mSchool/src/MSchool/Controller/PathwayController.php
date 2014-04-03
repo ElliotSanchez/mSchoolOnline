@@ -15,11 +15,11 @@ class PathwayController extends AbstractActionController
 
         $session = $this->getServiceLocator()->get('StudentSessionContainer');
 
-        //$pathwayService = $this->getServiceLocator()->get('PathwayService');
-
         $sequenceService = $this->getServiceLocator()->get('SequenceService');
 
         $student = $adminAuthService = $this->getServiceLocator()->get('StudentAuthService')->getCurrentUser();
+
+        //$session->pathwayContainer = null; // TODO REMOVE ME !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         if (!$session->pathwayContainer) {
 
@@ -100,6 +100,12 @@ class PathwayController extends AbstractActionController
         $json->setVariable('timer', $time);
 
         return $json;
+
+    }
+
+    public function finishedAction() {
+
+        $this->layout('mschool/layout/layout');
 
     }
 
