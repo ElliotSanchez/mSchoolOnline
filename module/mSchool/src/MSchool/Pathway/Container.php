@@ -39,6 +39,20 @@ class Container
         return ($this->currStep == count($this->studentSteps));
     }
 
+    public function fastForward() {
+
+        foreach ($this->studentSteps as $studentStep) {
+            if ($studentStep->isComplete) {
+                $this->currStep++;
+            }
+        }
+
+        if ($this->currStep > count($this->studentSteps)) {
+            $this->currStep = count($this->studentSteps);
+        }
+
+    }
+
     public function addStudentStep($step) {
         $this->studentSteps[] = $step;
     }

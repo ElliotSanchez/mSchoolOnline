@@ -320,6 +320,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         }
 
         // TODO MOVE CONTAINER'S TO NEXT INCOMPLETE STEP
+        $container->fastForward();
 
         return $container;
 

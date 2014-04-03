@@ -107,6 +107,10 @@ class AuthController extends AbstractActionController
 
         $authService->logout();
 
+        // DESTORY CONTAINER
+        $session = $this->getServiceLocator()->get('StudentSessionContainer');
+        $session->pathwayContainer = null;
+
         if ($user instanceof \Admin\Teacher\Entity) {
             return $this->redirect()->toRoute('mschool/teacher_login');
         } else {
