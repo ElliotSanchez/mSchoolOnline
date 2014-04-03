@@ -7,11 +7,11 @@ class Container
 
     public $currStep;
 
-    protected $steps;
+    protected $studentSteps;
 
     public function __construct() {
         $this->currStep = 1;
-        $this->steps = array();
+        $this->studentSteps = array();
     }
 
     public function next() {
@@ -29,15 +29,15 @@ class Container
     }
 
     public function isAtLastStep() {
-        return ($this->currStep == count($this->steps));
+        return ($this->currStep == count($this->studentSteps));
     }
 
-    public function addStep($step) {
-        $this->steps[] = $step;
+    public function addStudentStep($step) {
+        $this->studentSteps[] = $step;
     }
 
     public function getCurrentStep() {
-        return $this->steps[$this->currStep-1];
+        return $this->studentSteps[$this->currStep-1]->step;
     }
 
     public function reset() {
@@ -45,13 +45,13 @@ class Container
     }
 
     public function numberOfSteps() {
-        return count($this->steps);
+        return count($this->studentSteps);
     }
 
     public function getPercentComplete() {
-        $numSteps = count($this->steps);
+        $numSteps = count($this->studentSteps);
 
-        return ($numSteps > 0) ? (round($this->currStep / count($this->steps) * 100, 0) ) : (0);
+        return ($numSteps > 0) ? (round($this->currStep / count($this->studentSteps) * 100, 0) ) : (0);
     }
 
 }

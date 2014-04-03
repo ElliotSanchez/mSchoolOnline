@@ -309,13 +309,13 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             // TODO OR ONLY LOAD STEPS *IF* THERE IS A PROGRESSION RETURNED
         }
 
-        $steps = $this->getStepsInPlanGroup($sequence, $progression->planGroup);
+        $studentSteps = $this->getStudentStepsInPlanGroup($sequence, $progression->planGroup);
 
         // POPULATE CONTAINER
         $container = new Container();
 
-        foreach ($steps as $step) {
-            $container->addStep($step);
+        foreach ($studentSteps as $step) {
+            $container->addStudentStep($step);
         }
 
         // TODO MOVE CONTAINER'S TO NEXT INCOMPLETE STEP
@@ -407,7 +407,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         }
     }
 
-    protected function getStepsInPlanGroup($sequence, $planGroup) {
+    protected function getStudentStepsInPlanGroup($sequence, $planGroup) {
 
         // QUERY STUDENT STEPS
         $select = $this->studentStepService->table->getSql()->select();
@@ -418,17 +418,17 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         $results = iterator_to_array($this->studentStepService->table->fetchWith($select));
 
-        // FETCH STEPS
-        $steps = array();
+        // FETCH STUDENT STEPS
+        $studentSteps = array();
 
-        foreach ($results as $row) {
-            echo 'STUDENT STEP: ' . $row->id . ', ' . $row->stepId . '<br>';
-            $step = $this->stepService->get($row->stepId);
-            $step->resource= $this->resourceService->get($step->resourceId);
-            $steps[] = $step;
+        foreach ($results as $currStudentStep) {
+            $studentStep = clone $currStudentStep;
+            $studentStep->step = $this->stepService->get($studentStep->stepId);
+            $studentStep->step->resource = $this->resourceService->get($studentStep->step->resourceId);
+            $studentSteps[] = $studentStep;
         }
 
-        return $steps;
+        return $studentSteps;
 
     }
 

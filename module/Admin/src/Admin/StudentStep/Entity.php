@@ -18,6 +18,8 @@ class Entity extends EntityAbstract {
     public $planGroup;
     //public $resourceId;
 
+    public $step; // MODEL
+
     public function create($data) {
 
         parent::create($data);
