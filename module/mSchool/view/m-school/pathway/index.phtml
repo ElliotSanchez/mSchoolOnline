@@ -20,11 +20,12 @@
 <!--                        <span class="glyphicon glyphicon-chevron-left"></span>Previous-->
 <!--                    </a>-->
                 <?php endif; ?>
-                <?php if ($container->isAtLastStep()): ?>
-                    <a href="<?php echo $this->url('mschool/pathway_finished'); ?>" class="btn btn-sm btn-primary">
-                        Next
-                    </a>
-                <?php elseif ($step->isTimed()): ?>
+                <?php //if ($container->isAtLastStep()): ?>
+<!--                    <a href="--><?php //echo $this->url('mschool/pathway_finished'); ?><!--" class="btn btn-sm btn-primary">-->
+<!--                        Next-->
+<!--                    </a>-->
+                <?php //elseif ($step->isTimed()): ?>
+                <?php if ($step->isTimed()): ?>
                     <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-sm btn-primary" id="pathway-next-btn" disabled>
                         <span id="pathway-next-text">Keep working!</span><span id="pathway-next-chevron" style="display: none" class="glyphicon glyphicon-chevron-right"></span>
                     </a>

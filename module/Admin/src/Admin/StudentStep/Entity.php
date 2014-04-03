@@ -17,6 +17,8 @@ class Entity extends EntityAbstract {
     public $stepId;
     public $planGroup;
     //public $resourceId;
+    public $isComplete;
+    public $completedAt;
 
     public $step; // MODEL
 
@@ -33,6 +35,9 @@ class Entity extends EntityAbstract {
         $this->planId = (!empty($data['plan_id'])) ? $data['plan_id'] : null;
         $this->stepId = (!empty($data['step_id'])) ? $data['step_id'] : null;
         $this->planGroup = (!empty($data['plan_group'])) ? $data['plan_group'] : null;
+        $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
+        $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
+
 
 //        $this->resourceId = (!empty($data['resource_id'])) ? $data['resource_id'] : null;
 
@@ -53,6 +58,8 @@ class Entity extends EntityAbstract {
         $this->planId = (!empty($data['plan_id'])) ? $data['plan_id'] : null;
         $this->stepId = (!empty($data['step_id'])) ? $data['step_id'] : null;
         $this->planGroup = (!empty($data['plan_group'])) ? $data['plan_group'] : null;
+        $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
+        $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
 
 //        $this->resourceId = (!empty($data['resource_id'])) ? $data['resource_id'] : null;
 
@@ -69,6 +76,8 @@ class Entity extends EntityAbstract {
             'step_id' => $this->stepId,
             'step_order' => $this->stepOrder,
             'plan_group' => $this->planGroup,
+            'is_complete' => (int) $this->isComplete,
+            'completed_at' => ($this->completedAt instanceof \DateTime) ? ($this->completedAt->format('Y-m-d H:i:s')) : (null),
 //            'timer' => $this->timer,
 //            'is_active' => $this->isActive,
 //            'resource_id' => $this->resourceId,
@@ -80,6 +89,11 @@ class Entity extends EntityAbstract {
 
     public function getArrayCopy() {
         return $this->toData();
+    }
+
+    public function markComplete() {
+        $this->isComplete = true;
+        $this->completedAt = new \DateTime();
     }
 
 }

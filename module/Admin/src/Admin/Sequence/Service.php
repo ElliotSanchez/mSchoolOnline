@@ -14,6 +14,7 @@ use Admin\PlanStep\Service as PlanStepService;
 use Admin\StudentStep\Service as StudentStepService;
 use Admin\Student\Service as StudentService;
 use Admin\Student\Entity as Student;
+use Admin\StudentStep\Entity as StudentStep;
 use Admin\Progression\Entity as Progression;
 use Admin\Progression\Service as ProgressionService;
 use MSchool\Pathway\Container as Container;
@@ -312,7 +313,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $studentSteps = $this->getStudentStepsInPlanGroup($sequence, $progression->planGroup);
 
         // POPULATE CONTAINER
-        $container = new Container();
+        $container = new Container($sequence, $progression);
 
         foreach ($studentSteps as $step) {
             $container->addStudentStep($step);
@@ -429,6 +430,47 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         }
 
         return $studentSteps;
+
+    }
+
+    // COMPLETION METHODS
+
+    public function markCurrentStepAsComplete(Container $container) {
+
+        $this->markStudentStepAsComplete($container->getCurrentStudentStep());
+
+        if ($container->isAtLastStep()) {
+            // MARK PROGRESSION COMPLETE
+            $this->markProgressionAsComplete($container->getCurrentProgression());
+            // CHECK SEQUENCE FOR COMPLETION
+            if ($container->isLastPlanGroup()) {
+                $this->markSequenceComplete($container->getSequence());
+            }
+        }
+
+    }
+
+    protected function markStudentStepAsComplete(StudentStep $studentStep) {
+
+        $studentStep->markComplete();
+
+        return $this->studentStepService->save($studentStep);
+
+    }
+
+    protected function markProgressionAsComplete(Progression $progression) {
+
+        $progression->markComplete();
+
+        return $this->progressionService->save($progression);
+
+    }
+
+    protected function markSequenceComplete(Sequence $sequence) {
+
+        $sequence->markComplete();
+
+        return $this->save($sequence);
 
     }
 

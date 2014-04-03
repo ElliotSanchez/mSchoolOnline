@@ -12,6 +12,7 @@ class Entity extends EntityAbstract {
     public $activityDate;
     public $planGroup;
     public $isComplete;
+    public $completedAt;
 
     public function create($data) {
 
@@ -23,6 +24,7 @@ class Entity extends EntityAbstract {
         $this->activityDate = (!empty($data['activity_date'])) ? (new \DateTime($data['activity_date'] . ' 00:00:00')) : (null);
         $this->planGroup = (!empty($data['plan_group'])) ? ($data['plan_group']) : (null);
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
+        $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
 
     }
 
@@ -37,6 +39,7 @@ class Entity extends EntityAbstract {
         $this->activityDate = (!empty($data['activity_date'])) ? (new \DateTime($data['activity_date'] . ' 00:00:00')) : (null);
         $this->planGroup = (!empty($data['plan_group'])) ? ($data['plan_group']) : (null);
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
+        $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
 
         $this->exchangeDates($data);
     }
@@ -50,6 +53,7 @@ class Entity extends EntityAbstract {
             'activity_date' => ($this->activityDate instanceof \DateTime) ? ($this->activityDate->format('Y-m-d')) : (null),
             'plan_group' => $this->planGroup,
             'is_complete' => (int) $this->isComplete,
+            'completed_at' => ($this->completedAt instanceof \DateTime) ? ($this->completedAt->format('Y-m-d H:i:s')) : (null),
         );
 
         return $data;
@@ -58,6 +62,11 @@ class Entity extends EntityAbstract {
 
     public function getArrayCopy() {
         return $this->toData();
+    }
+
+    public function markComplete() {
+        $this->isComplete = true;
+        $this->completedAt = new \DateTime();
     }
 
 }

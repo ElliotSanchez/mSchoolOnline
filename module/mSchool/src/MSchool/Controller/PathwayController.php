@@ -48,12 +48,20 @@ class PathwayController extends AbstractActionController
 
     public function nextAction() {
 
-        // THIS JUST MOVE THE CURRENT CONTAINER A STEP FORWARD AND REDIRECTS TO THE INDEX
+        // MOVE THE CURRENT CONTAINER A STEP FORWARD AND REDIRECTS BACK TO LAYOUT
         $session = $this->getServiceLocator()->get('StudentSessionContainer');
+        $container = $session->pathwayContainer;
 
-        $session->pathwayContainer->next();
+        $sequenceService = $this->getServiceLocator()->get('SequenceService');
 
-        return $this->redirect()->toRoute('mschool/pathway');
+        $sequenceService->markCurrentStepAsComplete($container);
+
+        if ($container->isAtLastStep()) {
+            return $this->redirect()->toRoute('mschool/pathway_finished');
+        } else {
+            $session->pathwayContainer->next();
+            return $this->redirect()->toRoute('mschool/pathway');
+        }
 
     }
 
@@ -61,6 +69,8 @@ class PathwayController extends AbstractActionController
 
         // THIS JUST MOVES THE CURRENT CONTAINER A STEP BACKWARD AND REDIRECTS TO THE INDEX
         $session = $this->getServiceLocator()->get('StudentSessionContainer');
+
+        // NOTE: THIS DOES NOT CHANGE COMPLETENESS
 
         $session->pathwayContainer->previous();
 
