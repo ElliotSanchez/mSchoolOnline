@@ -1,16 +1,5 @@
-CREATE TABLE `progressions` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `sequence_id` int(11) NOT NULL,
-  `plan_id` int(11) NOT NULL,
-  `activity_date` date DEFAULT NULL,
-  `is_complete` tinyint(4) NOT NULL DEFAULT '0',
-  `created_at` int(11) NOT NULL,
-  `updated_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `progressions` ADD `student_id` INT  NULL  DEFAULT NULL  AFTER `id`;
+ALTER TABLE `progressions` ADD INDEX (`student_id`);
 
-
-ALTER TABLE `student_steps` ADD `plan_group` TINYINT  NULL  DEFAULT NULL  AFTER `step_id`;
-
-
-ALTER TABLE `steps` CHANGE `timer` `timer` SMALLINT(6)  NULL;
+ALTER TABLE `progressions` CHANGE `created_at` `created_at` DATETIME  NOT NULL;
+ALTER TABLE `progressions` CHANGE `updated_at` `updated_at` DATETIME  NULL;

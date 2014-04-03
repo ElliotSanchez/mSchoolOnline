@@ -63,7 +63,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
     }
 
-
     public function importSequencesFromFile($filename) {
 
         $objPHPExcel = \PHPExcel_IOFactory::load($filename);
@@ -132,7 +131,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             if ($student) {
 
                 // COMMON SEQUENCE DATA
-                $newSequenceData = array('student_id' => $student->id);
+                $newSequenceData = array('student_id' => $student->id, 'plan_groups' => 0);
 
                 if ($sequenceDefaultCode) {
                     $this->inactivateDefaultSequences($student);
@@ -173,10 +172,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
     public function assignSteps(Sequence $sequence, $shortCode, $student) {
 
-//        echo 'Student: ' . $student->id . '<br>';
-//        echo '- sequence: ' . $sequence->id . '<br>';
-//        echo '- shortcode: ' . $shortCode . '<br>';
-
         if (isset($this->pathwayCache[$shortCode])) {
 
             $pathway = $this->pathwayCache[$shortCode];
@@ -209,6 +204,10 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
             }
 
+            // SAVE SEQUENCES PLAN GROUP COUNT
+            $sequence->planGroups = $planGroup-1; // COUNTER IS ONE AHEAD OF TOTAL AT THIS POINT
+            $sequence = $this->save($sequence);
+
         } else if (isset($this->planCache[$shortCode])) {
 
             $plan = $this->planCache[$shortCode];
@@ -234,8 +233,13 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
             }
 
+            // SAVE SEQUENCES PLAN GROUP COUNT
+            $sequence->planGroups = $planGroup;
+            $sequence = $this->save($sequence);
 
         }
+
+
 
     }
 
@@ -287,6 +291,8 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
     public function getStudentSequenceContainerFor(Student $student, \DateTime $date) {
 
+        $date->setTime(0, 0, 0); // JUST TO BE SURE WE ARE ONLY COMPARING DATES
+
         // TODO HANDLE COMPLETED DEFAULT SEQUENCE (LOOP BACK)
 
         // FIND INCOMPLETE & NOT DEFAULT
@@ -296,34 +302,14 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             $sequence = $this->getStudentsDefaultSequence($student);
         }
 
-        $progression = $this->getLastProgressionForSequence($sequence, $date);
+        $progression = $this->getCurrentProgressionForSequence($sequence, $date);
 
-        // TODO CREATE NEW PROGRESSION
         if (!$progression) {
-            $progression = $this->progressionService->create(array(
-                'sequence_id' => $sequence->id,
-                // 'plan_id' ???
-                'activity_date' => $date->format('Y-m-d'),
-                'plan_group' => 1,
-                'is_complete' => 0,
-            ));
+            // TODO RETURN null????
+            // TODO OR ONLY LOAD STEPS *IF* THERE IS A PROGRESSION RETURNED
         }
 
-        $date->setTime(0, 0, 0); // JUST TO BE SURE WE ARE ONLY COMPARING DATES
-
-        if ($date > $progression->activityDate) {
-            // TODO MOVE TO NEXT PLAN
-            // GET NEXT PLAN GROUP
-            $nextPlanGroup = $progression->planGroup + 1;
-
-            // GET STEPS IN PLAN GROUP
-            $steps = $this->getStepsInPlanGroup($sequence, $nextPlanGroup);
-
-        } else {
-            // TODO GET ACTIVE PLAN
-            // GET STEPS IN PLAN GROUP
-            $steps = $this->getStepsInPlanGroup($sequence, $progression->planGroup);
-        }
+        $steps = $this->getStepsInPlanGroup($sequence, $progression->planGroup);
 
         // POPULATE CONTAINER
         $container = new Container();
@@ -339,27 +325,68 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
     }
 
     public function getCurrentSequence(Student $student) {
-        // TODO
-        return null;
+
+        $select = $this->table->getSql()->select();
+        $select->where(array(
+            'student_id = ?' => $student->id,
+            'is_complete = 0',
+            'is_default = 0',
+        ))->order('id ASC')->limit(1);
+
+        $results = $this->table->fetchWith($select);
+
+        $sequence = $results->current();
+
+        return $sequence;
+
     }
 
-    public function getLastProgressionForSequence(Sequence $sequence) {
+    public function getCurrentProgressionForSequence(Sequence $sequence, \DateTime $date) {
 
+        // FIND CURRENT PROGRESSION
         $select = $this->progressionService->table->getSql()->select();
 
+        // - DOES is_complete MATTER HERE?
         $select->where(array(
             'sequence_id' => $sequence->id,
         ))->order(array('activity_date DESC'))->limit(1);
 
         $results = $this->progressionService->table->fetchWith($select);
 
-        if (count($results)) {
-            $objects = iterator_to_array($results);
-            return $objects[0];
-        } else {
-            return null;
+        $progression = $results->current();
+
+        if (!$progression) {
+            // CREATE NEW PROGRESSION
+            $progression = $this->progressionService->create(array(
+                'sequence_id' => $sequence->id,
+                // 'plan_id' ???
+                'activity_date' => $date->format('Y-m-d'),
+                'plan_group' => 1,
+                'is_complete' => 0,
+            ));
+
+        } else if ($date > $progression->activityDate) {
+
+            $nextPlanGroup = $progression->planGroup + 1;
+
+            if ($nextPlanGroup <= $sequence->planGroups) {
+
+                // MOVE TO PLAN GROUP ON NEW DAYS, IF THERE IS ANOTHER DAY
+                $progression = $this->progressionService->create(array(
+                    'sequence_id' => $sequence->id,
+                    // 'plan_id' ???
+                    'activity_date' => $date->format('Y-m-d'),
+                    'plan_group' => $nextPlanGroup,
+                    'is_complete' => 0,
+                ));
+            } else {
+
+                // THERE AREN'T ANY MORE PLAN GROUPS TO DO
+                $progression = null;
+            }
         }
 
+        return $progression;
     }
 
     public function getStudentsDefaultSequence(Student $student) {
@@ -395,6 +422,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $steps = array();
 
         foreach ($results as $row) {
+            echo 'STUDENT STEP: ' . $row->id . ', ' . $row->stepId . '<br>';
             $step = $this->stepService->get($row->stepId);
             $step->resource= $this->resourceService->get($step->resourceId);
             $steps[] = $step;

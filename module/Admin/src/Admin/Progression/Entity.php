@@ -6,6 +6,7 @@ use Admin\ModelAbstract\EntityAbstract;
 
 class Entity extends EntityAbstract {
 
+    public $studentId;
     public $sequenceId;
     public $planId;
     public $activityDate;
@@ -15,7 +16,8 @@ class Entity extends EntityAbstract {
     public function create($data) {
 
         parent::create($data);
-        print_r($data);
+        //print_r($data);
+        $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : null;
         $this->sequenceId = (!empty($data['sequence_id'])) ? $data['sequence_id'] : null;
         $this->planId = (!empty($data['plan_id'])) ? $data['plan_id'] : null;
         $this->activityDate = (!empty($data['activity_date'])) ? (new \DateTime($data['activity_date'] . ' 00:00:00')) : (null);
@@ -29,6 +31,7 @@ class Entity extends EntityAbstract {
 
         if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
 
+        $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : null;
         $this->sequenceId = (!empty($data['sequence_id'])) ? $data['sequence_id'] : null;
         $this->planId = (!empty($data['plan_id'])) ? $data['plan_id'] : null;
         $this->activityDate = (!empty($data['activity_date'])) ? (new \DateTime($data['activity_date'] . ' 00:00:00')) : (null);
@@ -41,6 +44,7 @@ class Entity extends EntityAbstract {
     public function toData() {
 
         $data = array(
+            'student_id' => $this->studentId,
             'sequence_id' => $this->sequenceId,
             'plan_id' => $this->planId,
             'activity_date' => ($this->activityDate instanceof \DateTime) ? ($this->activityDate->format('Y-m-d')) : (null),

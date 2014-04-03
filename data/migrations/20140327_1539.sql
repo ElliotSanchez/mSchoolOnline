@@ -11,3 +11,6 @@ CREATE TABLE `progressions` (
 
 
 ALTER TABLE `student_steps` ADD `plan_group` TINYINT  NULL  DEFAULT NULL  AFTER `step_id`;
+
+
+ALTER TABLE `steps` CHANGE `timer` `timer` SMALLINT(6)  NULL;
