@@ -24,6 +24,10 @@ body {
     /*background-color: #f5f5f5;*/
 }
 
+body.sequence-layout {
+    margin-top: 40px;
+}
+
 nav.navbar div.sequence-header {
     padding-top: 6px;
 }
