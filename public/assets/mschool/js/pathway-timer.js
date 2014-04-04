@@ -20,15 +20,13 @@ $.getJSON( "/pathway/timer", function( data ) {
             $('#pathway-next-text').text('Next');
 
             bootbox.dialog({
-                message: " You're ready to move on to the next step.",
+                message: "Please log out of your current work and then click 'Next'.",
                 title: "Well done!",
                 buttons: {
                     main: {
-                        label: "Next",
+                        label: "Ok",
                         className: "btn-primary",
-                        callback: function() {
-                            window.location = window.location.href + '/next';
-                        }
+                        callback: null
                     }
                 }
             });
