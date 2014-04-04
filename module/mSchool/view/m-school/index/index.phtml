@@ -1,7 +1,4 @@
-<div class="alert alert-success alert-dismissable">
-    <a class="close" data-dismiss="alert" href="#">×
-    </a>
-
+<div class="alert alert-success">
     <h4>
         <i class="icon-ok-sign"></i>
         Welcome to mSchool
@@ -10,8 +7,28 @@
 
 <p>
     <?php if ($hasSteps): ?>
-        <a class="btn btn-primary btn-lg" href="<?php echo $this->url('mschool/pathway') ?>" role="button">Go to your lessons!</a>
+        <a class="btn btn-primary btn-lg" href="<?php echo $this->url('mschool/pathway') ?>" role="button">Go to your
+            lessons!</a>
     <?php else: ?>
         Great job! You're all done for the day.
     <?php endif; ?>
 </p>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="title">
+                    Your Progress
+                </div>
+                <div class="actions">
+                </div>
+            </div>
+            <div class="box-content">
+                <div id="stats-chart1" style="padding: 0px; position: relative; height: 200px;">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
