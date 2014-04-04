@@ -425,7 +425,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         if (!$progression) {
             // CREATE NEW PROGRESSION
-            echo 'CREATING NEW PROGRESSION FOR ' . $date->format('Y-m-d') . '<br>';
             $progression = $this->progressionService->create(array(
                 'student_id' => $sequence->studentId,
                 'sequence_id' => $sequence->id,
