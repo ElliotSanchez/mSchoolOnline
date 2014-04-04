@@ -9,5 +9,9 @@
 </div>
 
 <p>
-    <a class="btn btn-primary btn-lg" href="<?php echo $this->url('mschool/pathway') ?>" role="button">Go to your lessons!</a>
+    <?php if ($hasSteps): ?>
+        <a class="btn btn-primary btn-lg" href="<?php echo $this->url('mschool/pathway') ?>" role="button">Go to your lessons!</a>
+    <?php else: ?>
+        Great job! You're all done for the day.
+    <?php endif; ?>
 </p>

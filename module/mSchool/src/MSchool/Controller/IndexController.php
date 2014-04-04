@@ -12,6 +12,14 @@ class IndexController extends AbstractActionController
 
         $this->layout('mschool/layout/layout');
 
-        return new ViewModel();
+        // TODO THIS ISA LITTLE HEAVY
+        $student = $adminAuthService = $this->getServiceLocator()->get('StudentAuthService')->getCurrentUser();
+        $container = $this->getServiceLocator()->get('SequenceService')->getStudentSequenceContainerFor($student, new \DateTime());
+
+        $hasSteps = ($container->hasAvailableSteps()) ? (true) : (false);
+
+        return new ViewModel(array(
+            'hasSteps' => $hasSteps,
+        ));
     }
 }

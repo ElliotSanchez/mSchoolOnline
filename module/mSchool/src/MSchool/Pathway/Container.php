@@ -14,7 +14,7 @@ class Container
     protected $currentProgression;
     protected $studentSteps;
 
-    public function __construct(Sequence $sequence, Progression $progression) {
+    public function __construct(Sequence $sequence = null, Progression $progression = null) {
         $this->currStep = 1;
         $this->studentSteps = array();
         $this->sequence = $sequence;
@@ -89,6 +89,14 @@ class Container
 
     public function isLastPlanGroup() {
         return $this->sequence->planGroups == $this->currentProgression->planGroup;
+    }
+
+    public function isInvalid() {
+        return (bool) $this->sequence;
+    }
+
+    public function hasAvailableSteps() {
+        return (bool) $this->currentProgression;
     }
 
 }
