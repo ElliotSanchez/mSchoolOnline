@@ -20,8 +20,18 @@ class StudentsController extends AbstractActionController
 
         $this->layout()->pageTitle = $student->getFullName();
 
+        $sequenceGroups = array();
+        $currSequenceId = null;
+
+        foreach ($sequenceOverview as $row) {
+            if (!isset($sequenceGroups[$row['sequence_id']])) {
+                $sequenceGroups[$row['sequence_id']] = array();
+            }
+            $sequenceGroups[$row['sequence_id']][] = $row;
+        }
+
         return new ViewModel(array(
-            'sequence_overview' => $sequenceOverview,
+            'sequenceGroups' => $sequenceGroups,
         ));
     }
 

@@ -1,38 +1,57 @@
-<div class="box bordered-box blue-border" style="margin-bottom:0;">
-    <div class="box-header blue-background">
-        <div class="title">Sequences</div>
-        <div class="actions">
 
+<?php foreach($this->sequenceGroups as $sequenceId => $sequenceRows): ?>
+
+    <div class="box bordered-box blue-border" style="margin-bottom:0;">
+        <div class="box-header blue-background">
+            <div class="title">Sequence <?php echo ($sequenceRows[0]['sequence_is_default']) ? ('Default') : ($sequenceId) ?></div>
+            <div class="actions">
+                <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="box-content box-no-padding">
-        <div class="responsive-table">
-            <div class="scrollable-area">
-                <table class="table">
-                    <tr>
-                        <th>Sequence</th>
-                        <th>Default</th>
-                        <th>Pathway</th>
-                        <th>Pathway Code</th>
-                        <th>Plan</th>
-                        <th>Plan Code</th>
-                        <th>Step Code</th>
-                    </tr>
 
-                    <?php foreach($this->sequence_overview as $row): ?>
+        <div class="box-content box-no-padding">
+            <div class="responsive-table">
+                <div class="scrollable-area">
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <td><?php echo $row['sequence_id'] ?></td>
-                            <td><?php echo ($row['sequence_is_default']) ? ('Default') : ('') ?></td>
-                            <td><?php echo $row['pathway_name'] ?></td>
-                            <td><?php echo $row['pathway_short_code'] ?></td>
-                            <td><?php echo $row['plan_name'] ?></td>
-                            <td><?php echo $row['plan_short_code'] ?></td>
-                            <td><?php echo $row['step_short_code'] ?></td>
+                            <th>Pathway</th>
+                            <th>Pathway Code</th>
+                            <th>Plan</th>
+                            <th>Plan Code</th>
+                            <th>Step Code</th>
+                            <th>Complete</th>
                         </tr>
+                        </thead>
+                        <tbody>
 
-                    <?php endforeach; ?>
-                </table>
+                            <?php foreach ($sequenceRows as $row): ?>
+                                <tr class="">
+                                    <td><?php echo $row['pathway_name'] ?></td>
+                                    <td><?php echo $row['pathway_short_code'] ?></td>
+                                    <td><?php echo $row['plan_name'] ?></td>
+                                    <td><?php echo $row['plan_short_code'] ?></td>
+                                    <td><?php echo $row['step_short_code'] ?></td>
+                                    <td>
+                                        <?php if($row['ss_is_complete'] == 1): ?>
+                                            <span class="label label-success">Complete</span>
+                                            <?php echo date('m/d/Y h:i:s A', strtotime($row['ss_completed_at'])); ?>
+                                        <?php else: ?>
+                                            &nbsp;
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <hr class="hr-double">
+
+<?php endforeach; ?>
+

@@ -255,7 +255,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
 
         $sql = new Sql($this->adapter);
-        $select = $sql->select(array());
+        $select = $sql->select(array())->columns(array('ss_is_complete' => 'is_complete', 'ss_completed_at' => 'completed_at'));
         $select->from(array('ss' => 'student_steps'))
             ->join(array('s'=> 'students'),  's.id = ss.student_id', array('student_first_name' => 'first_name', 'student_last_name' => 'last_name', 'student_number' => 'number'))
             ->join(array('sq' => 'sequences'), 'ss.sequence_id = sq.id', array('sequence_id' => 'id', 'sequence_is_default' => 'is_default'))
@@ -263,7 +263,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             ->join(array('st'=> 'steps'),  'ss.step_id = st.id', array('step_short_code' => 'short_code'))
             ->join(array('pw'=> 'pathways'),  'ss.pathway_id = pw.id', array('pathway_name' => 'name', 'pathway_short_code' => 'short_code'), \Zend\Db\Sql\Select::JOIN_LEFT)
 //            ->where('ss.is_default = 0')
-            ->order(array('sq.id ASC', 'ss.id'))
+            ->order(array('sq.is_default ASC', 'sq.id ASC', 'ss.id'))
         ;
 
         $select->where(array('ss.student_id' => $student->id));
