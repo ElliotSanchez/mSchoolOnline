@@ -15,50 +15,8 @@ class Module
         $moduleRouteListener->attach($eventManager);
         $moduleRouteListener->onRoute($e);
 
-//        $eventManager->attach(MvcEvent::EVENT_DISPATCH, function($e) {
-//
-//            $match = $e->getRouteMatch();
-//
-//            //die($match->getMatchedRouteName());
-//
-//        }, 100);
-
         // SESSION
         $this->bootstrapSession($e);
-
-//        // AUTH
-//        $eventManager->attach(MvcEvent::EVENT_DISPATCH, function($e) {
-//
-//            $match = $e->getRouteMatch();
-//
-//            // LOGIN PAGE
-//            $name = $match->getMatchedRouteName();
-//
-//            if (in_array($name, array('admin/login', 'admin/authenticate', 'mschool/login', 'mschool/authenticate'))) {
-//                return;
-//            }
-//
-//            if (strpos($name, 'mschool') !== FALSE) return; // NOT PART OF THE mschool MODULE
-//
-//            // USER IS AUTHENTICATED
-//            $authService = new \Zend\Authentication\AuthenticationService();
-//            if ($authService->hasIdentity()) {
-//                return;
-//            }
-//
-//            // USER IS NOT LOGGED IN SO REDIRECT THEM TO LOGIN
-//            $router   = $e->getRouter();
-//            $url      = $router->assemble(array(), array(
-//                'name' => 'mschool/login'
-//            ));
-//
-//            $response = $e->getResponse();
-//            $response->getHeaders()->addHeaderLine('Location', $url);
-//            $response->setStatusCode(302);
-//
-//            return $response;
-//
-//        }, 100);
 
     }
 
