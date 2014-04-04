@@ -11,8 +11,14 @@ class StepsController extends AbstractActionController
     {
         $this->layout()->pageTitle = 'Steps';
 
+        $steps = iterator_to_array($this->getServiceLocator()->get('StepService')->all());
+
+        foreach ($steps as &$step) {
+            $step->resource = $this->getServiceLocator()->get('ResourceService')->get($step->resourceId);
+        }
+
         return new ViewModel(array(
-            'steps' => $this->getServiceLocator()->get('StepService')->all(),
+            'steps' => $steps,
         ));
     }
 

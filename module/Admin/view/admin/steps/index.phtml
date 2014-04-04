@@ -12,24 +12,36 @@
                 <tr>
                     <th>Name</th>
                     <th>Short Code</th>
+                    <th>Resource Code</th>
+                    <th>Resource URL</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($steps as $steps): ?>
+                <?php foreach($steps as $step): ?>
                     <tr>
                         <td>
-                            <a href="<?php echo $this->url('admin/step_edit', array('id' => $steps->id)) ?>">
-                                <?php echo $steps->name ?>
+                            <a href="<?php echo $this->url('admin/step_edit', array('id' => $step->id)) ?>">
+                                <?php echo $step->name ?>
                             </a>
                         </td>
                         <td>
-                            <a href="<?php echo $this->url('admin/step_edit', array('id' => $steps->id)) ?>">
-                                <?php echo $steps->shortCode ?>
+                            <a href="<?php echo $this->url('admin/step_edit', array('id' => $step->id)) ?>">
+                                <?php echo $step->shortCode ?>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="<?php echo $this->url('admin/resource_edit', array('id' => $step->resource->id)) ?>">
+                                <?php echo $step->resource->shortCode ?>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="<?php echo $this->url('admin/step_edit', array('id' => $step->id)) ?>">
+                                <?php echo $step->resource->url ?>
                             </a>
                         </td>
                         <td class="text-right">
-                            <a href="<?php echo $this->url('admin/step_edit', array('id' => $steps->id)) ?>" class="btn btn-default btn-sm">
+                            <a href="<?php echo $this->url('admin/step_edit', array('id' => $step->id)) ?>" class="btn btn-default btn-sm">
                                 Edit
                             </a>
                         </td>
