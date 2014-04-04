@@ -18,6 +18,21 @@ $.getJSON( "/pathway/timer", function( data ) {
             $('#pathway-next-btn').removeAttr('disabled');
             $('#pathway-next-chevron').css('display', 'inline');
             $('#pathway-next-text').text('Next');
+
+            bootbox.dialog({
+                message: " You're ready to move on to the next step.",
+                title: "Well done!",
+                buttons: {
+                    main: {
+                        label: "Next",
+                        className: "btn-primary",
+                        callback: function() {
+                            window.location = window.location.href + '/next';
+                        }
+                    }
+                }
+            });
+
         }
     }, 1000);
 

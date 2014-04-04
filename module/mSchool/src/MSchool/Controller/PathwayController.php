@@ -102,7 +102,7 @@ class PathwayController extends AbstractActionController
         $step = $container->getCurrentStep();
 
         if ($step->isTimed())
-            $time = $step->time;
+            $time = $step->timer;
         else
             $time = null;
 
