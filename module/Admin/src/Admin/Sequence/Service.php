@@ -424,13 +424,22 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $progression = $results->current();
 
         if (!$progression) {
+
+            $previousProgress = $this->getPreviousProgression($sequence);
+
+            if ($previousProgress) {
+                $newPlanGroup = $previousProgress->planGroup + 1;
+            } else {
+                $newPlanGroup = 1;
+            }
+
             // CREATE NEW PROGRESSION
             $progression = $this->progressionService->create(array(
                 'student_id' => $sequence->studentId,
                 'sequence_id' => $sequence->id,
                 // 'plan_id' ???
                 'activity_date' => $date->format('Y-m-d'),
-                'plan_group' => 1,
+                'plan_group' => $newPlanGroup, // TODO THIS SHOULD BE SET FROM PREVIOUS DATA, *OR* DEFAULT TO 0; PROBABLY FROM THE SEQUENCE
                 'is_complete' => 0,
             ));
 
@@ -462,6 +471,22 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         }
 
         return $progression;
+    }
+
+    public function getPreviousProgression(Sequence $sequence) {
+
+        // FIND CURRENT PROGRESSION
+        $select = $this->progressionService->table->getSql()->select();
+
+        // - DOES is_complete MATTER HERE?
+        $select->where(array(
+            'sequence_id' => $sequence->id,
+        ))->order(array('activity_date DESC'))->limit(1);
+
+        $results = $this->progressionService->table->fetchWith($select);
+
+        return $results->current();
+
     }
 
     public function getStudentsDefaultSequence(Student $student) {
