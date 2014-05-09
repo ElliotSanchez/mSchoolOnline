@@ -190,6 +190,17 @@ return array(
                         ),
                     ),
 
+                    'teacher_student_progress' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/teacher/student/progress',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Teacher',
+                                'action'     => 'student-progress',
+                            ),
+                        ),
+                    ),
+
                     // PAGES
                     'page_intro' => array(
                         'type' => 'Literal',

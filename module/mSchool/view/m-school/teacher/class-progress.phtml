@@ -136,6 +136,9 @@
                     //currentGroup.select("rect").style("fill", "steelblue");
                     currentGroup.select("rect").style("fill", timeOnTaskFillByValue);
                     currentGroup.select("text").style("font-weight", "normal");
+                })
+                .on("click", function(d) {
+                    window.location = 'http://' + location.hostname + '/teacher/student/progress';
                 });
 
             x.call(xAxis);
@@ -257,6 +260,9 @@
                     //currentGroup.select("rect").style("fill", "steelblue");
                     currentGroup.select("rect").style("fill", pointsFillByValue);
                     currentGroup.select("text").style("font-weight", "normal");
+                })
+                .on("click", function(d) {
+                    window.location = 'http://' + location.hostname + '/teacher/student/progress';
                 });
 
             x.call(xAxis);
