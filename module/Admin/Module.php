@@ -55,7 +55,7 @@ class Module
             // LOGIN PAGE
             $name = $match->getMatchedRouteName();
 
-            if (in_array($name, array('admin/login', 'admin/authenticate', 'mschool/login', 'mschool/authenticate'))) {
+            if (in_array($name, array('admin/login', 'admin/authenticate', 'mschool/login', 'mschool/teacher_login', 'mschool/authenticate'))) {
                 return;
             }
 
