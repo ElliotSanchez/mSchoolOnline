@@ -179,6 +179,17 @@ return array(
                         ),
                     ),
 
+                    'teacher_class_progress' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/teacher/class/progress',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Teacher',
+                                'action'     => 'classProgress',
+                            ),
+                        ),
+                    ),
+
                     // PAGES
                     'page_intro' => array(
                         'type' => 'Literal',

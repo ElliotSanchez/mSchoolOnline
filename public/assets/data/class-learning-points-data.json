@@ -1,0 +1,7 @@
+[
+    { "country" : "bunny", "rate" : 156 },
+    { "country" : "elephant", "rate" : 87 },
+    { "country" : "monkey", "rate" : 43 },
+    { "country" : "pelican", "rate" : 20 },
+    { "country" : "turtle", "rate" : 13 }
+]
