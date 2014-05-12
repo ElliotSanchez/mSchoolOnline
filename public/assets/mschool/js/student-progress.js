@@ -7,43 +7,48 @@ var orange = "#f8a326";
 var blue = "#00acec";
 var purple = "#9564e2";
 var green = "#49bf67";
-//randNumber = function() {
-//    return ((Math.floor(Math.random() * (1 + 50 - 20))) + 20) * 800;
-//    };
-//randSmallerNumber = function() {
-//    return ((Math.floor(Math.random() * (1 + 40 - 20))) + 10) * 200;
-//    };
-//if ($("#stats-chart1").length !== 0) {
-//    orders = [[1, randNumber() - 10], [2, randNumber() - 10], [3, randNumber() - 10], [4, randNumber()], [5, randNumber()], [6, 4 + randNumber()], [7, 5 + randNumber()], [8, 6 + randNumber()], [9, 6 + randNumber()], [10, 8 + randNumber()], [11, 9 + randNumber()], [12, 10 + randNumber()], [13, 11 + randNumber()], [14, 12 + randNumber()], [15, 13 + randNumber()], [16, 14 + randNumber()], [17, 15 + randNumber()], [18, 15 + randNumber()], [19, 16 + randNumber()], [20, 17 + randNumber()], [21, 18 + randNumber()], [22, 19 + randNumber()], [23, 20 + randNumber()], [24, 21 + randNumber()], [25, 14 + randNumber()], [26, 24 + randNumber()], [27, 25 + randNumber()], [28, 26 + randNumber()], [29, 27 + randNumber()], [30, 31 + randNumber()]];
-//    newOrders = [[1, randSmallerNumber() - 10], [2, randSmallerNumber() - 10], [3, randSmallerNumber() - 10], [4, randSmallerNumber()], [5, randSmallerNumber()], [6, 4 + randSmallerNumber()], [7, 5 + randSmallerNumber()], [8, 6 + randSmallerNumber()], [9, 6 + randSmallerNumber()], [10, 8 + randSmallerNumber()], [11, 9 + randSmallerNumber()], [12, 10 + randSmallerNumber()], [13, 11 + randSmallerNumber()], [14, 12 + randSmallerNumber()], [15, 13 + randSmallerNumber()], [16, 14 + randSmallerNumber()], [17, 15 + randSmallerNumber()], [18, 15 + randSmallerNumber()], [19, 16 + randSmallerNumber()], [20, 17 + randSmallerNumber()], [21, 18 + randSmallerNumber()], [22, 19 + randSmallerNumber()], [23, 20 + randSmallerNumber()], [24, 21 + randSmallerNumber()], [25, 14 + randSmallerNumber()], [26, 24 + randSmallerNumber()], [27, 25 + randSmallerNumber()], [28, 26 + randSmallerNumber()], [29, 27 + randSmallerNumber()], [30, 31 + randSmallerNumber()]];
-//    plot = $.plot($("#stats-chart1"), [
-//    {
-//    data: orders,
-//    label: "Orders"
-//    }, {
-//    data: newOrders,
-//    label: "New rders"
-//    }
-//], {
-//    series: {
-//    lines: {
-//    show: true,
-//    lineWidth: 3
-//    },
-//shadowSize: 0
-//},
-//legend: {
-//    show: false
-//    },
-//grid: {
-//    clickable: true,
-//    hoverable: true,
-//    borderWidth: 0,
-//    tickColor: "#f4f7f9"
-//    },
-//colors: ["#00acec", "#f8a326"]
-//});
-//}
+
+var learningPoints = [
+    [0, 20],
+    [1, 25],
+    [2, 30],
+    [3, 32],
+    [4, 80],
+    [5, 84],
+    [6, 95],
+    [7, 97],
+    [8, 120],
+    [9, 160],
+    [10, 180],
+    [11, 215]
+];
+
+if ($("#learning-points").length !== 0) {
+    plot = $.plot($("#learning-points"), [
+    {
+    data: learningPoints,
+    label: "Orders"
+    }
+], {
+    series: {
+    lines: {
+    show: true,
+    lineWidth: 3
+    },
+shadowSize: 0
+},
+legend: {
+    show: false
+    },
+grid: {
+    clickable: true,
+    hoverable: true,
+    borderWidth: 0,
+    tickColor: "#f4f7f9"
+    },
+colors: ["#00acec", "#f8a326"]
+});
+}
 //if ($("#stats-chart2").length !== 0) {
 //    orders = [[1, randNumber() - 5], [2, randNumber() - 6], [3, randNumber() - 10], [4, randNumber()], [5, randNumber()], [6, 4 + randNumber()], [7, 10 + randNumber()], [8, 12 + randNumber()], [9, 6 + randNumber()], [10, 8 + randNumber()], [11, 9 + randNumber()], [12, 10 + randNumber()], [13, 11 + randNumber()], [14, 12 + randNumber()], [15, 3 + randNumber()], [16, 14 + randNumber()], [17, 14 + randNumber()], [18, 15 + randNumber()], [19, 16 + randNumber()], [20, 17 + randNumber()], [21, 18 + randNumber()], [22, 19 + randNumber()], [23, 20 + randNumber()], [24, 21 + randNumber()], [25, 14 + randNumber()], [26, 24 + randNumber()], [27, 25 + randNumber()], [28, 26 + randNumber()], [29, 27 + randNumber()], [30, 31 + randNumber()]];
 //    newOrders = [[1, randSmallerNumber() - 10], [2, randSmallerNumber() - 10], [3, randSmallerNumber() - 10], [4, randSmallerNumber()], [5, randSmallerNumber()], [6, 4 + randSmallerNumber()], [7, 5 + randSmallerNumber()], [8, 6 + randSmallerNumber()], [9, 6 + randSmallerNumber()], [10, 8 + randSmallerNumber()], [11, 9 + randSmallerNumber()], [12, 10 + randSmallerNumber()], [13, 11 + randSmallerNumber()], [14, 12 + randSmallerNumber()], [15, 13 + randSmallerNumber()], [16, 14 + randSmallerNumber()], [17, 15 + randSmallerNumber()], [18, 15 + randSmallerNumber()], [19, 16 + randSmallerNumber()], [20, 17 + randSmallerNumber()], [21, 18 + randSmallerNumber()], [22, 19 + randSmallerNumber()], [23, 20 + randSmallerNumber()], [24, 21 + randSmallerNumber()], [25, 14 + randSmallerNumber()], [26, 24 + randSmallerNumber()], [27, 25 + randSmallerNumber()], [28, 26 + randSmallerNumber()], [29, 27 + randSmallerNumber()], [30, 31 + randSmallerNumber()]];
@@ -180,7 +185,7 @@ dataset = [
     {
         label: "",
         data: data,
-        color: "#5482FF"
+        color: "#9564e2"
     }
 ];
 ticks = [[0, "1"], [1, "2"], [2, "3"], [3, "4"], [4, "5"], [5, "6"], [6, "7"], [7, "8"], [8, "9"], [9, "10"], [10, "11"], [11, "12"]];
