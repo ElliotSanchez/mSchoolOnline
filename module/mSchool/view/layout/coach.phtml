@@ -32,7 +32,7 @@
     <script src="/assets/d3/d3.min.js"></script>
 
 </head>
-<body class='contrast-green'>
+<body class='contrast-green main-nav-closed'>
 <header>
     <nav class='navbar navbar-default'>
         <a class='navbar-brand' href='index.html'>
@@ -40,6 +40,52 @@
         </a>
 
         <ul class='nav'>
+
+            <li class="dropdown light only-icon">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="icon-cog"></i>
+                </a>
+                <ul class="dropdown-menu color-settings">
+
+                </ul>
+            </li>
+
+            <li class="dropdown medium only-icon widget">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="icon-rss"></i>
+                    <div class="label">5</div>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">
+                            <div class="widget-body">
+                                <div class="pull-left icon">
+                                    <i class="icon-user text-success"></i>
+                                </div>
+                                <div class="pull-left text">
+                                    John Doe signed on
+                                    <small class="text-muted">just now</small>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div class="widget-body">
+                                <div class="pull-left icon">
+                                    <i class="icon-user text-success"></i>
+                                </div>
+                                <div class="pull-left text">
+                                    Jane Doe signed on
+                                    <small class="text-muted">last week</small>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                </ul>
+            </li>
 
             <li class='dropdown dark'>
                 <a href="<?php echo $this->url('mschool/logout') ?>">
@@ -49,13 +95,104 @@
             </li>
         </ul>
 
+        <form action="search_results.html" class="navbar-form navbar-right hidden-xs" method="get">
+            <button class="btn btn-link icon-search" name="button" type="submit"></button>
+            <div class="form-group">
+                <input value="" class="form-control" placeholder="Search..." autocomplete="off" id="q_header" name="q" type="text">
+            </div>
+        </form>
+
     </nav>
 </header>
 <div id='wrapper'>
     <div id='main-nav-bg'></div>
     <nav id='main-nav'>
         <div class='navigation'>
-
+        <ul class="nav nav-stacked">
+        <li class="active">
+            <a href="index.html">
+                <i class="icon-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="">
+            <a class="dropdown-collapse" href="#"><i class="icon-edit"></i>
+                <span>Forms</span>
+                <i class="icon-angle-down angle-down"></i>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-collapse " href="#">
+                <i class="icon-tint"></i>
+                <span>UI Elements &amp; Widgets</span>
+                <i class="icon-angle-down angle-down"></i>
+            </a>
+        </li>
+        <li class="">
+            <a href="buttons_and_icons.html">
+                <i class="icon-star"></i>
+                <span>Buttons &amp; Icons</span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-collapse " href="#">
+                <i class="icon-cogs"></i>
+                <span>Components</span>
+                <i class="icon-angle-down angle-down"></i>
+            </a>
+        </li>
+        <li class="">
+            <a href="tables.html">
+                <i class="icon-table"></i>
+                <span>Tables</span>
+            </a>
+        </li>
+        <li class="">
+            <a href="grid.html">
+                <i class="icon-th"></i>
+                <span>Grid</span>
+            </a>
+        </li>
+        <li class="">
+            <a href="type.html">
+                <i class="icon-font"></i>
+                <span>Typography</span>
+            </a>
+        </li>
+        <li class="">
+            <a href="calendar.html">
+                <i class="icon-calendar"></i>
+                <span>Calendar</span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-collapse " href="#">
+                <i class="icon-book"></i>
+                <span>Example pages</span>
+                <i class="icon-angle-down angle-down"></i>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-collapse " href="#">
+                <i class="icon-cog"></i>
+                <span>Layouts</span>
+                <i class="icon-angle-down angle-down"></i>
+            </a>
+        </li>
+        <li class="">
+            <a href="email_templates.html">
+                <i class="icon-mail-reply"></i>
+                <span>Email templates</span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-collapse" href="#">
+                <i class="icon-folder-open-alt"></i>
+                <span>Four level dropdown</span>
+                <i class="icon-angle-down angle-down"></i>
+            </a>
+        </li>
+        </ul>
 
         </div>
     </nav>
