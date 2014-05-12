@@ -44,7 +44,7 @@ class TeacherController extends AbstractActionController
 
     public function studentProgressAction()
     {
-        $this->layout('mschool/layout/layout');
+        $this->layout('mschool/layout/coach');
     }
 
 }
