@@ -1,9 +1,140 @@
-<h1>Teacher Dashboard</h1>
+<!--<h1>Teacher Dashboard</h1>-->
+<!---->
+<!--<table>-->
+<!--    <tbody>-->
+<!--        <tr>-->
+<!--            <td><a href="/teacher/class/progress">Math 100</a></td></td>-->
+<!--        </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
 
-<table>
-    <tbody>
-        <tr>
-            <td><a href="/teacher/class/progress">Math 100</a></td></td>
-        </tr>
-    </tbody>
-</table>
+<div class="row" id="content-wrapper">
+    <div class="col-xs-12">
+        <div class="page-header page-header-with-buttons">
+            <h1 class="pull-left">
+                <i class="icon-dashboard"></i>
+                <span>Dashboard</span>
+            </h1>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <a class="btn btn-white hidden-xs" href="#">Last month</a>
+                    <a class="btn btn-white" href="#">Last week</a>
+                    <a class="btn btn-white " href="#">Today</a>
+                    <a class="btn btn-white" id="daterange" href="#"><i class="icon-calendar"></i>
+                        <span>Custom</span>
+                        <b class="caret"></b>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row box box-transparent">
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link blue-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-comments"></div>
+                        </div>
+                        <div class="content">Messages</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link green-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-star"></div>
+                        </div>
+                        <div class="content">Star Performers</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link orange-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-magic"></div>
+                        </div>
+                        <div class="content">Most Improved</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link purple-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-eye-open"></div>
+                        </div>
+                        <div class="content">Student View</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link red-background">
+                    <a href="orders.html">
+                        <div class="header">
+                            <div class="icon-inbox"></div>
+                        </div>
+                        <div class="content">Assignments</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link muted-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-refresh"></div>
+                        </div>
+                        <div class="content">Refresh</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 box">
+                <div class="box-header">
+                    <div class="title">
+                        <i class="icon-inbox"></i>
+                        Problems Solved
+                    </div>
+                    <div class="actions">
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
+                        </a>
+
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <div id="stats-chart1" style="padding: 0px; position: relative;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 box">
+                <div class="box-header">
+                    <div class="title">
+                        <i class="icon-group"></i>
+                        Levels Completed
+                    </div>
+                    <div class="actions">
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
+                        </a>
+
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <div id="stats-chart2" style="padding: 0px; position: relative;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

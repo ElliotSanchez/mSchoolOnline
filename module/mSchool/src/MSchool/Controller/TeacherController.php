@@ -11,7 +11,7 @@ class TeacherController extends AbstractActionController
     public function dashboardAction()
     {
 
-        $this->layout('mschool/layout/layout');
+        $this->layout('mschool/layout/coach');
 
         return new ViewModel(array(
         ));
