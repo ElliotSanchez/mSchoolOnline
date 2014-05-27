@@ -362,6 +362,7 @@ class AccountsController extends AbstractActionController
         return new ViewModel([
             'account' => $account,
             'form' => $form,
+            'student' => $student,
         ]);
 
     }

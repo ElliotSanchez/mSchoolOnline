@@ -69,6 +69,24 @@ class Entity extends UserAbstract {
         return $password == $decrypted;
     }
 
+    public function getUnencryptedPassword() {
+
+        $cipher = BlockCipher::factory('mcrypt',
+            array('algorithm' => 'aes')
+        );
+
+        $cipher->setKey(AdminModule::$studentPasswordKey);
+
+        try {
+            return $cipher->decrypt($this->password);
+        } catch (\Exception $e) {
+
+        }
+
+        return null;
+
+    }
+
     public function create($data) {
 
         parent::create($data);
