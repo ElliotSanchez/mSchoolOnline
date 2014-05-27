@@ -136,7 +136,7 @@ class UploadController extends AbstractActionController
         }
 
         $this->layout()->pageTitle = 'Sequences Upload';
-        $this->layout()->activeMenu = 'pathway';
+        $this->layout()->activeMenu = 'sequences';
 
         return new ViewModel(array(
             'form' => $form,

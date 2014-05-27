@@ -94,13 +94,13 @@
         </li>
 
         <li class=''>
-            <a class="dropdown-collapse" href="#">
+            <a class="dropdown-collapse <?php echo ($this->activeMenu == 'structures') ? ('in') : ('') ?>" href="#">
                 <i class='icon-cogs'></i>
                 <span>Structures</span>
                 <i class='icon-angle-down angle-down'></i>
             </a>
 
-            <ul class='nav nav-stacked'>
+            <ul class='nav nav-stacked <?php echo ($this->activeMenu == 'structures') ? ('in') : ('') ?>'>
                 <li><a href="<?php echo $this->url('admin/pathways') ?>"><i class='icon-caret-right'></i><span>Pathways</span></a></li>
                 <li><a href="<?php echo $this->url('admin/plans') ?>"><i class='icon-caret-right'></i><span>Plans</span></a></li>
                 <li><a href="<?php echo $this->url('admin/steps') ?>"><i class='icon-caret-right'></i><span>Steps</span></a></li>
@@ -108,16 +108,16 @@
             </ul>
         </li>
 
-        <li class='<?php echo ($this->activeMenu == 'pathway') ? ('active') : ('') ?>'>
-            <a class="dropdown-collapse" href="#">
+        <li class=''>
+            <a class="dropdown-collapse <?php echo ($this->activeMenu == 'sequences') ? ('in') : ('') ?>" href="#">
                 <i class='icon-cogs'></i>
                 <span>Sequences</span>
                 <i class='icon-angle-down angle-down'></i>
             </a>
 
-            <ul class='nav nav-stacked'>
+            <ul class='nav nav-stacked <?php echo ($this->activeMenu == 'sequences') ? ('in') : ('') ?>'>
                 <li><a href="<?php echo $this->url('admin/upload_pathways') ?>"><i class='icon-caret-right'></i><span>Upload</span></a></li>
-                <li><a href="<?php echo $this->url('admin/pathways_preview') ?>"><i class='icon-caret-right'></i><span>Preview</span></a></li>
+<!--                <li><a href="--><?php //echo $this->url('admin/pathways_preview') ?><!--"><i class='icon-caret-right'></i><span>Preview</span></a></li>-->
             </ul>
         </li>
 

@@ -11,6 +11,7 @@ class ResourcesController extends AbstractActionController
     {
 
         $this->layout()->pageTitle = 'Resources';
+        $this->layout()->activeMenu = 'structures';
 
         return new ViewModel(array(
             'resources' => $this->getServiceLocator()->get('ResourceService')->all(),
@@ -40,6 +41,7 @@ class ResourcesController extends AbstractActionController
         }
 
         $this->layout()->pageTitle = 'Resources > Add';
+        $this->layout()->activeMenu = 'structures';
 
         return new ViewModel([
             'form' => $form,
@@ -50,6 +52,7 @@ class ResourcesController extends AbstractActionController
     public function editAction() {
 
         $this->layout()->pageTitle = 'Resources > Edit';
+        $this->layout()->activeMenu = 'structures';
 
         $resourceService = $this->getServiceLocator()->get('ResourceService');
 
