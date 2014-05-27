@@ -23,7 +23,7 @@ class Entity extends EntityAbstract {
 
         parent::create($data);
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
-        $this->shortCode = (!empty($data['short_code'])) ? $data['short_code'] : null;
+        $this->shortCode = trim((!empty($data['short_code'])) ? $data['short_code'] : null);
         $this->timer = (!empty($data['timer'])) ? $data['timer'] : null;
         $this->isActive = (!empty($data['is_active'])) ? $data['is_active'] : null;
 
@@ -37,7 +37,7 @@ class Entity extends EntityAbstract {
         if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
 
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
-        $this->shortCode = (!empty($data['short_code'])) ? $data['short_code'] : null;
+        $this->shortCode = trim((!empty($data['short_code'])) ? $data['short_code'] : null);
         $this->timer = (!empty($data['timer'])) ? $data['timer'] : null;
         $this->isActive = (!empty($data['is_active'])) ? $data['is_active'] : null;
 
@@ -51,7 +51,7 @@ class Entity extends EntityAbstract {
         $data = array(
             'resource_id' => $this->resourceId,
             'name' => $this->name,
-            'short_code' => $this->shortCode,
+            'short_code' => trim($this->shortCode),
             'timer' => $this->timer,
             'is_active' => $this->isActive,
         );

@@ -15,7 +15,7 @@ class Entity extends EntityAbstract {
 
         parent::create($data);
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
-        $this->shortCode = (!empty($data['short_code'])) ? $data['short_code'] : null;
+        $this->shortCode = trim((!empty($data['short_code'])) ? $data['short_code'] : null);
         $this->url = (!empty($data['url'])) ? $data['url'] : null;
         $this->isExternal = (!empty($data['is_external'])) ? $data['is_external'] : 0;
 
@@ -27,7 +27,7 @@ class Entity extends EntityAbstract {
         if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
 
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
-        $this->shortCode = (!empty($data['short_code'])) ? $data['short_code'] : null;
+        $this->shortCode = trim((!empty($data['short_code'])) ? $data['short_code'] : null);
         $this->url = (!empty($data['url'])) ? $data['url'] : null;
         $this->isExternal = (!empty($data['is_external'])) ? $data['is_external'] : 0;
 
@@ -38,7 +38,7 @@ class Entity extends EntityAbstract {
 
         $data = array(
             'name' => $this->name,
-            'short_code' => $this->shortCode,
+            'short_code' => trim($this->shortCode),
             'url' => $this->url,
             'is_external' => $this->isExternal,
         );
