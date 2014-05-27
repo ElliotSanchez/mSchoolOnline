@@ -14,6 +14,8 @@ use Zend\Mvc\MvcEvent;
 
 class Module
 {
+    public static $studentPasswordKey = null;
+
     public function onBootstrap(MvcEvent $e)
     {
         date_default_timezone_set('America/Chicago');
@@ -40,6 +42,8 @@ class Module
                 },2
             );
         }
+
+        $this->loadKeys($e);
 
         // CURRENT USER
         $sharedManager->attach(__NAMESPACE__, 'dispatch', function($e) use ($sm) {
@@ -102,5 +106,11 @@ class Module
     public function getServiceConfig()
     {
         return include __DIR__ . '/config/service.config.php';
+    }
+
+    protected function loadKeys(MvcEvent $e) {
+        $sm             = $e->getApplication()->getServiceManager();
+        $config         = $sm->get('config');
+        self::$studentPasswordKey = $config['encryption']['student_key'];
     }
 }

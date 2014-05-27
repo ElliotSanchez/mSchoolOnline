@@ -4,6 +4,8 @@ namespace Admin\Student;
 
 use Admin\ModelAbstract\EntityAbstract;
 use Admin\User\UserAbstract as UserAbstract;
+use Zend\Crypt\BlockCipher;
+use Admin\Module as AdminModule;
 
 class Entity extends UserAbstract {
 
@@ -32,17 +34,39 @@ class Entity extends UserAbstract {
 
     public function setPassword($password) {
 
-        // THIS FUNCTION DOES NOT HAS THE PASSWORDS BY DESIGN.
-        // THE INTENTION IS THAT ADMINS AND TEACHERS CAN PASSWORDS WHEN STUDENTS FORGET THEM.
-        $this->password = $password;
+        // THIS FUNCTION DOES NOT HASH THE PASSWORDS BY DESIGN.
+        // THE INTENTION IS THAT ADMINS AND TEACHERS CAN SEE PASSWORDS WHEN STUDENTS FORGET THEM.
 
-//        $bcrypt = new \Zend\Crypt\Password\Bcrypt();
-//        $this->password = $bcrypt->create($password);
+        $cipher = BlockCipher::factory('mcrypt',
+            array('algorithm' => 'aes')
+        );
+
+        $cipher->setKey(AdminModule::$studentPasswordKey);
+
+        try {
+            $encrypted = $cipher->encrypt($password);
+            $this->password = $encrypted;
+        } catch (\Exception $e) {
+
+        }
 
     }
 
     public function validatePassword($password) {
-        return $this->password == $password;
+
+        $cipher = BlockCipher::factory('mcrypt',
+            array('algorithm' => 'aes')
+        );
+
+        $cipher->setKey(AdminModule::$studentPasswordKey);
+
+        try {
+            $decrypted = $cipher->decrypt($this->password);
+        } catch (\Exception $e) {
+
+        }
+
+        return $password == $decrypted;
     }
 
     public function create($data) {
