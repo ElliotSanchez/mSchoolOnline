@@ -6,10 +6,10 @@ return array(
             'mschool' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => 'school.mschool.today',
-//                    'constraints' => array(
-//                        'subdomain' => '[a-zA-Z0-9_-]*',
-//                    ),
+                    'route' => ':subdomain.mschool.lp', // SEE MSchool/Module initRoute FOR REALLY IMPORTANT STUFF TO SUPPORT THIS
+                    'constraints' => array(
+                        'subdomain' => '[a-zA-Z0-9_-]*',
+                    ),
                     'defaults' => array(
 //                        '__NAMESPACE__' => 'MSchool\Controller',  // REMOVE OF THIS LINE IS IMPORTANT; OTHER WISE THE MSchool MODULE HAS TROUBLE
                         'module'        => 'MSchool',

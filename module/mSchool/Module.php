@@ -15,6 +15,8 @@ class Module
         $moduleRouteListener->attach($eventManager);
         $moduleRouteListener->onRoute($e);
 
+        $this->initRoute($e);
+
         // SESSION
         $this->bootstrapSession($e);
 
@@ -59,4 +61,18 @@ class Module
 
     }
 
+    protected function initRoute(MvcEvent $e) {
+
+        // SUPER IMPORTANT STUFF
+        $application   = $e->getApplication();
+        $sm            = $application->getServiceManager();
+        $router = $sm->get('router');
+        $request = $sm->get('request');
+        $matchedRoute = $router->match($request);
+        if ($matchedRoute->getParam('subdomain')) {
+            // THIS IS DONE SO THAT CALLED TO CONTROLLER redirect()->toRoute(...) HAVE THE SUBDOMAIN AVAILABLE
+            $router->setDefaultParam('subdomain', $matchedRoute->getParam('subdomain'));
+        }
+
+    }
 }
