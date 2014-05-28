@@ -19,4 +19,8 @@ class Service extends ServiceAbstract {
 
     }
 
+    public function getAccountWithSubdomain($subdomain) {
+        return $this->table->fetchWith(array('subdomain' => $subdomain))->current();
+    }
+
 }
