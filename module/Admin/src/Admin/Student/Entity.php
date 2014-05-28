@@ -29,7 +29,8 @@ class Entity extends UserAbstract {
     }
     public function generatePassword() {
         // THIS IS MEANT TO BE A RELATIVELY FRIENDLY INITIAL PASSWORD FOR A STUDENT
-        $this->password = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 4) . substr(str_shuffle("0123456789"), 0, 4);
+        $clearTextPassword = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 4) . substr(str_shuffle("0123456789"), 0, 4);
+        $this->setPassword($clearTextPassword);
     }
 
     public function setPassword($password) {
