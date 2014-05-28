@@ -146,7 +146,7 @@ class UploadController extends AbstractActionController
 
     public function pathwaysFileAction() {
 
-        $filename = 'mschool_pathways_template.xlsx';
+        $filename = 'mschool_sequences_template.xlsx';
 
         $filePath = realpath(__DIR__ . '/../../../../../data/files/'.$filename);
 
