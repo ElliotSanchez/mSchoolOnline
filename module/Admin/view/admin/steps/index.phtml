@@ -13,6 +13,7 @@
                     <th>Name</th>
                     <th>Short Code</th>
                     <th>Resource Code</th>
+                    <th>Is Timed</th>
                     <th>Resource URL</th>
                     <th>&nbsp;</th>
                 </tr>
@@ -34,6 +35,12 @@
                             <a href="<?php echo $this->url('admin/resource_edit', array('id' => $step->resource->id)) ?>">
                                 <?php echo $step->resource->shortCode ?>
                             </a>
+                        </td>
+                        <td>
+                            <?php if($step->isTimed()): ?>
+                                <i class="icon-time flatty-green"></i>
+                            <?php endif; ?>
+
                         </td>
                         <td>
                             <a href="<?php echo $this->url('admin/step_edit', array('id' => $step->id)) ?>">
