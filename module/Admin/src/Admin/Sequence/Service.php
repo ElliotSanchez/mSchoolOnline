@@ -296,6 +296,10 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         // TODO HANDLE COMPLETED DEFAULT SEQUENCE (LOOP BACK)
 
+        $sequence = null;
+        $progression = null;
+        $container = null;
+
         // IS THERE PROGRESSION TODAY?
         $todaysProgression = $this->getProgressionForDate($student, $date);
         if ($todaysProgression && $todaysProgression->isComplete) {
@@ -323,7 +327,9 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                 $sequence = $this->getCurrentSequence($student);
             }
 
-            $progression = $this->getCurrentProgressionForSequence($sequence, $date);
+            if ($sequence) {
+                $progression = $this->getCurrentProgressionForSequence($sequence, $date);
+            }
         }
 
         // BUILD CONTAINER
@@ -342,7 +348,9 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             $container->fastForward();
         } else {
             // OR AS EMPTY (i.e. NO WORK LEFT TO BE DONE)
-            $container = new Container($sequence, $progression);
+            if ($sequence && $progression) {
+                $container = new Container($sequence, $progression);
+            }
         }
 
         return $container;
