@@ -18,6 +18,7 @@
                         <tr>
                             <th>Pathway</th>
                             <th>Pathway Code</th>
+                            <th>Plan Group</th>
                             <th>Plan</th>
                             <th>Plan Code</th>
                             <th>Step Code</th>
@@ -25,11 +26,11 @@
                         </tr>
                         </thead>
                         <tbody>
-
                             <?php foreach ($sequenceRows as $row): ?>
-                                <tr class="">
+                                <tr class="<?php echo ($row['plan_group'] % 2 == 0) ? ('plan-group-highlight-one') : ('plan-group-highlight-two')  ?>">
                                     <td><?php echo $row['pathway_name'] ?></td>
                                     <td><?php echo $row['pathway_short_code'] ?></td>
+                                    <td><?php echo $row['plan_group'] ?></td>
                                     <td><?php echo $row['plan_name'] ?></td>
                                     <td><?php echo $row['plan_short_code'] ?></td>
                                     <td><?php echo $row['step_short_code'] ?></td>

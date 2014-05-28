@@ -255,7 +255,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
 
         $sql = new Sql($this->adapter);
-        $select = $sql->select(array())->columns(array('ss_is_complete' => 'is_complete', 'ss_completed_at' => 'completed_at'));
+        $select = $sql->select(array())->columns(array('ss_is_complete' => 'is_complete', 'ss_completed_at' => 'completed_at', 'plan_group' => 'plan_group'));
         $select->from(array('ss' => 'student_steps'))
             ->join(array('s'=> 'students'),  's.id = ss.student_id', array('student_first_name' => 'first_name', 'student_last_name' => 'last_name', 'student_number' => 'number'))
             ->join(array('sq' => 'sequences'), 'ss.sequence_id = sq.id', array('sequence_id' => 'id', 'sequence_is_default' => 'is_default'))
