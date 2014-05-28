@@ -372,13 +372,19 @@ class AccountsController extends AbstractActionController
 
         $account = $this->getAccount();
 
+        $schools = $this->getServiceLocator()->get('SchoolService')->getForAccount($account);
         $classes = $this->getServiceLocator()->get('MclassService')->getForAccount($account);
+
+        $indexSchools = [];
+
+        foreach ($schools as $school) $indexSchools[$school->id] = $school;
 
         $this->layout()->pageTitle = 'Account > School > Classes';
 
         return new ViewModel([
             'account' => $account,
             'classes' => $classes,
+            'schools' => $indexSchools,
         ]);
 
     }
