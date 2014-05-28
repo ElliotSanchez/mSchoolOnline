@@ -116,19 +116,6 @@ echo $this->formHidden($form->get('account_id'));
 </div>
 
 <div class="row">
-    <div class="form-group <?php echo (!$form->get('password_confirm')->getMessages()) ?: ('has-error') ?>">
-        <div class="col-md-4">
-            <label class="control-label" for="username">Password Confirmation</label>
-            <?php
-            $passwordConfirm = $form->get('password_confirm');
-            echo $this->formInput($passwordConfirm->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
-            echo $this->formElementErrors($passwordConfirm);
-            ?>
-        </div>
-    </div>
-</div>
-
-<div class="row">
     <div class="form-group">
         <div class="col-md-2">
             <label class="control-label" for="">Current Password</label>
@@ -143,6 +130,19 @@ echo $this->formHidden($form->get('account_id'));
             <span class="visible-password" style="display: none">
                 <?php echo $password; ?>
             </span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-md-2">
+            <label class="control-label" for=""></label>
+            <?php
+            $submit = $form->get('submit');
+            echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Update Student'));
+            echo $this->formElementErrors($submit );
+            ?>
         </div>
     </div>
 </div>

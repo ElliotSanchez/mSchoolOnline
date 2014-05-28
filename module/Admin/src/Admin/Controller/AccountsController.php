@@ -357,7 +357,7 @@ class AccountsController extends AbstractActionController
 
         }
 
-        $this->layout()->pageTitle = 'Account > School > Teacher > Edit';
+        $this->layout()->pageTitle = 'Account > School > Student > Edit';
 
         return new ViewModel([
             'account' => $account,
