@@ -3,9 +3,13 @@ namespace MSchool;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Admin\Account\Entity as Account;
 
 class Module
 {
+    protected $subdomain;
+    protected static $account;
+
     public function onBootstrap(MvcEvent $e)
     {
         date_default_timezone_set('America/Chicago');
@@ -16,6 +20,8 @@ class Module
         $moduleRouteListener->onRoute($e);
 
         $this->initRoute($e);
+
+        $this->initAccount($e);
 
         // SESSION
         $this->bootstrapSession($e);
@@ -72,7 +78,26 @@ class Module
         if ($matchedRoute->getParam('subdomain')) {
             // THIS IS DONE SO THAT CALLED TO CONTROLLER redirect()->toRoute(...) HAVE THE SUBDOMAIN AVAILABLE
             $router->setDefaultParam('subdomain', $matchedRoute->getParam('subdomain'));
+            $this->subdomain = $matchedRoute->getParam('subdomain');
         }
 
+    }
+
+    protected function initAccount(MvcEvent $e) {
+
+        if ($this->subdomain) {
+
+            $application = $e->getApplication();
+            $sm = $application->getServiceManager();
+            $accountService = $sm->get('AccountService');
+
+            self::$account = $accountService->getAccountWithSubdomain($this->subdomain);
+
+        }
+
+    }
+
+    public static function account() {
+        return self::$account;
     }
 }

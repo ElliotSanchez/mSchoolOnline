@@ -1,3 +1,12 @@
+<?php if (!$this->hasAccount): ?>
+    <div class='row'>
+        <div class='col-md-12'>
+            <div class="alert alert-warning">This account is not configured yet.</div>
+        </div>
+    </div>
+    <?php return; // <== RETURN STATEMENT WHEN ACCOUNT EXISTS ?>
+<?php endif; ?>
+
 <div class='row'>
     <div class='col-md-12'>
         <?php

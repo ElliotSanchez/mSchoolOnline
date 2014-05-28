@@ -14,7 +14,14 @@ class AuthController extends AbstractActionController
 
         $this->layout('layout/auth');
 
+        $hasAccount = \MSchool\Module::account();
+
         if ($this->request->isPost()) {
+
+            if (!$hasAccount) {
+                $this->flashMessenger()->addErrorMessage('This account is not configured yet.');
+                return $this->redirect()->toRoute('mschool/login');
+            }
 
             $form->prepare();
 
@@ -51,6 +58,7 @@ class AuthController extends AbstractActionController
 
         return new ViewModel(array(
             'form' => $form,
+            'hasAccount' => $hasAccount,
         ));
     }
 
