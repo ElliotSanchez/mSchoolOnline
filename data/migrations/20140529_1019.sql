@@ -21,3 +21,6 @@ CREATE TABLE `mclasses_teachers` (
   KEY `teacher_id` (`teacher_id`),
   KEY `mclass_teacher` (`mclass_id`,`teacher_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `teachers` ADD `account_id` INT(11)  NOT NULL  AFTER `id`;
+ALTER TABLE `teachers` ADD INDEX (`account_id`);

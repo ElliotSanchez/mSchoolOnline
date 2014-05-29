@@ -4,6 +4,7 @@ namespace Admin\Teacher;
 
 use Admin\ModelAbstract\ServiceAbstract as ServiceAbstract;
 use Admin\Teacher\Entity as Teacher;
+use Admin\Account\Entity as Account;
 
 class Service extends ServiceAbstract {
 
@@ -22,6 +23,12 @@ class Service extends ServiceAbstract {
     public function getForUsername($username) {
 
         return $this->table->fetchWith(['username' => $username])->current();
+
+    }
+
+    public function getForUsernameWithAccount($username, Account $account) {
+
+        return $this->table->fetchWith(['username' => $username, 'account_id' => $account->id])->current();
 
     }
 

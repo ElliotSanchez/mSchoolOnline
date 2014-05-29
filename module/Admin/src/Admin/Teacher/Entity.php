@@ -13,6 +13,7 @@ class Entity extends UserAbstract {
     public $lastName;
     public $isSchoolAdmin;
 
+    public $accountId;
     public $schoolId;
 
     public function getFullName() {
@@ -37,6 +38,7 @@ class Entity extends UserAbstract {
         $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : null;
         $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : null;
 
+        $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : null;
         $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : null;
 
         if(isset($data['password']))
@@ -56,6 +58,7 @@ class Entity extends UserAbstract {
         $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : null;
         $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : 0;
 
+        $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : null;
         $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : null;
 
         $this->exchangeDates($data);
@@ -69,6 +72,7 @@ class Entity extends UserAbstract {
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
             'is_school_admin' => $this->isSchoolAdmin,
+            'account_id' => $this->accountId,
             'school_id' => $this->schoolId,
         );
 
