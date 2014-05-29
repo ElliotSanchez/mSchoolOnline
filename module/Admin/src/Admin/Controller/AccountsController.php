@@ -438,6 +438,7 @@ class AccountsController extends AbstractActionController
         $form = $this->getServiceLocator()->get('MclassEditForm');
 
         $form->setAccount($account);
+        $form->bind($mclass);
 
         $request = $this->getRequest();
 
