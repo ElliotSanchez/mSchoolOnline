@@ -1,19 +1,9 @@
-<!--<h1>Teacher Dashboard</h1>-->
-<!---->
-<!--<table>-->
-<!--    <tbody>-->
-<!--        <tr>-->
-<!--            <td><a href="/teacher/class/progress">Math 100</a></td></td>-->
-<!--        </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
-
-<div class="row" id="content-wrapper">
+<div class="row">
     <div class="col-xs-12">
         <div class="page-header page-header-with-buttons">
             <h1 class="pull-left">
                 <i class="icon-dashboard"></i>
-                <span>Coach Dashboard</span>
+                <span><?php echo $this->mclass->name ?> Dashboard</span>
             </h1>
             <div class="pull-right">
                 <div class="btn-group">
@@ -28,7 +18,52 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-xs-12">
+            <div class="box bordered-box purple-border" style="margin-bottom:0;">
+                <div class="box-header purple-background">
+                    <div class="title">Students</div>
+                    <div class="actions">
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
+                        </a>
+
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="box-content box-no-padding">
+                    <table class="table table-striped" style="margin-bottom:0;">
+                        <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->students as $student): ?>
+                                <tr>
+                                    <td>
+                                        <a href="<?php echo $this->url('mschool/teacher_student_progress', ['s_id' => $student->id, 'm_id' => $mclass->id]); ?>">
+                                            <?php echo $student->getFullName(); ?>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+
+<hr class="">
+
+<div class="row">
+    <div class="col-xs-12">
         <div class="row box box-transparent">
             <div class="col-xs-4 col-sm-2">
                 <div class="box-quick-link blue-background">

@@ -11,9 +11,29 @@ class TeacherController extends AbstractActionController
     public function dashboardAction()
     {
 
+        $teacher = $adminAuthService = $this->getServiceLocator()->get('TeacherAuthService')->getCurrentUser();
+
+        $mclasses = $this->getServiceLocator()->get('MclassService')->getMclassesForTeacher($teacher);
+
         $this->layout('mschool/layout/coach');
 
         return new ViewModel(array(
+            'mclasses' => $mclasses,
+        ));
+
+    }
+
+    public function classDashboardAction()
+    {
+
+        $this->layout('mschool/layout/coach');
+
+        $mclass = $this->getServiceLocator()->get('MclassService')->get($this->params('id'));
+        $students = $this->getServiceLocator()->get('MclassService')->getStudentsAssignedToMclass($mclass);
+
+        return new ViewModel(array(
+            'mclass' => $mclass,
+            'students' => $students,
         ));
 
     }
@@ -44,7 +64,16 @@ class TeacherController extends AbstractActionController
 
     public function studentProgressAction()
     {
+
+        $student = $this->getServiceLocator()->get('StudentService')->get($this->params('s_id'));
+        $mclass = $this->getServiceLocator()->get('MclassService')->get($this->params('m_id'));
+
         $this->layout('mschool/layout/coach');
+
+        return new ViewModel([
+            'student' => $student,
+            'mclass' => $mclass,
+        ]);
     }
 
 }

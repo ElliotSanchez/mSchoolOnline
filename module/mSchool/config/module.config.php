@@ -168,6 +168,20 @@ return array(
                         ),
                     ),
 
+                    'teacher_class_dashboard' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/teacher/class/:id/dashboard',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Teacher',
+                                'action'     => 'class-dashboard',
+                            ),
+                        ),
+                    ),
+
                     'teacher_students' => array(
                         'type' => 'Literal',
                         'options' => array(
@@ -191,9 +205,13 @@ return array(
                     ),
 
                     'teacher_student_progress' => array(
-                        'type' => 'Literal',
+                        'type' => 'Segment',
                         'options' => array(
-                            'route'    => '/teacher/student/progress',
+                            'route'    => '/teacher/student/:s_id/progress/:m_id',
+                            'constraints' => array(
+                                's_id' => '[0-9]*',
+                                'm_id' => '[0-9]*',
+                            ),
                             'defaults' => array(
                                 'controller' => 'MSchool\Controller\Teacher',
                                 'action'     => 'student-progress',

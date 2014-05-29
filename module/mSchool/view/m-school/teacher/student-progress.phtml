@@ -1,4 +1,6 @@
-<h1>Student Progress</h1>
+<h1><?php echo $this->student->getFullName(); ?>'s <?php echo $this->mclass->name ?> Progress</h1>
+<hr>
+<a href="<?php echo $this->url("mschool/teacher_class_dashboard", ['id' => $this->mclass->id]); ?>" class="btn btn-default"><i class="icon-chevron-left"></i> Back to Class</a>
 
 <div class="row">
 
