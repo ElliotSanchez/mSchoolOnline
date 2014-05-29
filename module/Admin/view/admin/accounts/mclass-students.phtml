@@ -1,0 +1,118 @@
+<?php echo $this->partial('admin/accounts/partials/header.phtml', array('active' => 'mclasses', 'account' => $account)); ?>
+
+<?php
+
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form->setAttribute('class', 'form'));
+
+echo $this->formHidden($this->form->get('account_id'));
+
+?>
+
+<div class="row">
+    <div class="col-sm-12 box" style="margin-bottom: 0">
+        <div class="box-header orange-background">
+            <div class="title">
+                Edit Class' Students
+            </div>
+            <div class="actions">
+            </div>
+        </div>
+        <div class="box-content">
+            <div class="tabbable" style="margin-top: 20px">
+                <ul class="nav nav-responsive nav-tabs">
+
+                    <li class="active">
+                        <a data-toggle="tab" href="#retab1">
+                            Assigned Students
+                        </a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#retab2">
+                            Available Students
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="tab-content">
+                    <div id="retab1" class="tab-pane active">
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($form->get('assigned_students') as $assignedStudentElement): ?>
+                                <tr>
+                                    <td>
+                                        <?php echo $assignedStudentElement->getLabel(); ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $this->formCheckbox($assignedStudentElement); ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div id="retab2" class="tab-pane">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($form->get('available_students') as $availableStudentElement): ?>
+                                <tr>
+                                    <td>
+                                        <?php echo $availableStudentElement->getLabel(); ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $this->formCheckbox($availableStudentElement); ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-md-2">
+            <label class="control-label" for=""></label>
+            <?php
+            $submit = $form->get('submit');
+            echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Update'));
+            echo $this->formElementErrors($submit );
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 12px">
+    <div class="col-md-2">
+        <a href="<?php echo $this->url('admin/account_mclasses', array('id'=>$account->id)) ?>" class="btn btn-default btn-sm">Cancel</a>
+    </div>
+</div>
+
+<?php echo $this->form()->closeTag() ?>
+

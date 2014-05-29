@@ -86,6 +86,10 @@ class TableAbstract
         $this->tableGateway->delete(array('id' => (int) $id));
     }
 
+    public function deleteWith($where) {
+        $this->tableGateway->delete($where);
+    }
+
     public function getAdapter() {
         return $this->tableGateway->getAdapter();
     }

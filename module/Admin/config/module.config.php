@@ -351,6 +351,21 @@ return array(
                         ),
                     ),
 
+                    'mclass_students' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:a_id]/mclass/[:m_id]/students',
+                            'constraints' => array(
+                                'a_id' => '[0-9]*',
+                                'm_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'mclass-students',
+                            ),
+                        ),
+                    ),
+
                     // RESOURCES
                     'resources' => array(
                         'type' => 'Zend\Mvc\Router\Http\Literal',

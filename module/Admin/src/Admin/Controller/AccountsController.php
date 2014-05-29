@@ -434,7 +434,6 @@ class AccountsController extends AbstractActionController
         $form = $this->getServiceLocator()->get('MclassEditForm');
 
         $form->setAccount($account);
-        $form->bind($mclass);
 
         $request = $this->getRequest();
 
@@ -460,6 +459,62 @@ class AccountsController extends AbstractActionController
 
         return new ViewModel([
             'account' => $account,
+            'form' => $form,
+        ]);
+
+    }
+
+    public function mclassStudentsAction() {
+
+        $accountService = $this->getServiceLocator()->get('AccountService');
+        $mclassService = $this->getServiceLocator()->get('MclassService');
+        $studentService = $this->getServiceLocator()->get('StudentService');
+
+        $account = $accountService->get($this->params('a_id'));
+        $mclass = $mclassService->get($this->params('m_id'));
+
+        $form = $this->getServiceLocator()->get('MclassStudentsForm');
+
+        $form->setAccount($account);
+        $form->setMclass($mclass);
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+
+                // ASSIGNED STUDENTS
+                foreach($form->get('assigned_students') as $studentElement) {
+                    if (!$studentElement->isChecked()) {
+                        $student = $studentService->get($studentElement->getName());
+                        $mclassService->removeStudentFromMclass($student, $mclass);
+                    }
+                }
+
+                // AVAILABLE STUDENTS
+                foreach($form->get('available_students') as $studentElement) {
+                    if ($studentElement->isChecked()) {
+                        $student = $studentService->get($studentElement->getName());
+                        $mclassService->addStudentToMclass($student, $mclass);
+                    }
+                }
+
+                $this->flashMessenger()->addSuccessMessage('Updated Class\' Students');
+                $this->redirect()->toRoute('admin/mclass_students', array('a_id' => $account->id, 'm_id' => $mclass->id));
+            } else {
+                $this->flashMessenger()->addErrorMessage('Please review your form.');
+            }
+
+        }
+
+        $this->layout()->pageTitle = 'Account > School > Class > Students';
+
+        return new ViewModel([
+            'account' => $account,
+            'mclass' => $mclass,
             'form' => $form,
         ]);
 

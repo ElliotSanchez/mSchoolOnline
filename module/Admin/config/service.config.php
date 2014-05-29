@@ -20,6 +20,9 @@ use Admin\Student\Service as StudentService;
 use Admin\Mclass\Entity as Mclass;
 use Admin\Mclass\Table as MclassTable;
 use Admin\Mclass\Service as MclassService;
+use Admin\MclassStudent\Entity as MclassStudent;
+use Admin\MclassStudent\Table as MclassStudentTable;
+use Admin\MclassStudent\Service as MclassStudentService;
 use Admin\Resource\Entity as Resource;
 use Admin\Resource\Table as ResourceTable;
 use Admin\Resource\Service as ResourceService;
@@ -181,13 +184,32 @@ return array(
                 return $table;
             },
         'MclassService' => function ($sm) {
-                return new MclassService($sm->get('MclassTable'));
+                return new MclassService($sm->get('MclassTable'), $sm->get('MclassStudentService'), $sm->get('StudentService'));
             },
         'MclassAddForm' => function ($sm) {
                 return new Admin\Form\Account\Mclass\Add($sm->get('SchoolService'));
             },
         'MclassEditForm' => function ($sm) {
                 return new Admin\Form\Account\Mclass\Edit($sm->get('SchoolService'));
+            },
+        'MclassStudentsForm' => function ($sm) {
+            return new Admin\Form\Account\Mclass\Students($sm->get('MclassService'), $sm->get('StudentService'));
+        },
+
+        // MCLASS STUDENTS
+        'MclassStudentTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new MclassStudent());
+                return new TableGateway('mclasses_students', $dbAdapter, null, $resultSetPrototype);
+            },
+        'MclassStudentTable' =>  function($sm) {
+                $tableGateway = $sm->get('MclassStudentTableGateway');
+                $table = new MclassStudentTable($tableGateway);
+                return $table;
+            },
+        'MclassStudentService' => function ($sm) {
+                return new MclassStudentService($sm->get('MclassStudentTable'));
             },
 
         // RESOURCES
