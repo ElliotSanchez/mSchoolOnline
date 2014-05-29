@@ -43,7 +43,9 @@ class AccountsController extends AbstractActionController
 
     public function teachersAction() {
 
-        $teachers = $this->getServiceLocator()->get('TeacherService')->all();
+        $account = $this->getAccount();
+
+        $teachers = $this->getServiceLocator()->get('TeacherService')->getForAccount($account);
 
         $this->layout()->pageTitle = 'Account > Schools';
 
@@ -222,6 +224,8 @@ class AccountsController extends AbstractActionController
 
             if ($form->isValid()) {
                 $data = $form->getData();
+
+                $data['account_id'] = $account->id;
 
                 $school = $this->getServiceLocator()->get('TeacherService')->create($data);
                 $this->flashMessenger()->addSuccessMessage('Added Teacher');

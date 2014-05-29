@@ -58,8 +58,8 @@ class Entity extends UserAbstract {
         $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : null;
         $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : 0;
 
-        $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : null;
-        $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : null;
+        $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : $this->accountId;
+        $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : $this->schoolId;
 
         $this->exchangeDates($data);
     }
