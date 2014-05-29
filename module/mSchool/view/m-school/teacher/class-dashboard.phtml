@@ -1,0 +1,451 @@
+<!--<h1>Teacher Dashboard</h1>-->
+<!---->
+<!--<table>-->
+<!--    <tbody>-->
+<!--        <tr>-->
+<!--            <td><a href="/teacher/class/progress">Math 100</a></td></td>-->
+<!--        </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+
+<div class="row" id="content-wrapper">
+    <div class="col-xs-12">
+        <div class="page-header page-header-with-buttons">
+            <h1 class="pull-left">
+                <i class="icon-dashboard"></i>
+                <span>Coach Dashboard</span>
+            </h1>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <a class="btn btn-white hidden-xs" href="#">Last month</a>
+                    <a class="btn btn-white" href="#">Last week</a>
+                    <a class="btn btn-white " href="#">Today</a>
+                    <a class="btn btn-white" id="daterange" href="#"><i class="icon-calendar"></i>
+                        <span>Custom</span>
+                        <b class="caret"></b>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row box box-transparent">
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link blue-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-comments"></div>
+                        </div>
+                        <div class="content">Messages</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link green-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-star"></div>
+                        </div>
+                        <div class="content">Star Performers</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link orange-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-magic"></div>
+                        </div>
+                        <div class="content">Most Improved</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link purple-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-eye-open"></div>
+                        </div>
+                        <div class="content">Student View</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link red-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-inbox"></div>
+                        </div>
+                        <div class="content">Assignments</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="box-quick-link muted-background">
+                    <a href="#">
+                        <div class="header">
+                            <div class="icon-refresh"></div>
+                        </div>
+                        <div class="content">Refresh</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 box">
+                <div class="box-header">
+                    <div class="title">
+                        <i class="icon-inbox"></i>
+                        Problems Solved
+                    </div>
+                    <div class="actions">
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
+                        </a>
+
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <div id="stats-chart1" style="padding: 0px; position: relative; height: 200px;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 box">
+                <div class="box-header">
+                    <div class="title">
+                        <i class="icon-group"></i>
+                        Levels Completed
+                    </div>
+                    <div class="actions">
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
+                        </a>
+
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <div id="stats-chart2" style="padding: 0px; position: relative; height: 200px;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php /* CLASS PROGRESS */ ?>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Math 100 Progress</h1>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <?php /* TIME ON TASK */ ?>
+            <div class="col-md-6">
+                <p class="text-muted">The chart below shows the number of minutes your students spent on mSchool last week.</p>
+                <div class="class-progress-chart">
+
+                </div>
+            </div>
+
+            <?php /*  */ ?>
+            <div class="col-md-6">
+                <p class="text-muted">The chart below shows how many Learning Points your students earned in mSchool last week.</p>
+                <div class="class-learning-points-chart">
+
+                </div>
+            </div>
+        </div>
+
+        <?php
+            /**
+                D3 DATA
+            */
+        ?>
+
+        <style type="text/css">
+            .x-axis path {
+                stroke:white;
+                fill:none;
+            }
+            .x-axis line {
+                fill: none;
+                stroke: none;
+                stroke-opacity:.8;
+                shape-rendering: crispEdges;
+            }
+            .bars rect {
+                fill:steelblue;
+                fill-opacity:.9;
+            }
+            .title {
+                font-weight: bold;
+            }
+            #precise-value {
+                fill:white;
+                font-size: 12px;
+            }
+        </style>
+        <script type="text/javascript">
+
+        chartWidth = 500;
+        chartHeight = 500;
+        numRecords = 24;
+
+        // TIME ON TASK
+        (function(){
+
+            /* CUSTOM */
+            var timeOnTaskFillByValue = function (d) {
+
+                if (d.rate >= 200)
+                    return "#3eb05b"; // FLATTY GREEN 62,176,91
+                else if (d.rate >= 100)
+                    return "#dfef34"; // SIMULATED FLATTY YELLOW 223 239 52 (9BA534)
+                else if (d.rate >= 0)
+                    return "#f7990d"; // FLATTY ORANGE 247, 153, 13
+                else
+                    return "#f12e29"; // FLATTY RED 241, 46, 41
+            };
+            /* END CUSTOM */
+
+            var margin = {top: 50, bottom: 50, left:125, right: 40};
+            var width = chartWidth - margin.left - margin.right;
+            var height = chartHeight - margin.top - margin.bottom;
+
+            var xScale = d3.scale.linear().range([0, width]);
+            var yScale = d3.scale.ordinal().rangeRoundBands([0, height], 1.8,0);
+
+            var numTicks = 5;
+            var xAxis = d3.svg.axis().scale(xScale)
+                .orient("top")
+                .tickSize((-height))
+                .ticks(numTicks);
+
+            var svg = d3.select(".class-progress-chart").append("svg")
+                .attr("width", width+margin.left+margin.right)
+                .attr("height", height+margin.top+margin.bottom)
+                .attr("class", "base-svg");
+
+            var barSvg = svg.append("g")
+                .attr("transform", "translate("+margin.left+","+margin.top+")")
+                .attr("class", "bar-svg");
+
+            var x = barSvg.append("g")
+                .attr("class", "x-axis");
+
+            var url = "/assets/data/class-progress-data.json";
+
+            d3.json(url, function(data) {
+
+                var xMax = d3.max(data, function(d) { return d.rate; } );
+                var xMin = 0;
+                xScale.domain([xMin, xMax]);
+                yScale.domain(data.map(function(d) { return d.country; }));
+
+                d3.select(".base-svg").append("text")
+                    .attr("x", margin.left)
+                    .attr("y", (margin.top)/2)
+                    .attr("text-anchor", "start")
+                    .text("Time on Task")
+                    .attr("class", "title");
+
+                var groups = barSvg.append("g").attr("class", "labels")
+                    .selectAll("text")
+                    .data(data)
+                    .enter()
+                    .append("g");
+
+                groups.append("text")
+                    .attr("x", "0")
+                    .attr("y", function(d) { return yScale(d.country); })
+                    .text(function(d) { return d.country; })
+                    .attr("text-anchor", "end")
+                    .attr("dy", ".9em")
+                    .attr("dx", "-.32em")
+                    .attr("id", function(d,i) { return "label"+i; });
+
+                var bars = groups
+                    .attr("class", "bars")
+                    .append("rect")
+                    .attr("width", function(d) { return xScale(d.rate); })
+                    .attr("height", height/numRecords)
+                    .attr("x", xScale(xMin))
+                    .attr("y", function(d) { return yScale(d.country); })
+                    .attr("id", function(d,i) { return "bar"+i; })
+                    .style("fill", timeOnTaskFillByValue);
+
+                groups.append("text")
+                    .attr("x", function(d) { return xScale(d.rate); })
+                    .attr("y", function(d) { return yScale(d.country); })
+                    .text(function(d) { return d.rate; })
+                    .attr("text-anchor", "end")
+                    .attr("dy", "1.2em")
+                    .attr("dx", "-.32em")
+                    .attr("id", "precise-value");
+
+                bars
+                    .on("mouseover", function() {
+                        var currentGroup = d3.select(this.parentNode);
+                        currentGroup.select("rect").style("fill", "brown");
+                        currentGroup.select("text").style("font-weight", "bold");
+                    })
+                    .on("mouseout", function() {
+                        var currentGroup = d3.select(this.parentNode);
+                        //currentGroup.select("rect").style("fill", "steelblue");
+                        currentGroup.select("rect").style("fill", timeOnTaskFillByValue);
+                        currentGroup.select("text").style("font-weight", "normal");
+                    })
+                    .on("click", function(d) {
+                        window.location = 'http://' + location.hostname + '/teacher/student/progress';
+                    });
+
+                x.call(xAxis);
+                var grid = xScale.ticks(numTicks);
+                barSvg.append("g").attr("class", "grid")
+                    .selectAll("line")
+                    .data(grid, function(d) { return d; })
+                    .enter().append("line")
+                    .attr("y1", 0)
+                    .attr("y2", height+margin.bottom)
+                    .attr("x1", function(d) { return xScale(d); })
+                    .attr("x2", function(d) { return xScale(d); })
+                    .attr("stroke", "white");
+
+            });
+
+        })();
+
+        // LEARNING POINTS
+        (function(){
+
+            /* CUSTOM */
+            var pointsFillByValue = function (d) {
+
+                if (d.rate >= 200)
+                    return "#3eb05b"; // FLATTY GREEN 62,176,91
+                else if (d.rate >= 100)
+                    return "#dfef34"; // SIMULATED FLATTY YELLOW 223 239 52 (9BA534)
+                else if (d.rate >= 0)
+                    return "#f7990d"; // FLATTY ORANGE 247, 153, 13
+                else
+                    return "#f12e29"; // FLATTY RED 241, 46, 41
+            };
+            /* END CUSTOM */
+
+            var margin = {top: 50, bottom: 50, left:125, right: 40};
+            var width = chartWidth - margin.left - margin.right;
+            var height = chartHeight - margin.top - margin.bottom;
+
+            var xScale = d3.scale.linear().range([0, width]);
+            var yScale = d3.scale.ordinal().rangeRoundBands([0, height], 1.8,0);
+
+            var numTicks = 5;
+            var xAxis = d3.svg.axis().scale(xScale)
+                .orient("top")
+                .tickSize((-height))
+                .ticks(numTicks);
+
+            var svg = d3.select(".class-learning-points-chart").append("svg")
+                .attr("width", width+margin.left+margin.right)
+                .attr("height", height+margin.top+margin.bottom)
+                .attr("class", "base-svg");
+
+            var barSvg = svg.append("g")
+                .attr("transform", "translate("+margin.left+","+margin.top+")")
+                .attr("class", "bar-svg");
+
+            var x = barSvg.append("g")
+                .attr("class", "x-axis");
+
+            var url = "/assets/data/class-learning-points-data.json";
+
+            d3.json(url, function(data) {
+
+                var xMax = d3.max(data, function(d) { return d.rate; } );
+                var xMin = 0;
+                xScale.domain([xMin, xMax]);
+                yScale.domain(data.map(function(d) { return d.country; }));
+
+                d3.select(".class-learning-points-chart .base-svg").append("text")
+                    .attr("x", margin.left)
+                    .attr("y", (margin.top)/2)
+                    .attr("text-anchor", "start")
+                    .text("Learning Points")
+                    .attr("class", "title");
+
+                var groups = barSvg.append("g").attr("class", "labels")
+                    .selectAll("text")
+                    .data(data)
+                    .enter()
+                    .append("g");
+
+                groups.append("text")
+                    .attr("x", "0")
+                    .attr("y", function(d) { return yScale(d.country); })
+                    .text(function(d) { return d.country; })
+                    .attr("text-anchor", "end")
+                    .attr("dy", ".9em")
+                    .attr("dx", "-.32em")
+                    .attr("id", function(d,i) { return "label"+i; });
+
+                var bars = groups
+                    .attr("class", "bars")
+                    .append("rect")
+                    .attr("width", function(d) { return xScale(d.rate); })
+                    .attr("height", height/numRecords)
+                    .attr("x", xScale(xMin))
+                    .attr("y", function(d) { return yScale(d.country); })
+                    .attr("id", function(d,i) { return "bar"+i; })
+                    .style("fill", pointsFillByValue);
+
+                groups.append("text")
+                    .attr("x", function(d) { return xScale(d.rate); })
+                    .attr("y", function(d) { return yScale(d.country); })
+                    .text(function(d) { return d.rate; })
+                    .attr("text-anchor", "end")
+                    .attr("dy", "1.2em")
+                    .attr("dx", "-.32em")
+                    .attr("id", "precise-value");
+
+                bars
+                    .on("mouseover", function() {
+                        var currentGroup = d3.select(this.parentNode);
+                        currentGroup.select("rect").style("fill", "brown");
+                        currentGroup.select("text").style("font-weight", "bold");
+                    })
+                    .on("mouseout", function() {
+                        var currentGroup = d3.select(this.parentNode);
+                        //currentGroup.select("rect").style("fill", "steelblue");
+                        currentGroup.select("rect").style("fill", pointsFillByValue);
+                        currentGroup.select("text").style("font-weight", "normal");
+                    })
+                    .on("click", function(d) {
+                        window.location = 'http://' + location.hostname + '/teacher/student/progress';
+                    });
+
+                x.call(xAxis);
+                var grid = xScale.ticks(numTicks);
+                barSvg.append("g").attr("class", "grid")
+                    .selectAll("line")
+                    .data(grid, function(d) { return d; })
+                    .enter().append("line")
+                    .attr("y1", 0)
+                    .attr("y2", height+margin.bottom)
+                    .attr("x1", function(d) { return xScale(d); })
+                    .attr("x2", function(d) { return xScale(d); })
+                    .attr("stroke", "white");
+
+            });
+
+        })();
+
+        </script>
+
+    </div>
+
+</div>

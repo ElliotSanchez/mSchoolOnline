@@ -5,6 +5,7 @@ namespace Admin\Teacher;
 use Admin\ModelAbstract\ServiceAbstract as ServiceAbstract;
 use Admin\Teacher\Entity as Teacher;
 use Admin\Account\Entity as Account;
+use Admin\School\Entity as School;
 
 class Service extends ServiceAbstract {
 
@@ -35,6 +36,12 @@ class Service extends ServiceAbstract {
     public function getForAccount(Account $account) {
 
         return $this->table->fetchWith(array('account_id' => $account->id));
+
+    }
+
+    public function getForSchool(School $school) {
+
+        return iterator_to_array($this->table->fetchWith(array('school_id' => $school->id)));
 
     }
 

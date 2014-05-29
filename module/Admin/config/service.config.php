@@ -187,7 +187,7 @@ return array(
                 return $table;
             },
         'MclassService' => function ($sm) {
-                return new MclassService($sm->get('MclassTable'), $sm->get('MclassStudentService'), $sm->get('MclassTeacherService'), $sm->get('StudentService'), $sm->get('TeacherService'));
+                return new MclassService($sm->get('MclassTable'), $sm->get('MclassStudentService'), $sm->get('MclassTeacherService'), $sm->get('StudentService'), $sm->get('TeacherService'), $sm->get('SchoolService'));
             },
         'MclassAddForm' => function ($sm) {
                 return new Admin\Form\Account\Mclass\Add($sm->get('SchoolService'));
