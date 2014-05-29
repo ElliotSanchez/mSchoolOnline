@@ -366,6 +366,21 @@ return array(
                         ),
                     ),
 
+                    'mclass_teachers' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:a_id]/mclass/[:m_id]/teachers',
+                            'constraints' => array(
+                                'a_id' => '[0-9]*',
+                                'm_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'mclass-teachers',
+                            ),
+                        ),
+                    ),
+
                     // RESOURCES
                     'resources' => array(
                         'type' => 'Zend\Mvc\Router\Http\Literal',

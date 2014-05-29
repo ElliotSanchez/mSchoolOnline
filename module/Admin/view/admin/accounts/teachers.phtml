@@ -22,7 +22,7 @@
                 <?php foreach($teachers as $teacher): ?>
                     <tr>
                         <td>
-                            <a href="<?php echo $this->url('admin/teacher_edit', array('a_id' => $teacher->id, 't_id' => $teacher->id)) ?>">
+                            <a href="<?php echo $this->url('admin/teacher_edit', array('a_id' => $account->id, 't_id' => $teacher->id)) ?>">
                                 <?php echo $teacher->firstName ?> <?php echo $teacher->lastName ?>
                             </a>
                         </td>
@@ -33,7 +33,7 @@
                             <?php echo $teacher->username ?>
                         </td>
                         <td class="text-right">
-                            <a href="<?php echo $this->url('admin/teacher_edit', array('a_id' => $teacher->id, 't_id' => $teacher->id)) ?>" class="btn btn-default btn-sm">
+                            <a href="<?php echo $this->url('admin/teacher_edit', array('a_id' => $account->id, 't_id' => $teacher->id)) ?>" class="btn btn-default btn-sm">
                                 Edit
                             </a>
                         </td>

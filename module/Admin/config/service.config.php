@@ -23,6 +23,9 @@ use Admin\Mclass\Service as MclassService;
 use Admin\MclassStudent\Entity as MclassStudent;
 use Admin\MclassStudent\Table as MclassStudentTable;
 use Admin\MclassStudent\Service as MclassStudentService;
+use Admin\MclassTeacher\Entity as MclassTeacher;
+use Admin\MclassTeacher\Table as MclassTeacherTable;
+use Admin\MclassTeacher\Service as MclassTeacherService;
 use Admin\Resource\Entity as Resource;
 use Admin\Resource\Table as ResourceTable;
 use Admin\Resource\Service as ResourceService;
@@ -184,7 +187,7 @@ return array(
                 return $table;
             },
         'MclassService' => function ($sm) {
-                return new MclassService($sm->get('MclassTable'), $sm->get('MclassStudentService'), $sm->get('StudentService'));
+                return new MclassService($sm->get('MclassTable'), $sm->get('MclassStudentService'), $sm->get('MclassTeacherService'), $sm->get('StudentService'), $sm->get('TeacherService'));
             },
         'MclassAddForm' => function ($sm) {
                 return new Admin\Form\Account\Mclass\Add($sm->get('SchoolService'));
@@ -194,6 +197,9 @@ return array(
             },
         'MclassStudentsForm' => function ($sm) {
             return new Admin\Form\Account\Mclass\Students($sm->get('MclassService'), $sm->get('StudentService'));
+        },
+        'MclassTeachersForm' => function ($sm) {
+            return new Admin\Form\Account\Mclass\Teachers($sm->get('MclassService'), $sm->get('TeacherService'));
         },
 
         // MCLASS STUDENTS
@@ -211,6 +217,22 @@ return array(
         'MclassStudentService' => function ($sm) {
                 return new MclassStudentService($sm->get('MclassStudentTable'));
             },
+
+        // MCLASS TEACHERS
+        'MclassTeacherTableGateway' => function ($sm) {
+            $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+            $resultSetPrototype = new ResultSet();
+            $resultSetPrototype->setArrayObjectPrototype(new MclassTeacher());
+            return new TableGateway('mclasses_teachers', $dbAdapter, null, $resultSetPrototype);
+        },
+        'MclassTeacherTable' =>  function($sm) {
+            $tableGateway = $sm->get('MclassTeacherTableGateway');
+            $table = new MclassTeacherTable($tableGateway);
+            return $table;
+        },
+        'MclassTeacherService' => function ($sm) {
+            return new MclassTeacherService($sm->get('MclassTeacherTable'));
+        },
 
         // RESOURCES
         'ResourceTableGateway' => function ($sm) {

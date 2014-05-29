@@ -15,6 +15,10 @@ class Entity extends UserAbstract {
 
     public $schoolId;
 
+    public function getFullName() {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
     public function setPassword($password) {
 
         $bcrypt = new \Zend\Crypt\Password\Bcrypt();

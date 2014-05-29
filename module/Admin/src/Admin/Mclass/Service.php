@@ -7,18 +7,23 @@ use Admin\Mclass\Table as MclassTable;
 use Admin\Mclass\Entity as Mclass;
 use Admin\Account\Entity as Account;
 use Admin\MclassStudent\Service as MclassStudentService;
+use Admin\MclassTeacher\Service as MclassTeacherService;
 use Admin\Student\Service as StudentService;
 use Admin\Student\Entity as Student;
+use Admin\Teacher\Service as TeacherService;
+use Admin\Teacher\Entity as Teacher;
 
 class Service extends ServiceAbstract {
 
     protected $mclassStudentService;
     protected $studentService;
 
-    public function __construct(MclassTable $table, MclassStudentService $mclassStudentService, StudentService $studentService) {
+    public function __construct(MclassTable $table, MclassStudentService $mclassStudentService, MclassTeacherService $mclassTeacherService, StudentService $studentService, TeacherService $teacherService) {
         $this->table = $table;
         $this->mclassStudentService = $mclassStudentService;
+        $this->mclassTeacherService = $mclassTeacherService;
         $this->studentService = $studentService;
+        $this->teacherService = $teacherService;
     }
 
     public function create($data) {
@@ -83,5 +88,42 @@ class Service extends ServiceAbstract {
 
     }
 
+    public function addTeacherToMclass(Teacher $teacher, Mclass $mclass) {
+
+        $this->mclassTeacherService->create(array('teacher_id' => $teacher->id, 'mclass_id' => $mclass->id));
+
+    }
+
+    public function removeTeacherFromMclass(Teacher $teacher, Mclass $mclass) {
+
+        $this->mclassTeacherService->table->deleteWith(['teacher_id' => $teacher->id, 'mclass_id' => $mclass->id]);
+
+    }
+    
+    public function getTeachersAssignedToMclass(Mclass $mclass) {
+
+        $mclassTeachers = $this->mclassTeacherService->table->fetchWith(['mclass_id' => $mclass->id]);
+
+        $teacherIds = [];
+
+        foreach ($mclassTeachers as $mclassTeacher) $teacherIds[] = $mclassTeacher->teacherId;
+
+        return $this->teacherService->get($teacherIds);
+
+    }
+
+    public function getTeachersAvailableToMclass(Mclass $mclass) {
+
+        $sql = $this->teacherService->table->getSql();
+
+        $select = $sql->select();
+
+        $select->join('mclasses_teachers', 'mclasses_teachers.teacher_id = teachers.id', [], 'left'); //\Zend\Db\Sql\Select::SQL_STAR
+        $select->where(['teachers.school_id = ?' => $mclass->schoolId]);
+        $select->where('mclasses_teachers.id IS NULL');
+
+        return iterator_to_array($this->teacherService->table->fetchWith($select));
+
+    }
 
 }

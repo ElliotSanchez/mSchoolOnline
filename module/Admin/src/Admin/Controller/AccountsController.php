@@ -520,6 +520,62 @@ class AccountsController extends AbstractActionController
 
     }
 
+    public function mclassTeachersAction() {
+
+        $accountService = $this->getServiceLocator()->get('AccountService');
+        $mclassService = $this->getServiceLocator()->get('MclassService');
+        $teacherService = $this->getServiceLocator()->get('TeacherService');
+
+        $account = $accountService->get($this->params('a_id'));
+        $mclass = $mclassService->get($this->params('m_id'));
+
+        $form = $this->getServiceLocator()->get('MclassTeachersForm');
+
+        $form->setAccount($account);
+        $form->setMclass($mclass);
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+
+                // ASSIGNED STUDENTS
+                foreach($form->get('assigned_teachers') as $teacherElement) {
+                    if (!$teacherElement->isChecked()) {
+                        $teacher = $teacherService->get($teacherElement->getName());
+                        $mclassService->removeTeacherFromMclass($teacher, $mclass);
+                    }
+                }
+
+                // AVAILABLE STUDENTS
+                foreach($form->get('available_teachers') as $teacherElement) {
+                    if ($teacherElement->isChecked()) {
+                        $teacher = $teacherService->get($teacherElement->getName());
+                        $mclassService->addTeacherToMclass($teacher, $mclass);
+                    }
+                }
+
+                $this->flashMessenger()->addSuccessMessage('Updated Class\' Teachers');
+                $this->redirect()->toRoute('admin/mclass_teachers', array('a_id' => $account->id, 'm_id' => $mclass->id));
+            } else {
+                $this->flashMessenger()->addErrorMessage('Please review your form.');
+            }
+
+        }
+
+        $this->layout()->pageTitle = 'Account > School > Class > Teachers';
+
+        return new ViewModel([
+            'account' => $account,
+            'mclass' => $mclass,
+            'form' => $form,
+        ]);
+
+    }
+
     protected function getAccount() {
 
         $accountService = $this->getServiceLocator()->get('AccountService');
