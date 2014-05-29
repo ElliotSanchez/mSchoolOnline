@@ -6,7 +6,7 @@ return array(
             'mschool' => array(
                 'type' => 'Hostname',
                 'options' => array(
-                    'route' => ':subdomain.mschool.lp', // SEE MSchool/Module initRoute FOR REALLY IMPORTANT STUFF TO SUPPORT THIS
+                    'route' => ':subdomain.mschool.today', // SEE MSchool/Module initRoute FOR REALLY IMPORTANT STUFF TO SUPPORT THIS
                     'constraints' => array(
                         'subdomain' => '[a-zA-Z0-9_-]*',
                     ),
