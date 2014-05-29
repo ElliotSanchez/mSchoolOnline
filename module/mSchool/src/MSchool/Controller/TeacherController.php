@@ -76,4 +76,41 @@ class TeacherController extends AbstractActionController
         ]);
     }
 
+    public function studentPasswordAction() {
+
+        $studentService = $this->getServiceLocator()->get('StudentService');
+
+        $student = $studentService->get($this->params('id'));
+
+        $this->layout('mschool/layout/coach');
+
+        $form = new \MSchool\Form\StudentPassword();
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+
+                $password = $form->getInputFilter()->getRawValue('password');
+
+                if (strlen($password))
+                    $student->setPassword($password);
+
+                $studentService->save($student);
+
+                $this->flashMessenger()->addSuccessMessage('Updated Student\'s Password');
+                $this->redirect()->toRoute('mschool/teacher_student_password', array('id' => $student->id));
+            }
+
+        }
+
+        return new ViewModel([
+            'student' => $student,
+            'form' => $form,
+        ]);
+
+    }
 }

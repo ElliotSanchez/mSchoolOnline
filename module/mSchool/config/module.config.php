@@ -219,6 +219,20 @@ return array(
                         ),
                     ),
 
+                    'teacher_student_password' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/teacher/student/:id/password',
+                            'constraints' => array(
+                                's_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Teacher',
+                                'action'     => 'student-password',
+                            ),
+                        ),
+                    ),
+
                     // PAGES
                     'page_intro' => array(
                         'type' => 'Literal',

@@ -41,6 +41,7 @@
                             <th>
                                 Name
                             </th>
+                            <th>&nbsp;</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,6 +51,9 @@
                                         <a href="<?php echo $this->url('mschool/teacher_student_progress', ['s_id' => $student->id, 'm_id' => $mclass->id]); ?>">
                                             <?php echo $student->getFullName(); ?>
                                         </a>
+                                    </td>
+                                    <td class="text-right">
+                                        <a class="btn btn-default" href="<?php echo $this->url('mschool/teacher_student_password', ['id' => $student->id]); ?>">Reset Password</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
