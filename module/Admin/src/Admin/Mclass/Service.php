@@ -80,15 +80,34 @@ class Service extends ServiceAbstract {
 
     public function getStudentsAvailableToMclass(Mclass $mclass) {
 
-        $sql = $this->studentService->table->getSql();
+        // TODO GET THIS QUERY RIGHT. THE OTHER CODE WON'T SCALE.
+//        $sql = $this->studentService->table->getSql();
+//
+//        $select = $sql->select();
+//
+//        $select->join('mclasses_students', 'mclasses_students.student_id = students.id', [], 'left'); //\Zend\Db\Sql\Select::SQL_STAR
+//        $select->where(['students.account_id = ?' => $mclass->accountId]);
+//        $select->where('mclasses_students.id IS NULL');
+//
+//        return iterator_to_array($this->studentService->table->fetchWith($select));
 
-        $select = $sql->select();
+        $assignedStudents = $this->getStudentsAssignedToMclass($mclass);
+        $school = $this->schoolService->get($mclass->schoolId);
+        $atSchool = $this->studentService->getForSchool($school);
 
-        $select->join('mclasses_students', 'mclasses_students.student_id = students.id', [], 'left'); //\Zend\Db\Sql\Select::SQL_STAR
-        $select->where(['students.account_id = ?' => $mclass->accountId]);
-        $select->where('mclasses_students.id IS NULL');
+        $assignedIds = [];
 
-        return iterator_to_array($this->studentService->table->fetchWith($select));
+        foreach ($assignedStudents as $student) $assignedIds[] = $student->id;
+
+        $available = [];
+
+        foreach ($atSchool as $student) {
+            if (!in_array($student->id, $assignedIds)) {
+                $available[] = $student;
+            }
+        }
+
+        return $available;
 
     }
 
