@@ -11,6 +11,7 @@ class Entity extends UserAbstract {
     public $isDefault;
     public $isComplete;
     public $completedAt;
+    public $movedOn;
 
     public $studentId;
 
@@ -22,6 +23,7 @@ class Entity extends UserAbstract {
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : null;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
+        $this->movedOn = (bool) (!empty($data['moved_on'])) ? $data['moved_on'] : false;
 
     }
 
@@ -34,6 +36,7 @@ class Entity extends UserAbstract {
         $this->isDefault = (bool) (!empty($data['is_default'])) ? $data['is_default'] : false;
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
+        $this->movedOn = (bool) (!empty($data['moved_on'])) ? $data['moved_on'] : null;
 
         $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : null;
 
@@ -48,6 +51,7 @@ class Entity extends UserAbstract {
             'is_complete' => (int) $this->isComplete,
             'student_id' => $this->studentId,
             'completed_at' => ($this->completedAt instanceof \DateTime) ? ($this->completedAt->format('Y-m-d H:i:s')) : (null),
+            'moved_on'=> (int) $this->movedOn,
         );
 
         return $data;

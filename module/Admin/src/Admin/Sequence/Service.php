@@ -332,6 +332,19 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             }
         }
 
+        if ($sequence && !$progression) {
+            // SEQUENCE EXISTS, BUT NO PLAN GROUPS LEFT (THEY ARE LIKELY INCOMPLETE)
+            // MOVE TO ANOTHER SEQUENCES
+            $sequence->movedOn = true;
+
+            $sequence = $this->save($sequence);
+
+            $sequence = $this->getCurrentSequence($student);
+
+            $progression = $this->getCurrentProgressionForSequence($sequence, $date);
+
+        }
+
         // BUILD CONTAINER
         if ($progression) {
             // WITH STEPS
@@ -388,6 +401,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             'student_id = ?' => $student->id,
             'is_complete = 0',
             'is_default = 0',
+            'moved_on = 0'
         ))->order('id ASC')->limit(1);
 
         $results = $this->table->fetchWith($select);
@@ -436,20 +450,28 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             $previousProgress = $this->getPreviousProgression($sequence);
 
             if ($previousProgress) {
+                //die('>'.__LINE__);
                 $newPlanGroup = $previousProgress->planGroup + 1;
             } else {
                 $newPlanGroup = 1;
             }
 
-            // CREATE NEW PROGRESSION
-            $progression = $this->progressionService->create(array(
-                'student_id' => $sequence->studentId,
-                'sequence_id' => $sequence->id,
-                // 'plan_id' ???
-                'activity_date' => $date->format('Y-m-d'),
-                'plan_group' => $newPlanGroup, // TODO THIS SHOULD BE SET FROM PREVIOUS DATA, *OR* DEFAULT TO 0; PROBABLY FROM THE SEQUENCE
-                'is_complete' => 0,
-            ));
+            if ($newPlanGroup <= $sequence->planGroups) {
+
+                // CREATE NEW PROGRESSION
+                $progression = $this->progressionService->create(array(
+                    'student_id' => $sequence->studentId,
+                    'sequence_id' => $sequence->id,
+                    // 'plan_id' ???
+                    'activity_date' => $date->format('Y-m-d'),
+                    'plan_group' => $newPlanGroup, // TODO THIS SHOULD BE SET FROM PREVIOUS DATA, *OR* DEFAULT TO 0; PROBABLY FROM THE SEQUENCE
+                    'is_complete' => 0,
+                ));
+
+            } else {
+                // WHAT SHOULD HAPPEN HERE?
+                $progression = null;
+            }
 
         } else if ($date == $progression->activityDate) {
 
@@ -459,6 +481,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         } else if ($date > $progression->activityDate) {
 
+            die('>'.__LINE__);
             $nextPlanGroup = $progression->planGroup + 1;
 
             if ($nextPlanGroup <= $sequence->planGroups) {

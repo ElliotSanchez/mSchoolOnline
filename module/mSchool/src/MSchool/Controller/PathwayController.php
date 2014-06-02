@@ -31,7 +31,9 @@ class PathwayController extends AbstractActionController
             $container = $session->pathwayContainer;
         }
 
-        $step = $container->getCurrentStep();
+        if ($container) {
+            $step = $container->getCurrentStep();
+        }
 
         // DETERMINE VIEW BASED ON CONTENT OF CURRENT STEP
 
