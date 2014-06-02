@@ -3,11 +3,11 @@
         <?php /* STEPS */ ?>
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <span class="navbar-brand" href="<?php echo $this->url('mschool/home') ?>">mSchool</span>
             </div>
 
-            <div class="col-md-6 sequence-header">
+            <div class="col-md-7 sequence-header">
                     <?php for($i = 1; $i <= $container->numberOfSteps(); $i++): ?>
                         <input class="btn btn-sm <?php echo ($container->currStep == $i) ? ('btn-info') : ('btn-default') ?>" value="<?php echo $i ?>" type="button">
                     <?php endfor; ?>
