@@ -78,12 +78,13 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $STUDENT_FNAME_COL = 'A';
         $STUDENT_LNAME_COL = 'B';
         $STUDENT_NUM_COL = 'C';
-        $SEQUENCE_DEFAULT = 'D';
-        $SEQUENCE_1 = 'E';
-        $SEQUENCE_2 = 'F';
-        $SEQUENCE_3 = 'G';
-        $SEQUENCE_4 = 'H';
-        $SEQUENCE_5 = 'I';
+        $REPLACE_EXISTING = 'D';
+        $SEQUENCE_DEFAULT = 'E';
+        $SEQUENCE_1 = 'F';
+        $SEQUENCE_2 = 'G';
+        $SEQUENCE_3 = 'H';
+        $SEQUENCE_4 = 'I';
+        $SEQUENCE_5 = 'J';
 
         foreach ($rowIterator as $row) {
 
@@ -92,6 +93,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
             if(1 == $row->getRowIndex ()) continue; //skip first row
 
+            $replaceExisting = false;
             $sequenceDefaultCode = null;
             $sequence1Code = null;
             $sequence2Code = null;
@@ -108,6 +110,9 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                     case $STUDENT_LNAME_COL: $studentLName = $cell->getValue();
                         break;
                     case $STUDENT_NUM_COL:  $studentNumber = $cell->getValue();
+                        break;
+                    case $REPLACE_EXISTING: $replaceExisting = $cell->getValue();
+                                            $replaceExisting = (strtolower($replaceExisting) == "yes") ? (true) : (false);
                         break;
                     case $SEQUENCE_DEFAULT: $sequenceDefaultCode = strtolower($cell->getValue());
                         break;
@@ -130,6 +135,10 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
             // BUILD OUT SEQUENCES
             if ($student) {
+
+                if ($replaceExisting) {
+                    $this->inactivateSequences($student);
+                }
 
                 // COMMON SEQUENCE DATA
                 $newSequenceData = array('student_id' => $student->id, 'plan_groups' => 0);
@@ -168,7 +177,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             }
 
         }
-
     }
 
     public function assignSteps(Sequence $sequence, $shortCode, $student) {
@@ -279,6 +287,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $this->adapter = $adapter;
     }
 
+    // INACTIVATE
     public function inactivateDefaultSequences(Student $student) {
 
         $where = new \Zend\Db\Sql\Where();
@@ -290,6 +299,18 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
     }
 
+    protected function inactivateSequences(Student $student) {
+
+        $where = new \Zend\Db\Sql\Where();
+
+        $where->equalTo('student_id', $student->id)
+            ->equalTo('is_complete', 0);
+
+        return $this->table->update(array('is_active' => 0), $where);
+
+    }
+
+    // SEQUENCE CONTAINER
     public function getStudentSequenceContainerFor(Student $student, \DateTime $date) {
 
         $date->setTime(0, 0, 0); // JUST TO BE SURE WE ARE ONLY COMPARING DATES
@@ -378,6 +399,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             'student_id = ?' => $student->id,
             'is_complete = 0',
             'is_default = 0',
+            'is_active = 1',
         ))->order('id ASC');
 
         $sequences = iterator_to_array($this->table->fetchWith($select));
@@ -401,6 +423,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             'student_id = ?' => $student->id,
             'is_complete = 0',
             'is_default = 0',
+            'is_active = 1',
             'moved_on = 0'
         ))->order('id ASC')->limit(1);
 
@@ -481,7 +504,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         } else if ($date > $progression->activityDate) {
 
-            die('>'.__LINE__);
             $nextPlanGroup = $progression->planGroup + 1;
 
             if ($nextPlanGroup <= $sequence->planGroups) {
