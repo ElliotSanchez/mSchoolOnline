@@ -104,10 +104,15 @@ class Service extends ServiceAbstract {
 
             $student = $this->create($data);
             $student->username = $this->generateUsernameFor($student);
-            $student->mname = $this->generateMnameFor($student);
+            $student->setPassword($this->generatePasswordFor($student));
 
-            $student->generatePassword();
             $this->save($student);
+
+            if (!$student->number) {
+                $student->number = $student->id;
+                $this->save($student);
+            }
+
         }
 
     }
@@ -163,10 +168,8 @@ class Service extends ServiceAbstract {
         return $this->table->fetchWith(array('mname' => $mname))->count();
     }
 
-    public function generateMPasswordFor(Student $student) {
+    public function generatePasswordFor(Student $student) {
 
-        $adjectives = ['fuzzy', 'slimy', 'fast', 'slow', 'quick', 'funny', 'happy', ''];
-        $nouns = ['bunny', 'bird', 'toad', 'cow', 'bear', 'lemur'];
         $numbers = substr(str_shuffle("0123456789"), 0, 2);
 
         $mpassword = $this->getRandomAdjective() . $this->getRandomNoun() . $numbers;
