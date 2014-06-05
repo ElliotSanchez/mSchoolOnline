@@ -11,7 +11,6 @@ class Entity extends UserAbstract {
 
     public $number;
     public $mname;
-    public $mpassword;
     public $username;
     public $password;
     public $email;
@@ -96,7 +95,6 @@ class Entity extends UserAbstract {
         parent::create($data);
         $this->number = (!empty($data['number'])) ? $data['number'] : null;
         $this->mname = (!empty($data['mname'])) ? $data['mname'] : null;
-        $this->mpassword = (!empty($data['mpassword'])) ? $data['mpassword'] : null;
         $this->username = (!empty($data['username'])) ? $data['username'] : null;
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
         $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : null;
@@ -123,7 +121,6 @@ class Entity extends UserAbstract {
 
         $this->number = (!empty($data['number'])) ? $data['number'] : null;
         $this->mname = (!empty($data['mname'])) ? $data['mname'] : $this->mname;
-        $this->mpassword = (!empty($data['mpassword'])) ? $data['mpassword'] : $this->mpassword;
         $this->username = (!empty($data['username'])) ? $data['username'] : null;
         $this->password = (!empty($data['password']) && strlen($data['password'])) ? $data['password'] : null;
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
@@ -146,7 +143,6 @@ class Entity extends UserAbstract {
         $data = array(
             'number' => $this->number,
             'mname' => $this->mname,
-            'mpassword' => $this->mpassword,
             'username' => $this->username,
             'email' => $this->email,
             'first_name' => $this->firstName,
