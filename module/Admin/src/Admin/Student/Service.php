@@ -169,9 +169,58 @@ class Service extends ServiceAbstract {
         $nouns = ['bunny', 'bird', 'toad', 'cow', 'bear', 'lemur'];
         $numbers = substr(str_shuffle("0123456789"), 0, 2);
 
-        $mpassword = $adjectives[array_rand($adjectives)] . $nouns[array_rand($nouns)] . $numbers;
+        $mpassword = $this->getRandomAdjective() . $this->getRandomNoun() . $numbers;
 
         return $mpassword;
+
+    }
+
+    private function getRandomNoun() {
+
+        $nouns = ['bean','beet','corn','dhal','kale','kiwi','leek','lime','okra',
+            'pear','plum','apple','chard','chive','grape','guava','lemon','mango',
+            'melon','olive','onion','peach','pecan','prune','almond','carrot',
+            'cashew','celery','cherry','citrus','daikon','fennel','garlic','lentil',
+            'lychee','orange','oyster','papaya','peanut','pepper','potato','radish',
+            'raisin','squash','tomato','turnip','walnut','bear','calf','colt','deer',
+            'fawn','foal','goat','hare','ibex','lamb','lion','lynx','mule','orca',
+            'oxen','seal','wolf','bison','camel','horse','hyena','koala','lemur',
+            'moose','mouse','otter','panda','puppy','sheep','tiger','whale','zebra',
+            'alpaca','badger','bobcat','gopher','impala','jaguar','marmot','monkey',
+            'ocelot','rabbit','turtle','walrus','wombat','duck','gull','hawk','lark',
+            'loon','swan','tern','crane','eagle','egret','finch','goose','heron',
+            'macaw','quail','robin','stork','canary','condor','falcon','grouse',
+            'magpie','osprey','parrot','pigeon','puffin','toucan','turkey','moth',
+            'wasp','snail','aspen','comet','bike','salad','bottle','swing','slide',
+            'ball','racket','cake','cheese','icing','bread','taco','kitten','trout',
+            'shark','perch','skate','prawn','shrimp','manta','guppy','bass','carp',
+            'pike','tuna','boxer','hound','poodle','beagle','basset','azalea',
+            'baobab','bonsai','gingko','spruce','willow','palm','pine','teak',
+            'rice','paint','brick','paper','marble','drum','guitar','song','chair',
+            'desk','pencil','sofa','shelf','book','plate','spoon','sugar','milk',
+            'pillow','bucket','shovel','train','boat','glider','beach','field',
+            'barn','farm','bridge','street','road','tree','plant','cactus',
+            'butter','acorn','lego','brush','mirror'];
+
+        return $nouns[array_rand($nouns)];
+
+    }
+
+    private function getRandomAdjective() {
+
+        $nouns = ['blue','cyan','gold','gray','jade','lime','navy','pink','plum',
+            'rose','rosy','ruby','sage','black','brown','coral','dusky',
+            'green','hazel','ivory','lilac','mocha','olive','peach','pearl',
+            'snowy','taupe','topaz','white','auburn','blonde','bronze','cherry',
+            'copper','golden','indigo','maroon','orange','purple','silver',
+            'violet','yellow','calm','clever','cute','dizzy','eager','fancy',
+            'funny','joyous','shiny','silly','super','wild','tall','small',
+            'fast','slow','soft','fuzzy','yummy','sweet','goofy','lucky',
+            'tricky','teeny','petite','jolly','strong','brave','noisy','cool',
+            'groovy','magic','quiet','quirky','pale','rainy','sunny','cloudy',
+            'hazy','foggy','snowy','tame','zesty','windy','wise'];
+
+        return $nouns[array_rand($nouns)];
 
     }
 
