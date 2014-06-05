@@ -371,6 +371,73 @@ class AccountsController extends AbstractActionController
 
     }
 
+    public function studentsExportAction() {
+
+        $account = $this->getAccount();
+
+        $students = $this->getServiceLocator()->get('StudentService')->getForAccount($account);
+
+        $objPHPExcel = new \PHPExcel();
+
+        // GENERATE EXPORT DOCUMENT
+        $objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Student Number')
+            ->setCellValue('B1', 'First Name')
+            ->setCellValue('C1', 'Last Name')
+            ->setCellValue('D1', 'Mname')
+            ->setCellValue('E1', 'Username')
+            ->setCellValue('F1', 'Password')
+            ->setCellValue('G1', 'Email')
+            ->setCellValue('H1', 'DOB')
+            ->setCellValue('I1', 'Gender')
+            ->setCellValue('J1', 'Ethnicity')
+            ->setCellValue('K1', 'IEP')
+            ->setCellValue('L1', 'Grade Level');
+
+        foreach ($students as $index => $student) {
+
+            $row = $index+2;
+
+            $objPHPExcel->getActiveSheet()
+                ->setCellValue('A'.$row, $student->number)
+                ->setCellValue('B'.$row, $student->firstName)
+                ->setCellValue('C'.$row, $student->lastName)
+                ->setCellValue('D'.$row, $student->mname)
+                ->setCellValue('E'.$row, $student->username)
+                ->setCellValue('F'.$row, $student->getUnencryptedPassword())
+                ->setCellValue('G'.$row, $student->email)
+                ->setCellValue('H'.$row, (($student->dob) ? ($student->dob->format('m/d/Y')) : (null)))
+                ->setCellValue('I'.$row, $student->gender)
+                ->setCellValue('J'.$row, $student->ethnicity)
+                ->setCellValue('K'.$row, $student->iep)
+                ->setCellValue('L'.$row, $student->gradeLevel);
+
+            $objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('B'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('F'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('G'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('H'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('J'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('K'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getStyle('L'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+
+        }
+
+        // SEND FILE DOWN
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . str_replace(' ', '_', $account->name) . '_Student.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+        exit;
+
+    }
+
     // CLASSES
     public function mclassesAction() {
 

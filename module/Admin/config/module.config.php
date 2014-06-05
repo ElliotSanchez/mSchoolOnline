@@ -217,6 +217,20 @@ return array(
                         ),
                     ),
 
+                    'account_students_export' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/account/[:id]/students/export',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Accounts',
+                                'action'     => 'students-export',
+                            ),
+                        ),
+                    ),
+
                     'account_mclasses' => array(
                         'type' => 'Segment',
                         'options' => array(
