@@ -274,7 +274,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             ->order(array('sq.is_default ASC', 'sq.id ASC', 'ss.id'))
         ;
 
-        $select->where(array('ss.student_id' => $student->id));
+        $select->where(array('ss.student_id' => $student->id, 'sq.is_active = 1'));
 
         $selectString = $sql->getSqlStringForSqlObject($select);
         $results = $this->adapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
