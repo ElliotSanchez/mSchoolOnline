@@ -132,9 +132,10 @@ class Service extends ServiceAbstract {
 
     public function generateMnameFor(Student $student) {
         $buildName = function($student) {
-            $lastLetter = substr($student->lastName, 0, 1);
+            $firstInitial = substr($student->firstName, 0, 1);
+            $lastInitial = substr($student->lastName, 0, 1);
             $random = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 4) . substr(str_shuffle("0123456789"), 0, 4);
-            $mname = $lastLetter . $random;
+            $mname = $firstInitial . $lastInitial . $random;
             return strtolower($mname);
         };
 
