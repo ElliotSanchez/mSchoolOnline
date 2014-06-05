@@ -104,6 +104,7 @@ class Service extends ServiceAbstract {
 
             $student = $this->create($data);
             $student->username = $this->generateUsernameFor($student);
+            $student->mname = $this->generateMnameFor($student);
 
             $student->generatePassword();
             $this->save($student);
@@ -126,6 +127,39 @@ class Service extends ServiceAbstract {
 
     public function usernameExists($username) {
         return count($this->table->fetchWith(array('username' => $username)));
+    }
+
+    public function generateMnameFor(Student $student) {
+        $buildName = function($student) {
+            $lastLetter = substr($student->lastName, 0, 1);
+            $random = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 4) . substr(str_shuffle("0123456789"), 0, 4);
+            $mname = $lastLetter . $random;
+            return strtolower($mname);
+        };
+
+        $mname = $buildName($student);
+
+        // TRY IT THREE TIMES
+        if ($this->mnameExists($mname)) {
+            $mname = $buildName($student);
+
+            if ($this->mnameExists($mname)) {
+                $mname = $buildName($student);
+
+                if ($this->mnameExists($mname)) {
+                    $mname = $buildName($student);
+                } else {
+                    $mname .= '_'.$student->number; // JUST MAKE SOMETHING UNIQUE
+                }
+            }
+        }
+
+        return $mname;
+
+    }
+
+    public function mnameExists($mname) {
+        return $this->table->fetchWith(array('mname' => $mname))->count();
     }
 
 }

@@ -10,6 +10,7 @@ use Admin\Module as AdminModule;
 class Entity extends UserAbstract {
 
     public $number;
+    public $mname;
     public $username;
     public $password;
     public $email;
@@ -27,6 +28,7 @@ class Entity extends UserAbstract {
     public function getFullName() {
         return $this->firstName . ' ' . $this->lastName;
     }
+
     public function generatePassword() {
         // THIS IS MEANT TO BE A RELATIVELY FRIENDLY INITIAL PASSWORD FOR A STUDENT
         $clearTextPassword = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 4) . substr(str_shuffle("0123456789"), 0, 4);
@@ -92,6 +94,7 @@ class Entity extends UserAbstract {
 
         parent::create($data);
         $this->number = (!empty($data['number'])) ? $data['number'] : null;
+        $this->mname = (!empty($data['number'])) ? $data['number'] : null;
         $this->username = (!empty($data['username'])) ? $data['username'] : null;
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
         $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : null;
@@ -108,6 +111,10 @@ class Entity extends UserAbstract {
         if(isset($data['password']))
             $this->setPassword($data['password']);
 
+        if (!$this->mname) {
+            $this->generateMname();
+        }
+
     }
 
     public function exchangeArray(array $data)
@@ -116,6 +123,7 @@ class Entity extends UserAbstract {
         if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
 
         $this->number = (!empty($data['number'])) ? $data['number'] : null;
+        $this->mname = (!empty($data['number'])) ? $data['number'] : $this->mname;
         $this->username = (!empty($data['username'])) ? $data['username'] : null;
         $this->password = (!empty($data['password']) && strlen($data['password'])) ? $data['password'] : null;
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
@@ -137,6 +145,7 @@ class Entity extends UserAbstract {
 
         $data = array(
             'number' => $this->number,
+            'mname' => $this->mname,
             'username' => $this->username,
             'email' => $this->email,
             'first_name' => $this->firstName,

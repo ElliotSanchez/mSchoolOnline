@@ -1,0 +1,1 @@
+ALTER TABLE `students` ADD `mname` VARCHAR(256)  NULL  DEFAULT NULL  AFTER `number`;
