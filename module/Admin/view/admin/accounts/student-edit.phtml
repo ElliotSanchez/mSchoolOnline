@@ -51,6 +51,15 @@ echo $this->formHidden($form->get('account_id'));
 </div>
 
 <div class="row">
+    <div class="form-group">
+        <div class="col-md-4">
+            <label class="control-label" for="last_name">mName</label>
+            <p><?php echo $student->mname ?></p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="form-group <?php echo (!$form->get('school_id')->getMessages()) ?: ('has-error') ?>">
         <div class="col-md-4">
             <label class="control-label" for="school_id">School</label>

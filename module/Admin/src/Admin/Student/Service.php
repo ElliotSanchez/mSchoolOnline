@@ -104,6 +104,7 @@ class Service extends ServiceAbstract {
 
             $student = $this->create($data);
             $student->username = $this->generateUsernameFor($student);
+            $student->mname = $this->generateMnameFor($student);
             $student->setPassword($this->generatePasswordFor($student));
 
             $this->save($student);
