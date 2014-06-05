@@ -62,6 +62,7 @@ class Container
     }
 
     public function getCurrentStep() {
+        // TODO DON'T ALLOW NEGATIVE INDEXES
         return $this->studentSteps[$this->currStep-1]->step;
     }
 
