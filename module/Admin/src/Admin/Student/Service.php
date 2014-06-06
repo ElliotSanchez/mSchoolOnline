@@ -139,7 +139,7 @@ class Service extends ServiceAbstract {
         $buildName = function($student) {
             $firstInitial = substr($student->firstName, 0, 1);
             $lastInitial = substr($student->lastName, 0, 1);
-            $random = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 4) . substr(str_shuffle("0123456789"), 0, 4);
+            $random = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"), 0, 8);
             $mname = $firstInitial . $lastInitial . $random;
             return strtolower($mname);
         };
