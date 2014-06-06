@@ -119,12 +119,31 @@ class Service extends ServiceAbstract {
     }
 
     public function generateUsernameFor(Student $student) {
-        $username =  strtolower($student->firstName.$student->lastName);
 
-        $username = str_replace(' ', '', $username);
+        $buildUsername = function($student) {
+            $firstName = $student->firstName;
+            $lastInitial = substr($student->lastName, 0, 1);
+            $randomLetter = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"), 0, 1);
+            $randomNumber = substr(str_shuffle("012345678901234567890123456789"), 0, 2);
+            $username = $randomLetter . $randomNumber . $firstName . $lastInitial;
+            return str_replace(' ', '', strtolower($username));
+        };
 
-        if ($this->usernameExists($username)) {
-            $username .= $student->number;
+        $username = $buildUsername($student);
+
+        // TRY IT THREE TIMES
+        if ($this->mnameExists($username)) {
+            $username = $buildUsername($student);
+
+            if ($this->mnameExists($username)) {
+                $username = $buildUsername($student);
+
+                if ($this->mnameExists($username)) {
+                    $username = $buildUsername($student);
+                } else {
+                    $username .= '_'.$student->number; // JUST MAKE SOMETHING UNIQUE
+                }
+            }
         }
 
         return $username;
@@ -137,11 +156,10 @@ class Service extends ServiceAbstract {
 
     public function generateMnameFor(Student $student) {
         $buildName = function($student) {
-            $firstInitial = substr($student->firstName, 0, 1);
             $lastInitial = substr($student->lastName, 0, 1);
             $random = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"), 0, 8);
-            $mname = $firstInitial . $lastInitial . $random;
-            return strtolower($mname);
+            $mname = $lastInitial . $random;
+            return ucwords(str_replace(' ', '', $mname));
         };
 
         $mname = $buildName($student);
