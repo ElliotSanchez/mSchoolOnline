@@ -115,6 +115,19 @@ class PathwayController extends AbstractActionController
 
     }
 
+    public function doneAction() {
+
+        //
+        $session = $this->getServiceLocator()->get('StudentSessionContainer');
+        $container = $session->pathwayContainer;
+
+        $sequenceService = $this->getServiceLocator()->get('SequenceService');
+
+        $sequenceService->markCurrentContainerAsSkipped($container);
+
+        return $this->redirect()->toRoute('mschool/pathway_finished');
+    }
+
     public function finishedAction() {
 
         $this->layout('mschool/layout/layout');

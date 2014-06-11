@@ -14,7 +14,16 @@ class IndexController extends AbstractActionController
 
         // TODO THIS IS A LITTLE HEAVY
         $student = $adminAuthService = $this->getServiceLocator()->get('StudentAuthService')->getCurrentUser();
-        $container = $this->getServiceLocator()->get('SequenceService')->getStudentSequenceContainerFor($student, new \DateTime());
+        $sequenceService = $this->getServiceLocator()->get('SequenceService');
+
+        $session = $this->getServiceLocator()->get('StudentSessionContainer');
+
+        if (!$session->pathwayContainer) {
+            $container = $sequenceService->getStudentSequenceContainerFor($student, new \DateTime());
+            $session->pathwayContainer = $container;
+        } else {
+            $container = $session->pathwayContainer;
+        }
 
         $hasSteps = ($container && $container->hasAvailableSteps()) ? (true) : (false);
 

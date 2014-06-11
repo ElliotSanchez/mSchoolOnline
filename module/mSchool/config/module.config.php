@@ -145,6 +145,17 @@ return array(
                         ),
                     ),
 
+                    'pathway_done' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/pathway/done',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pathway',
+                                'action'     => 'done',
+                            ),
+                        ),
+                    ),
+
                     'pathway_finished' => array(
                         'type' => 'Literal',
                         'options' => array(

@@ -37,7 +37,7 @@ class Service extends ServiceAbstract
 //
 //    }
 
-    protected function inactivateInProgressProgressions(Student $student) {
+    public function inactivateInProgressProgressions(Student $student) {
 
         $where = new \Zend\Db\Sql\Where();
 

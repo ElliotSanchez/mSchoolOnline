@@ -13,6 +13,7 @@ class Entity extends EntityAbstract {
     public $planGroup;
     public $isComplete;
     public $completedAt;
+    public $skippedAt;
     public $isActive;
 
     public function create($data) {
@@ -26,7 +27,8 @@ class Entity extends EntityAbstract {
         $this->planGroup = (!empty($data['plan_group'])) ? ($data['plan_group']) : (null);
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
-        $this->isActive = (bool) (!empty($data['is_active'])) ? $data['is_complete'] : 1;
+        $this->skippedAt = (!empty($data['skipped_at'])) ? (new \DateTime($data['skipped_at'])) : $this->skippedAt;
+        $this->isActive = (bool) (!empty($data['is_active'])) ? $data['is_active'] : true;
 
     }
 
@@ -42,7 +44,8 @@ class Entity extends EntityAbstract {
         $this->planGroup = (!empty($data['plan_group'])) ? ($data['plan_group']) : (null);
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
-        $this->isActive = (bool) (!empty($data['is_active'])) ? $data['is_complete'] : $this->isActive;
+        $this->skippedAt = (!empty($data['skipped_at'])) ? (new \DateTime($data['skipped_at'])) : $this->skippedAt;
+        $this->isActive = (bool) (!empty($data['is_active'])) ? $data['is_active'] : $this->isActive;
 
         $this->exchangeDates($data);
     }
@@ -57,6 +60,7 @@ class Entity extends EntityAbstract {
             'plan_group' => $this->planGroup,
             'is_complete' => (int) $this->isComplete,
             'completed_at' => ($this->completedAt instanceof \DateTime) ? ($this->completedAt->format('Y-m-d H:i:s')) : (null),
+            'skipped_at' => ($this->skippedAt instanceof \DateTime) ? ($this->skippedAt->format('Y-m-d H:i:s')) : (null),
             'is_active' => (int) $this->isActive,
         );
 
@@ -71,6 +75,14 @@ class Entity extends EntityAbstract {
     public function markComplete() {
         $this->isComplete = true;
         $this->completedAt = new \DateTime();
+    }
+
+    public function markSkipped() {
+        $this->skippedAt = new \DateTime();
+    }
+
+    public function wasSkipped() {
+        return $this->skippedAt != null;
     }
 
 }

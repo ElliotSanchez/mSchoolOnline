@@ -10,7 +10,7 @@ $(function(){
                 ok: {
                     label: "I'm done",
                     className: "btn-default",
-                    callback: function () { window.location.replace("/pathway/finished") }
+                    callback: function () { window.location.replace("/pathway/done") }
                 },
                 main: {
                     label: "I'm not done",

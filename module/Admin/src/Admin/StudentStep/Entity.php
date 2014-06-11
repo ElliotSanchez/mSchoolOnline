@@ -19,6 +19,7 @@ class Entity extends EntityAbstract {
     //public $resourceId;
     public $isComplete;
     public $completedAt;
+    public $skippedAt;
 
     public $step; // MODEL
 
@@ -37,7 +38,7 @@ class Entity extends EntityAbstract {
         $this->planGroup = (!empty($data['plan_group'])) ? $data['plan_group'] : null;
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
-
+        $this->skippedAt = (!empty($data['skipped_at'])) ? (new \DateTime($data['skipped_at'])) : null;
 
 //        $this->resourceId = (!empty($data['resource_id'])) ? $data['resource_id'] : null;
 
@@ -60,6 +61,7 @@ class Entity extends EntityAbstract {
         $this->planGroup = (!empty($data['plan_group'])) ? $data['plan_group'] : null;
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
+        $this->skippedAt = (!empty($data['skipped_at'])) ? (new \DateTime($data['skipped_at'])) : $this->skippedAt;
 
 //        $this->resourceId = (!empty($data['resource_id'])) ? $data['resource_id'] : null;
 
@@ -78,6 +80,7 @@ class Entity extends EntityAbstract {
             'plan_group' => $this->planGroup,
             'is_complete' => (int) $this->isComplete,
             'completed_at' => ($this->completedAt instanceof \DateTime) ? ($this->completedAt->format('Y-m-d H:i:s')) : (null),
+            'skipped_at' => ($this->skippedAt instanceof \DateTime) ? ($this->skippedAt->format('Y-m-d H:i:s')) : (null),
 //            'timer' => $this->timer,
 //            'is_active' => $this->isActive,
 //            'resource_id' => $this->resourceId,
@@ -94,6 +97,10 @@ class Entity extends EntityAbstract {
     public function markComplete() {
         $this->isComplete = true;
         $this->completedAt = new \DateTime();
+    }
+
+    public function markSkipped() {
+        $this->skippedAt = new \DateTime();
     }
 
 }

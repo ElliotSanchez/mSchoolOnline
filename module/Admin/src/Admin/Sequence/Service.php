@@ -324,7 +324,8 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         // IS THERE PROGRESSION TODAY?
         $todaysProgression = $this->getProgressionForDate($student, $date);
-        if ($todaysProgression && $todaysProgression->isComplete) {
+
+        if ($todaysProgression && ($todaysProgression->isComplete || $todaysProgression->wasSkipped())) {
 
             // ALL DONE FOR THE DAY
             $sequence = null;
@@ -445,6 +446,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             'student_id' => $student->id,
             'activity_date' => $date->format('Y-m-d'),
             'is_active = 1',
+            // 'skipped_at = NULL',
         ))->limit(1);
 
         $results = $this->progressionService->table->fetchWith($select);
@@ -470,13 +472,13 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $results = $this->progressionService->table->fetchWith($select);
 
         $progression = $results->current();
-
+//var_dump($progression);die('>'.__LINE__);
         if (!$progression) {
 
             $previousProgress = $this->getPreviousProgression($sequence);
 
             if ($previousProgress) {
-                //die('>'.__LINE__);
+                die('>'.__LINE__);
                 $newPlanGroup = $previousProgress->planGroup + 1;
             } else {
                 $newPlanGroup = 1;
@@ -499,6 +501,9 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                 $progression = null;
             }
 
+        } else if ($progression && $progression->wasSkipped()) {
+            $progression = null;
+
         } else if ($date == $progression->activityDate) {
 
             if ($progression->isComplete) {
@@ -506,7 +511,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             }
 
         } else if ($date > $progression->activityDate) {
-
+die('>'.__LINE__);
             $nextPlanGroup = $progression->planGroup + 1;
 
             if ($nextPlanGroup <= $sequence->planGroups) {
@@ -601,6 +606,24 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             if ($container->isLastPlanGroup()) {
                 $this->markSequenceComplete($container->getSequence());
             }
+        }
+
+    }
+
+    public function markCurrentContainerAsSkipped(Container $container) {
+
+        $progression = $container->getCurrentProgression();
+
+        if ($progression) {
+            $progression->markSkipped();
+            $this->progressionService->save($progression);
+        }
+
+        $remainingSteps = $container->getRemainingStudentSteps();
+
+        foreach ($remainingSteps as $studentStep) {
+            $studentStep->markSkipped();
+            $this->studentStepService->save($studentStep);
         }
 
     }

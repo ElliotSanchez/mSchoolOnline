@@ -66,6 +66,20 @@ class Container
         return $this->studentSteps[$this->currStep-1]->step;
     }
 
+    public function getRemainingStudentSteps() {
+
+        $remaining = [];
+
+        if ($this->currStep != null) {
+            for ($i = $this->currStep; $i < count($this->studentSteps); $i++) {
+                $remaining[] = $this->studentSteps[$i];
+            }
+        }
+
+        return $remaining;
+
+    }
+
     public function reset() {
         $this->currStep = 1;
     }
@@ -97,7 +111,7 @@ class Container
     }
 
     public function hasAvailableSteps() {
-        return (bool) $this->currentProgression;
+        return (bool) $this->currentProgression && !$this->currentProgression->wasSkipped();
     }
 
 }
