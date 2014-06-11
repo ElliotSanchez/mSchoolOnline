@@ -43,6 +43,15 @@ nav.navbar div.sequence-header {
     border: 0px;
 }
 
+.pathway-done {
+    margin-left: 20px !important;
+}
+
+.pathway-done:hover {
+    background-color: gainsboro !important; /* FLATTY GREY */
+    color: black !important;
+}
+
 /* STUDENT SEQUENCE THEME ADJUSTMENTS */
 section.sequence-content {
     margin-left: 0px !important;
