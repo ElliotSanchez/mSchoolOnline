@@ -25,4 +25,7 @@ return array(
             => 'Zend\Db\Adapter\AdapterServiceFactory',
         ),
     ),
+    'environment' => array(
+        'type' => 'production',
+    )
 );

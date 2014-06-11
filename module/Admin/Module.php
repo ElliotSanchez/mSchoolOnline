@@ -28,6 +28,8 @@ class Module
         $sm            = $application->getServiceManager();
         $sharedManager = $application->getEventManager()->getSharedManager();
 
+        $this->loadView($e);
+
         $router = $sm->get('router');
         $request = $sm->get('request');
 
@@ -112,5 +114,22 @@ class Module
         $sm             = $e->getApplication()->getServiceManager();
         $config         = $sm->get('config');
         self::$studentPasswordKey = $config['encryption']['student_key'];
+    }
+
+    protected function loadView(MvcEvent $e) {
+        $sm             = $e->getApplication()->getServiceManager();
+        $config         = $sm->get('config');
+
+        $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+
+        $themeColor = 'green';
+
+        switch ($config['environment']['type']) {
+            case 'development': $themeColor = 'green'; break;
+            case 'qa': $themeColor = 'purple'; break;
+            case 'production': $themeColor = 'green'; break;
+        }
+
+        $viewModel->themeColor = $themeColor;
     }
 }
