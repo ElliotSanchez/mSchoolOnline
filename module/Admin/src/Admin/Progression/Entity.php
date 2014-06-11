@@ -13,6 +13,7 @@ class Entity extends EntityAbstract {
     public $planGroup;
     public $isComplete;
     public $completedAt;
+    public $isActive;
 
     public function create($data) {
 
@@ -25,6 +26,7 @@ class Entity extends EntityAbstract {
         $this->planGroup = (!empty($data['plan_group'])) ? ($data['plan_group']) : (null);
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
+        $this->isActive = (bool) (!empty($data['is_active'])) ? $data['is_complete'] : 1;
 
     }
 
@@ -40,6 +42,7 @@ class Entity extends EntityAbstract {
         $this->planGroup = (!empty($data['plan_group'])) ? ($data['plan_group']) : (null);
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
+        $this->isActive = (bool) (!empty($data['is_active'])) ? $data['is_complete'] : $this->isActive;
 
         $this->exchangeDates($data);
     }
@@ -54,6 +57,7 @@ class Entity extends EntityAbstract {
             'plan_group' => $this->planGroup,
             'is_complete' => (int) $this->isComplete,
             'completed_at' => ($this->completedAt instanceof \DateTime) ? ($this->completedAt->format('Y-m-d H:i:s')) : (null),
+            'is_active' => (int) $this->isActive,
         );
 
         return $data;

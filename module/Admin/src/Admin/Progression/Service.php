@@ -24,16 +24,28 @@ class Service extends ServiceAbstract
 
     }
 
-    public function getLatestProgression(Student $student) {
+//    public function getLatestProgression(Student $student) {
+//
+//        $select = $this->table->getSql()->select();
+//        $select->where(array(
+//            'student_id = ?' => $student->id,
+//        ))->order(array('activity_date DESC'))->limit(1);
+//
+//        $results = $this->table->fetchWith($select);
+//
+//        return $results->current();
+//
+//    }
 
-        $select = $this->table->getSql()->select();
-        $select->where(array(
-            'student_id = ?' => $student->id,
-        ))->order(array('activity_date DESC'))->limit(1);
+    protected function inactivateInProgressProgressions(Student $student) {
 
-        $results = $this->table->fetchWith($select);
+        $where = new \Zend\Db\Sql\Where();
 
-        return $results->current();
+        $where->equalTo('student_id', $student->id)
+            ->equalTo('is_active', 1)
+            ->equalTo('is_complete', 0);
+
+        return $this->table->update(array('is_active' => 0), $where);
 
     }
 

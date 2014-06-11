@@ -138,6 +138,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
                 if ($replaceExisting) {
                     $this->inactivateSequences($student);
+                    $this->progressionService->inactivateInProgressProgressions($student);
                 }
 
                 // COMMON SEQUENCE DATA
@@ -443,6 +444,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $select->where(array(
             'student_id' => $student->id,
             'activity_date' => $date->format('Y-m-d'),
+            'is_active = 1',
         ))->limit(1);
 
         $results = $this->progressionService->table->fetchWith($select);
@@ -462,6 +464,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $select->where(array(
             'sequence_id' => $sequence->id,
             'activity_date' => $date->format('Y-m-d'),
+            'is_active = 1',
         ))->order(array('activity_date DESC'))->limit(1);
 
         $results = $this->progressionService->table->fetchWith($select);
