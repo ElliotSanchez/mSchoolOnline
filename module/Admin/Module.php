@@ -126,7 +126,7 @@ class Module
 
         switch ($config['environment']['type']) {
             case 'development': $themeColor = 'green'; break;
-            case 'qa': $themeColor = 'purple'; break;
+            case 'qa': $themeColor = 'blue'; break;
             case 'production': $themeColor = 'green'; break;
         }
 
