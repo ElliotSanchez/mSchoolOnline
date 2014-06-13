@@ -472,13 +472,12 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         $results = $this->progressionService->table->fetchWith($select);
 
         $progression = $results->current();
-//var_dump($progression);die('>'.__LINE__);
+
         if (!$progression) {
 
             $previousProgress = $this->getPreviousProgression($sequence);
 
             if ($previousProgress) {
-                die('>'.__LINE__);
                 $newPlanGroup = $previousProgress->planGroup + 1;
             } else {
                 $newPlanGroup = 1;
@@ -511,7 +510,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             }
 
         } else if ($date > $progression->activityDate) {
-die('>'.__LINE__);
+
             $nextPlanGroup = $progression->planGroup + 1;
 
             if ($nextPlanGroup <= $sequence->planGroups) {
