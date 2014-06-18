@@ -60,6 +60,7 @@ use Zend\Authentication\AuthenticationService as ZendAuthService;
 use Admin\Authentication\Service as AdminAuthService;
 use Admin\Authentication\TeacherService as TeacherAuthService;
 use Admin\Authentication\StudentService as StudentAuthService;
+use \Dropbox as Dropbox;
 
 return array(
 
@@ -469,6 +470,23 @@ return array(
         'StudentLoginService' => function ($sm) {
                 return new StudentLoginService($sm->get('StudentLoginTable'));
             },
+
+        // DROPBOX
+        'Dropbox' => function ($sm) {
+
+            try {
+                $appInfo = Dropbox\AppInfo::loadFromJsonFile(__DIR__.'/../../../config/dropbox.json');
+
+                $accessToken = 'nI_4XnmswRIAAAAAAAAAHm095i2vM-Gdwy3czHlbn3thU3F81I9I_8n1TEdubhP0';
+                $clientIdentifier = "mschool-data-import";
+                $userLocale = null;
+
+                return new Dropbox\Client($accessToken, $clientIdentifier, $userLocale, $appInfo->getHost());
+            } catch (\Exception $e) {
+                //var_dump($e);die();
+            }
+
+        },
 
     ),
     'invokables' => array(

@@ -686,6 +686,20 @@ return array(
                         ),
                     ),
 
+                    // DROPBOX
+                    'import_status' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/import/status',
+                            'constraints' => array(
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Import',
+                                'action'     => 'status',
+                            ),
+                        ),
+                    )
+
                 ),
             ),
 
@@ -754,6 +768,7 @@ return array(
             'Admin\Controller\Plans' => 'Admin\Controller\PlansController',
             'Admin\Controller\Steps' => 'Admin\Controller\StepsController',
             'Admin\Controller\Students' => 'Admin\Controller\StudentsController',
+            'Admin\Controller\Import' => 'Admin\Controller\ImportController',
         ),
     ),
     'view_manager' => array(

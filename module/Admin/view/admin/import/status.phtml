@@ -1,0 +1,46 @@
+<h1>Import Status</h1>
+
+<?php
+    $listContents = function($entry) {
+        $listing = '';
+
+        echo "<ul>";
+        foreach($entry['contents'] as $child) {
+            $cp = $child['path'];
+            $cn = basename($cp);
+            if ($child['is_dir']) $cn .= '/';
+
+            $cp = htmlspecialchars($cp);
+            //$link = getPath("?path=".htmlspecialchars($cp));
+            echo "<li>" . $cp . "</li>";
+        }
+        echo "</ul>";
+
+    };
+
+?>
+
+<h2>Dreambox</h2>
+<?php
+    $entry = $this->dropbox->getMetadataWithChildren('/dreambox');
+    $listContents($entry);
+?>
+
+<h2>iReady</h2>
+<?php
+    $entry = $this->dropbox->getMetadataWithChildren('/iready');
+    $listContents($entry);
+?>
+
+<h2>ST Math</h2>
+<?php
+    $entry = $this->dropbox->getMetadataWithChildren('/stmath');
+    $listContents($entry);
+?>
+
+<h2>ST Math</h2>
+<?php
+    $entry = $this->dropbox->getMetadataWithChildren('/thinkthroughmath');
+    $listContents($entry);
+?>
+
