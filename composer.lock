@@ -1,7 +1,8 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
     "hash": "0c38f5f5e0bc0d2fe1decf29622ecce5",
     "packages": [
@@ -11,16 +12,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPExcel.git",
-                "reference": "220da7485ed450e0c12e53592bbbbeb83f888db6"
+                "reference": "78a065754dd0b233d67f26f1ef8a8a66cd449e7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/220da7485ed450e0c12e53592bbbbeb83f888db6",
-                "reference": "220da7485ed450e0c12e53592bbbbeb83f888db6",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/78a065754dd0b233d67f26f1ef8a8a66cd449e7f",
+                "reference": "78a065754dd0b233d67f26f1ef8a8a66cd449e7f",
                 "shasum": ""
             },
             "require": {
                 "ext-xml": "*",
+                "ext-xmlwriter": "*",
                 "php": ">=5.2.0"
             },
             "type": "library",
@@ -59,24 +61,25 @@
                 "xls",
                 "xlsx"
             ],
-            "time": "2014-02-09 16:08:17"
+            "time": "2014-06-15 19:26:15"
         },
         {
             "name": "zendframework/zendframework",
-            "version": "2.2.5",
+            "version": "2.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "4a7cf6a4cf791244e14aa0ca49d1f06916b63202"
+                "reference": "ffca3e3eefd7fbe0f316ed0224edff368949223d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/4a7cf6a4cf791244e14aa0ca49d1f06916b63202",
-                "reference": "4a7cf6a4cf791244e14aa0ca49d1f06916b63202",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/ffca3e3eefd7fbe0f316ed0224edff368949223d",
+                "reference": "ffca3e3eefd7fbe0f316ed0224edff368949223d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.3",
+                "zendframework/zendxml": "~1.0-dev"
             },
             "replace": {
                 "zendframework/zend-authentication": "self.version",
@@ -174,7 +177,52 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-10-31 15:48:16"
+            "time": "2014-04-15 14:31:59"
+        },
+        {
+            "name": "zendframework/zendxml",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/ZendXml.git",
+                "reference": "559b34f426d33a11c3db118e00ce14bb8dc64e5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/ZendXml/zipball/559b34f426d33a11c3db118e00ce14bb8dc64e5f",
+                "reference": "559b34f426d33a11c3db118e00ce14bb8dc64e5f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "*@dev",
+                "phpunit/phpunit": "~3.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "ZendXml": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Utility library for XML usage, best practices, and security in PHP",
+            "homepage": "http://packages.zendframework.com/",
+            "keywords": [
+                "security",
+                "xml",
+                "zf2"
+            ],
+            "time": "2014-03-05 22:25:44"
         }
     ],
     "packages-dev": [
