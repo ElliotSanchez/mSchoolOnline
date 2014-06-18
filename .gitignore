@@ -3,7 +3,7 @@
 /vendor/bin/
 
 .DS_Store
-
+/vendor
 /vendor/phpoffice/
 
 ~

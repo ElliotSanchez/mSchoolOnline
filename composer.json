@@ -10,6 +10,7 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.2.*",
-	"phpoffice/phpexcel": "dev-develop"
+	"phpoffice/phpexcel": "dev-develop",
+	"dropbox/dropbox-sdk": "1.1.*"
     }
 }
