@@ -495,8 +495,8 @@ return array(
             return new \Admin\Import\Importer();
         },
 
-        'iReadyImporter' => function ($sm) {
-            return new \Admin\Import\iReady($sm->get('IreadyService'));
+        'IreadyImporter' => function ($sm) {
+            return new \Admin\Import\Iready($sm->get('IreadyService'));
         },
 
         // IREADY

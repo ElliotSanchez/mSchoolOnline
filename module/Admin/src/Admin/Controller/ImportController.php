@@ -24,7 +24,7 @@ class ImportController extends AbstractActionController
     public function importAction() {
 
         $importer = $this->getServiceLocator()->get('Importer');
-        $iReadyImporter = $this->getServiceLocator()->get('iReadyImporter');
+        $iReadyImporter = $this->getServiceLocator()->get('IreadyImporter');
 
         $dropbox = $this->getServiceLocator()->get('Dropbox');
         $studentService = $this->getServiceLocator()->get('StudentService');
