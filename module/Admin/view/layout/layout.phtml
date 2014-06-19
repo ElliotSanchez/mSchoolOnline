@@ -125,6 +125,20 @@
         </li>
 
         <li class=''>
+            <a class="dropdown-collapse <?php echo ($this->activeMenu == 'import') ? ('in') : ('') ?>" href="#">
+                <i class='icon-cogs'></i>
+                <span>Import</span>
+                <i class='icon-angle-down angle-down'></i>
+            </a>
+
+            <ul class='nav nav-stacked <?php echo ($this->activeMenu == 'import') ? ('in') : ('') ?>'>
+                <li><a href="<?php echo $this->url('admin/import_status') ?>"><i class='icon-caret-right'></i><span>Status</span></a></li>
+                <li><a href="<?php echo $this->url('admin/import_history', array('type' => 'iready')) ?>"><i class='icon-caret-right'></i><span>iReady</span></a></li>
+                <!--                <li><a href="--><?php //echo $this->url('admin/pathways_preview') ?><!--"><i class='icon-caret-right'></i><span>Preview</span></a></li>-->
+            </ul>
+        </li>
+
+        <li class=''>
             <a href="<?php echo $this->url('admin/users') ?>">
                 <i class='icon-user'></i>
                 <?php echo $this->translate('Users') ?>

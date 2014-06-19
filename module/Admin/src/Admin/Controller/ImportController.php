@@ -13,6 +13,8 @@ class ImportController extends AbstractActionController
 
         $dropbox = $this->getServiceLocator()->get('Dropbox');
 
+        $this->layout()->activeMenu = 'import';
+
         return new ViewModel([
            'dropbox' => $dropbox,
         ]);
@@ -38,8 +40,6 @@ class ImportController extends AbstractActionController
 
         $this->redirect()->toUrl('/import/history/iready');
 
-
-
     }
 
     public function historyAction() {
@@ -47,6 +47,8 @@ class ImportController extends AbstractActionController
         $type = $this->params('type');
 
         $iready = $this->getServiceLocator()->get('IreadyService')->all();
+
+        $this->layout()->activeMenu = 'import';
 
         return new ViewModel([
             'iready' => $iready,
