@@ -1,0 +1,23 @@
+CREATE TABLE `iready` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `import_filename` varchar(256) DEFAULT NULL,
+  `imported_at` datetime DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `last_name` varchar(256) DEFAULT '',
+  `first_name` varchar(256) DEFAULT NULL,
+  `student_number` varchar(256) DEFAULT NULL,
+  `student_grade` varchar(256) DEFAULT NULL,
+  `academic_year` varchar(256) DEFAULT NULL,
+  `school` varchar(256) DEFAULT NULL,
+  `subject` varchar(256) DEFAULT NULL,
+  `diagnostic_gain` int(11) DEFAULT NULL,
+  `diagnostic_completions` int(11) DEFAULT NULL,
+  `diagnostic_completion_date` datetime DEFAULT NULL,
+  `diagnostic_overall_scale_score` int(11) DEFAULT NULL,
+  `diagnostic_overall_placement_1` varchar(11) DEFAULT NULL,
+  `diagnostic_notes_1` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

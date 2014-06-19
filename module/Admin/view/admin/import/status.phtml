@@ -8,6 +8,7 @@
         foreach($entry['contents'] as $child) {
             $cp = $child['path'];
             $cn = basename($cp);
+            if ($cn == 'completed') continue;
             if ($child['is_dir']) $cn .= '/';
 
             $cp = htmlspecialchars($cp);
@@ -27,10 +28,20 @@
 ?>
 
 <h2>iReady</h2>
-<?php
-    $entry = $this->dropbox->getMetadataWithChildren('/iready');
-    $listContents($entry);
-?>
+<div class="row">
+    <div class="col-md-12">
+        <a href="/import/iready" class="btn btn-primary">Import</a>
+        <a href="/import/history/iready" class="btn btn-info">History</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <?php
+            $entry = $this->dropbox->getMetadataWithChildren('/iready');
+            $listContents($entry);
+        ?>
+    </div>
+</div>
 
 <h2>ST Math</h2>
 <?php
@@ -43,4 +54,3 @@
     $entry = $this->dropbox->getMetadataWithChildren('/thinkthroughmath');
     $listContents($entry);
 ?>
-

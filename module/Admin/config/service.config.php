@@ -61,6 +61,9 @@ use Admin\Authentication\Service as AdminAuthService;
 use Admin\Authentication\TeacherService as TeacherAuthService;
 use Admin\Authentication\StudentService as StudentAuthService;
 use \Dropbox as Dropbox;
+use Admin\Iready\Entity as Iready;
+use Admin\Iready\Table as IreadyTable;
+use Admin\Iready\Service as IreadyService;
 
 return array(
 
@@ -487,6 +490,30 @@ return array(
             }
 
         },
+
+        'Importer' => function ($sm) {
+            return new \Admin\Import\Importer();
+        },
+
+        'iReadyImporter' => function ($sm) {
+            return new \Admin\Import\iReady($sm->get('IreadyService'));
+        },
+
+        // IREADY
+        'IreadyTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new Iready());
+                return new TableGateway('iready', $dbAdapter, null, $resultSetPrototype);
+            },
+        'IreadyTable' =>  function($sm) {
+                $tableGateway = $sm->get('IreadyTableGateway');
+                $table = new IreadyTable($tableGateway);
+                return $table;
+            },
+        'IreadyService' => function ($sm) {
+                return new IreadyService($sm->get('IreadyTable'));
+            },
 
     ),
     'invokables' => array(

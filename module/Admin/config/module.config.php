@@ -688,7 +688,7 @@ return array(
 
                     // DROPBOX
                     'import_status' => array(
-                        'type' => 'Segment',
+                        'type' => 'Literal',
                         'options' => array(
                             'route'    => '/import/status',
                             'constraints' => array(
@@ -698,7 +698,37 @@ return array(
                                 'action'     => 'status',
                             ),
                         ),
+                    ),
+
+                    'import_action' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/import/[:type]',
+                            'constraints' => array(
+                                'type' => 'iready|dreambox',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Import',
+                                'action'     => 'import',
+                            ),
+                        ),
+                    ),
+
+                    'import_history' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/import/history/[:type]',
+                            'constraints' => array(
+                                'type' => 'iready|dreambox',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Admin\Controller\Import',
+                                'action'     => 'history',
+                            ),
+                        ),
                     )
+
+
 
                 ),
             ),

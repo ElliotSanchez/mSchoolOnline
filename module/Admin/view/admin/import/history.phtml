@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-12">
+        <a href="/import/status" class="btn btn-default">Status</a>
+    </div>
+</div>
+
+<h1>Import History: <?php echo $this->type; ?></h1>
+
+<table class="table">
+    <tr>
+        <th>Filename</th>
+        <th>Imported At</th>
+        <th>Number</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Diagnostic Completions</th>
+        <th>Diagnostic Completion Date</th>
+    </tr>
+    <?php foreach ($this->iready as $iready): ?>
+        <tr>
+            <td><?php echo $iready->filename() ?></td>
+            <td><?php echo $iready->importedAt->format('m/d/Y h:i:s A') ?></td>
+            <td><?php echo $iready->studentNumber ?></td>
+            <td><?php echo $iready->lastName ?></td>
+            <td><?php echo $iready->firstName ?></td>
+            <td><?php echo $iready->diagnosticCompletions ?></td>
+            <td><?php echo ($iready->diagnosticCompletionDate) ? ($iready->diagnosticCompletionDate->format('m/d/Y h:i:s A')) : ('') ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
