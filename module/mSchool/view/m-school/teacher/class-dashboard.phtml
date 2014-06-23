@@ -295,7 +295,8 @@
                         currentGroup.select("text").style("font-weight", "normal");
                     })
                     .on("click", function(d) {
-                        window.location = 'http://' + location.hostname + '/teacher/student/progress';
+                        window.location = "<?php echo $this->url('mschool/teacher_student_progress', ['s_id' => '10000040', 'm_id' => $this->mclass->id]); ?>";
+                        //window.location = 'http://' + location.hostname + '/teacher/student/progress';
                     });
 
                 x.call(xAxis);
@@ -419,7 +420,8 @@
                         currentGroup.select("text").style("font-weight", "normal");
                     })
                     .on("click", function(d) {
-                        window.location = 'http://' + location.hostname + '/teacher/student/progress';
+                        window.location = "<?php echo $this->url('mschool/teacher_student_progress', ['s_id' => '10000040', 'm_id' => $this->mclass->id]); ?>";
+                        //window.location = 'http://' + location.hostname + '/teacher/student/progress';
                     });
 
                 x.call(xAxis);
