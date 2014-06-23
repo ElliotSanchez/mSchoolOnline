@@ -11,10 +11,10 @@ $(document).ready(function () {
     var purple = "#9564e2";
     var green = "#49bf67";
     randNumber = function() {
-        return ((Math.floor(Math.random() * (1 + 50 - 20))) + 20) * 800;
+        return ((Math.floor(Math.random() * (20 - 10) + 10)));
     };
     randSmallerNumber = function() {
-        return ((Math.floor(Math.random() * (1 + 40 - 20))) + 10) * 200;
+        return ((Math.floor(Math.random() * (20 - 10) + 10)));
     };
     if ($("#stats-chart1").length !== 0) {
         orders = [[1, randNumber() - 10], [2, randNumber() - 10], [3, randNumber() - 10], [4, randNumber()], [5, randNumber()], [6, 4 + randNumber()], [7, 5 + randNumber()], [8, 6 + randNumber()], [9, 6 + randNumber()], [10, 8 + randNumber()], [11, 9 + randNumber()], [12, 10 + randNumber()], [13, 11 + randNumber()], [14, 12 + randNumber()], [15, 13 + randNumber()], [16, 14 + randNumber()], [17, 15 + randNumber()], [18, 15 + randNumber()], [19, 16 + randNumber()], [20, 17 + randNumber()], [21, 18 + randNumber()], [22, 19 + randNumber()], [23, 20 + randNumber()], [24, 21 + randNumber()], [25, 14 + randNumber()], [26, 24 + randNumber()], [27, 25 + randNumber()], [28, 26 + randNumber()], [29, 27 + randNumber()], [30, 31 + randNumber()]];
@@ -44,7 +44,11 @@ $(document).ready(function () {
                 borderWidth: 0,
                 tickColor: "#f4f7f9"
             },
-            colors: ["#00acec", "#f8a326"]
+            colors: ["#00acec", "#f8a326"],
+            yaxis:
+            {
+                min:0, max: 50,  tickSize: 10
+            }
         });
     }
     if ($("#stats-chart2").length !== 0) {
@@ -75,7 +79,11 @@ $(document).ready(function () {
                 borderWidth: 0,
                 tickColor: "#f4f7f9"
             },
-            colors: ["#f34541", "#49bf67"]
+            colors: ["#f34541", "#49bf67"],
+            yaxis:
+            {
+                min:0, max: 50,  tickSize: 10
+            }
         });
         $("#stats-chart2").bind("plotclick", function(event, pos, item) {
             if (item) {
