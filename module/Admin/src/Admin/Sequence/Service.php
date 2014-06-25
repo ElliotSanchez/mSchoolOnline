@@ -273,15 +273,22 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         $select->from(array('ss' => 'student_steps'))
             ->join(array('s'=> 'students'),  's.id = ss.student_id', array('student_first_name' => 'first_name', 'student_last_name' => 'last_name', 'student_number' => 'number'))
-            ->join(array('sq' => 'sequences'), 'ss.sequence_id = sq.id', array('sequence_id' => 'id', 'sequence_is_default' => 'is_default'))
+            ->join(array('sq' => 'sequences'), 'ss.sequence_id = sq.id', array(
+                'sequence_id' => 'id',
+                'sequence_is_default' => 'is_default',
+                'sequence_completed_steps' => 'completed_steps',
+                'sequence_is_complete' => 'is_complete',
+                'sequence_completed_at' => 'completed_at',
+                'sequence_is_active' => 'is_active',
+            ))
             ->join(array('pl'=> 'plans'),  'ss.plan_id = pl.id', array('plan_name' => 'name', 'plan_short_code' => 'short_code'))
             ->join(array('st'=> 'steps'),  'ss.step_id = st.id', array('step_short_code' => 'short_code'))
             ->join(array('pw'=> 'pathways'),  'ss.pathway_id = pw.id', array('pathway_name' => 'name', 'pathway_short_code' => 'short_code'), \Zend\Db\Sql\Select::JOIN_LEFT)
 //            ->where('ss.is_default = 0')
-            ->order(array('sq.is_default ASC', 'sq.id ASC', 'ss.id'))
+            ->order(array('sq.is_default ASC', 'sq.id DESC', 'ss.id'))
         ;
 
-        $select->where(array('ss.student_id' => $student->id, 'sq.is_active = 1'));
+        $select->where(array('ss.student_id' => $student->id, '(sq.is_active = 1 OR (sq.is_active = 0 AND sq.completed_steps > 0))'));
 
         $selectString = $sql->getSqlStringForSqlObject($select);
         $results = $this->adapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
@@ -603,6 +610,11 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
     public function markCurrentStepAsComplete(Container $container) {
 
         $this->markStudentStepAsComplete($container->getCurrentStudentStep());
+
+        // INCREMENT STEPS COMPLETED
+        $sequence = $container->getSequence();
+        $sequence->incrementCompletedSteps();
+        $this->save($sequence);
 
         if ($container->isAtLastStep()) {
             // MARK PROGRESSION COMPLETE

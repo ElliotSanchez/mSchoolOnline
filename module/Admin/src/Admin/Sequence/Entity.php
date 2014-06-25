@@ -9,6 +9,7 @@ class Entity extends UserAbstract {
 
     public $planGroups;
     public $isDefault;
+    public $completedSteps;
     public $isComplete;
     public $completedAt;
     public $movedOn;
@@ -21,6 +22,7 @@ class Entity extends UserAbstract {
         parent::create($data);
         $this->planGroups = (bool) (!empty($data['plan_groups'])) ? $data['plan_groups'] : null;
         $this->isDefault = (bool) (!empty($data['is_default'])) ? $data['is_default'] : false;
+        $this->completedSteps = (!empty($data['completed_steps'])) ? $data['completed_steps'] : 0;
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : null;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
@@ -36,6 +38,7 @@ class Entity extends UserAbstract {
 
         $this->planGroups = (bool) (!empty($data['plan_groups'])) ? $data['plan_groups'] : null;
         $this->isDefault = (bool) (!empty($data['is_default'])) ? $data['is_default'] : false;
+        $this->completedSteps = (!empty($data['completed_steps'])) ? $data['completed_steps'] : $this->completedSteps;
         $this->isComplete = (bool) (!empty($data['is_complete'])) ? $data['is_complete'] : false;
         $this->completedAt = (!empty($data['completed_at'])) ? (new \DateTime($data['completed_at'])) : null;
         $this->movedOn = (bool) (!empty($data['moved_on'])) ? $data['moved_on'] : null;
@@ -51,6 +54,7 @@ class Entity extends UserAbstract {
         $data = array(
             'plan_groups' => (int) $this->planGroups,
             'is_default' => (int) $this->isDefault,
+            'completed_steps' => (int) $this->completedSteps,
             'is_complete' => (int) $this->isComplete,
             'student_id' => $this->studentId,
             'completed_at' => ($this->completedAt instanceof \DateTime) ? ($this->completedAt->format('Y-m-d H:i:s')) : (null),
@@ -69,6 +73,10 @@ class Entity extends UserAbstract {
     public function markComplete() {
         $this->isComplete = true;
         $this->completedAt = new \DateTime();
+    }
+
+    public function incrementCompletedSteps() {
+        $this->completedSteps++;
     }
 
 }

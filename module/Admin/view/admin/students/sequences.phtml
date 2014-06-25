@@ -1,9 +1,18 @@
+<?php $boxOpenStyle = ''; ?>
 
 <?php foreach($this->sequenceGroups as $sequenceId => $sequenceRows): ?>
+    <div class="box bordered-box blue-border <?php echo $boxOpenStyle ?>" style="margin-bottom:0;">
+        <div class="box-header <?php echo ($sequenceRows[0]['sequence_is_active']) ? ('blue-background') : ('muted-background'); ?> ">
+            <div class="title">
+                Sequence <?php echo ($sequenceRows[0]['sequence_is_default']) ? ('Default') : ($sequenceId) ?>
+                <?php if (!$sequenceRows[0]['sequence_is_active']): ?>
+                    <span class="label label-contrast">(Inactive)</span>
+                <?php endif; ?>
+                <?php if ($sequenceRows[0]['sequence_is_complete']): ?>
+                    <span class="label label-contrast">Completed: <?php echo date_create($sequenceRows[0]['sequence_completed_at'])->format('m/d/Y h:i:s A'); ?></span>
+                <?php endif; ?>
 
-    <div class="box bordered-box blue-border" style="margin-bottom:0;">
-        <div class="box-header blue-background">
-            <div class="title">Sequence <?php echo ($sequenceRows[0]['sequence_is_default']) ? ('Default') : ($sequenceId) ?></div>
+            </div>
             <div class="actions">
                 <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
                 </a>
@@ -41,6 +50,8 @@
                                         <?php elseif($row['ss_skipped_at']): ?>
                                             <span class="label label-warning">Skipped</span>
                                             <?php echo date_create($row['ss_skipped_at'])->format('m/d/Y h:i:s A'); ?>
+                                        <?php elseif (!$row['sequence_is_active']): ?>
+                                            <span class="label label-default">Inactive</span>
                                         <?php else: ?>
                                             &nbsp;
                                         <?php endif; ?>
@@ -56,6 +67,9 @@
     </div>
 
     <hr class="hr-double">
+
+    <?php // CLOSE OLD BOXES ?>
+    <?php if ($boxOpenStyle == '') $boxOpenStyle = 'box-collapsed'; ?>
 
 <?php endforeach; ?>
 
