@@ -16,7 +16,7 @@ CREATE TABLE `dreambox_usage` (
   `last_name` varchar(256) DEFAULT '',
   `first_name` varchar(256) DEFAULT NULL,
   `student_grade` varchar(256) DEFAULT NULL,
-  `teacher_email` varchar(256) DEFAULT NULL,
+  `teacher_emails` varchar(256) DEFAULT NULL,
   `class_name` varchar(256) DEFAULT NULL,
   `school_name` varchar(256) DEFAULT NULL,
   `intervention` varchar(256) DEFAULT NULL,
