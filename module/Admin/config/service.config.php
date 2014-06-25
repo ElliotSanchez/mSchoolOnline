@@ -64,6 +64,9 @@ use \Dropbox as Dropbox;
 use Admin\Iready\Entity as Iready;
 use Admin\Iready\Table as IreadyTable;
 use Admin\Iready\Service as IreadyService;
+use Admin\IreadyData\Entity as IreadyData;
+use Admin\IreadyData\Table as IreadyDataTable;
+use Admin\IreadyData\Service as IreadyDataService;
 
 return array(
 
@@ -496,7 +499,7 @@ return array(
         },
 
         'IreadyImporter' => function ($sm) {
-            return new \Admin\Import\Iready($sm->get('IreadyService'));
+            return new \Admin\Import\Iready($sm->get('IreadyService'), $sm->get('IreadyDataService'));
         },
 
         // IREADY
@@ -513,6 +516,22 @@ return array(
             },
         'IreadyService' => function ($sm) {
                 return new IreadyService($sm->get('IreadyTable'));
+            },
+
+        // IREADY DATA
+        'IreadyDataTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new IreadyData());
+                return new TableGateway('iready_data', $dbAdapter, null, $resultSetPrototype);
+            },
+        'IreadyDataTable' =>  function($sm) {
+                $tableGateway = $sm->get('IreadyDataTableGateway');
+                $table = new IreadyDataTable($tableGateway);
+                return $table;
+            },
+        'IreadyDataService' => function ($sm) {
+                return new IreadyDataService($sm->get('IreadyDataTable'));
             },
 
     ),
