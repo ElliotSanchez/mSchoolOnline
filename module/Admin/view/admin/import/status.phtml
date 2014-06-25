@@ -21,9 +21,15 @@
 
 ?>
 
-<h2>Dreambox</h2>
+<h2>Dreambox - Usage</h2>
+<div class="row">
+    <div class="col-md-12">
+        <a href="/import/dreambox-usage" class="btn btn-primary">Import</a>
+        <a href="/import/history/dreambox-usage" class="btn btn-info">History</a>
+    </div>
+</div>
 <?php
-    $entry = $this->dropbox->getMetadataWithChildren('/dreambox');
+    $entry = $this->dropbox->getMetadataWithChildren('/dreambox/import');
     $listContents($entry);
 ?>
 

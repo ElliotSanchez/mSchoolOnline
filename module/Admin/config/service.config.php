@@ -68,6 +68,10 @@ use Admin\IreadyData\Entity as IreadyData;
 use Admin\IreadyData\Table as IreadyDataTable;
 use Admin\IreadyData\Service as IreadyDataService;
 
+use Admin\Dreambox\Usage\Entity as DreamboxUsage;
+use Admin\Dreambox\Usage\Table as DreamboxUsageTable;
+use Admin\Dreambox\Usage\Service as DreamboxUsageService;
+
 return array(
 
     'factories' => array(
@@ -502,6 +506,10 @@ return array(
             return new \Admin\Import\Iready($sm->get('IreadyService'), $sm->get('IreadyDataService'));
         },
 
+        'DreamboxUsageImporter' => function ($sm) {
+                return new \Admin\Import\Dreambox\Usage($sm->get('DreamboxUsageService'));
+            },
+
         // IREADY
         'IreadyTableGateway' => function ($sm) {
                 $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
@@ -532,6 +540,22 @@ return array(
             },
         'IreadyDataService' => function ($sm) {
                 return new IreadyDataService($sm->get('IreadyDataTable'));
+            },
+
+        // DREAMBOX - USAGE
+        'DreamboxUsageTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new DreamboxUsage());
+                return new TableGateway('dreambox_usage', $dbAdapter, null, $resultSetPrototype);
+            },
+        'DreamboxUsageTable' =>  function($sm) {
+                $tableGateway = $sm->get('DreamboxUsageTableGateway');
+                $table = new DreamboxUsageTable($tableGateway);
+                return $table;
+            },
+        'DreamboxUsageService' => function ($sm) {
+                return new DreamboxUsageService($sm->get('DreamboxUsageTable'));
             },
 
     ),

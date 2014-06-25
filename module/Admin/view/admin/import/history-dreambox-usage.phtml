@@ -1,0 +1,43 @@
+<table class="table">
+    <tr>
+        <th>Filename</th>
+        <th>Imported At</th>
+        <th>Student Id</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+
+        <th>Student Grade</th>
+        <th>Teacher Emails</th>
+        <th>Class Name</th>
+        <th>School Name</th>
+        <th>Intervention</th>
+        <th>Sessions</th>
+        <th>Time On Task</th>
+        <th>Lessons Completed</th>
+        <th>Unique Lessons Completed</th>
+        <th>Units Completed</th>
+
+    </tr>
+    <?php foreach ($this->data as $dreamboxUsage): ?>
+        <tr>
+            <td><?php echo $dreamboxUsage->filename() ?></td>
+            <td><?php echo $dreamboxUsage->importedAt->format('m/d/Y h:i:s A') ?></td>
+            <td><?php echo $dreamboxUsage->studentId ?></td>
+            <td><?php echo $dreamboxUsage->lastName ?></td>
+            <td><?php echo $dreamboxUsage->firstName ?></td>
+
+            <td><?php echo $dreamboxUsage->studentGrade ?></td>
+            <td><?php echo $dreamboxUsage->teacherEmails ?></td>
+            <td><?php echo $dreamboxUsage->className ?></td>
+            <td><?php echo $dreamboxUsage->schoolName ?></td>
+            <td><?php echo $dreamboxUsage->intervention ?></td>
+            <td><?php echo $dreamboxUsage->sessions ?></td>
+            <td><?php echo $dreamboxUsage->timeOnTask ?></td>
+            <td><?php echo $dreamboxUsage->lessonsCompleted ?></td>
+            <td><?php echo $dreamboxUsage->uniqueLessonsCompleted ?></td>
+            <td><?php echo $dreamboxUsage->unitsCompleted ?></td>
+
+        </tr>
+    <?php endforeach; ?>
+</table>
+

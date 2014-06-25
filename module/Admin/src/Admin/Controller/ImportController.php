@@ -24,7 +24,11 @@ class ImportController extends AbstractActionController
     public function importAction() {
 
         $importer = $this->getServiceLocator()->get('Importer');
-        $iReadyImporter = $this->getServiceLocator()->get('IreadyImporter');
+
+        switch ($this->params('type')) {
+            case 'iready': $importerStrategy = $this->getServiceLocator()->get('IreadyImporter'); break;
+            case 'dreambox-usage': $importerStrategy = $this->getServiceLocator()->get('DreamboxUsageImporter'); break;
+        }
 
         $dropbox = $this->getServiceLocator()->get('Dropbox');
         $studentService = $this->getServiceLocator()->get('StudentService');
@@ -33,7 +37,7 @@ class ImportController extends AbstractActionController
         //$metadata = $dropbox->getFile($path, $fd);
 
         $importer->setDropbox($dropbox);
-        $importer->setImporter($iReadyImporter);
+        $importer->setImporter($importerStrategy);
         $importer->setStudentService($studentService);
 
         $importer->import();
@@ -46,12 +50,16 @@ class ImportController extends AbstractActionController
 
         $type = $this->params('type');
 
-        $iready = $this->getServiceLocator()->get('IreadyService')->all();
+
+        switch ($type){
+            case 'iready': $data = $this->getServiceLocator()->get('IreadyService')->all(); break;
+            case 'dreambox-usage': $data = $this->getServiceLocator()->get('DreamboxUsageService')->all(); break;
+        }
 
         $this->layout()->activeMenu = 'import';
 
         return new ViewModel([
-            'iready' => $iready,
+            'data' => $data,
             'type' => $type,
         ]);
 
