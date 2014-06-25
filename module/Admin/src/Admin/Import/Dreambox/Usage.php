@@ -51,8 +51,6 @@ class Usage {
             if (substr($filename, 0, strlen($this->filenamePrefix)) != $this->filenamePrefix)
                 continue;
 
-            echo "importing " . $filename . '<br>';
-
             $this->originalFilename = $cp;
 
             $fd = tmpfile();
