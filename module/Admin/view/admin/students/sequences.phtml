@@ -2,7 +2,7 @@
 
 <?php foreach($this->sequenceGroups as $sequenceId => $sequenceRows): ?>
     <div class="box bordered-box blue-border <?php echo $boxOpenStyle ?>" style="margin-bottom:0;">
-        <div class="box-header <?php echo ($sequenceRows[0]['sequence_is_active']) ? ('blue-background') : ('muted-background'); ?> ">
+        <div class="box-header <?php //echo ($sequenceRows[0]['sequence_is_active']) ? ('blue-background') : ('muted-background'); ?> ">
             <div class="title">
                 Sequence <?php echo ($sequenceRows[0]['sequence_is_default']) ? ('Default') : ($sequenceId) ?>
                 <?php if (!$sequenceRows[0]['sequence_is_active']): ?>
