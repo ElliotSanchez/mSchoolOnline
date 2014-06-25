@@ -22,7 +22,7 @@
                             <th>Plan</th>
                             <th>Plan Code</th>
                             <th>Step Code</th>
-                            <th>Complete</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,6 +38,9 @@
                                         <?php if($row['ss_is_complete'] == 1): ?>
                                             <span class="label label-success">Complete</span>
                                             <?php echo date('m/d/Y h:i:s A', strtotime($row['ss_completed_at'])); ?>
+                                        <?php elseif($row['ss_skipped_at']): ?>
+                                            <span class="label label-warning">Skipped</span>
+                                            <?php echo date_create($row['ss_skipped_at'])->format('m/d/Y h:i:s A'); ?>
                                         <?php else: ?>
                                             &nbsp;
                                         <?php endif; ?>
