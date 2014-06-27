@@ -12,4 +12,6 @@
     <?php echo $this->partial('admin/import/history-dreambox-usage.phtml', array('data' => $this->data)); ?>
 <?php elseif ($this->type == 'ttm-student'): ?>
     <?php echo $this->partial('admin/import/history-ttm-student.phtml', array('data' => $this->data)); ?>
+<?php elseif ($this->type == 'ttm-overview'): ?>
+    <?php echo $this->partial('admin/import/history-ttm-overview.phtml', array('data' => $this->data)); ?>
 <?php endif; ?>

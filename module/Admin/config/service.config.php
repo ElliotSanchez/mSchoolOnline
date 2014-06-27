@@ -512,6 +512,9 @@ return array(
         'ThinkThroughMathStudentImporter' => function ($sm) {
             return new \Admin\Import\ThinkThroughMath\Student($sm->get('ThinkThroughMathStudentService'));
         },
+        'ThinkThroughMathOverviewImporter' => function ($sm) {
+            return new \Admin\Import\ThinkThroughMath\Overview($sm->get('ThinkThroughMathOverviewService'));
+        },
 
         // IREADY
         'IreadyTableGateway' => function ($sm) {
@@ -561,7 +564,9 @@ return array(
                 return new DreamboxUsageService($sm->get('DreamboxUsageTable'));
             },
 
-
+        'ThinkThroughMathOverviewTableGateway' => 'Admin\ThinkThroughMath\Overview\Factory',
+        'ThinkThroughMathOverviewTable' => 'Admin\ThinkThroughMath\Overview\Factory',
+        'ThinkThroughMathOverviewService' => 'Admin\ThinkThroughMath\Overview\Factory',
 
     ),
 
@@ -571,6 +576,7 @@ return array(
 
     'invokables' => array(
         'AdminLoginForm' => 'Admin\Form\Auth\Login',
+        'TTMOverviewFactory' => 'Admin\ThinkThroughMath\Overview\FFactory',
     ),
 
     'initializers' => array(

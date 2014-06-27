@@ -1,0 +1,48 @@
+<table class="table">
+    <tr>
+        <th>Filename</th>
+        <th>Imported At</th>
+        <th>Student Id</th>
+        <th>Student</th>
+        <th>Placement Test Result</th>
+        <th>Lessons Attempted</th>
+        <th>Total Lessons Passed</th>
+        <th>Target Lesson Pass Rate</th>
+        <th>Precursor Lesson Pass Rate</th>
+        <th>Lessons Passed By Pre Quiz</th>
+        <th>Pre Quiz Avg</th>
+        <th>Post Quiz Avg</th>
+        <th>Problems Attempted</th>
+        <th>Earned Points</th>
+        <th>Learning Coach Helps</th>
+        <th>Live Helps</th>
+        <th>Total Math Time	</th>
+        <th>School Time</th>
+        <th>Evening Weekend Time</th>
+    </tr>
+    <?php foreach ($this->data as $ttnOverview): ?>
+        <tr>
+            <td><?php echo $ttnOverview->filename() ?></td>
+            <td><?php echo $ttnOverview->importedAt->format('m/d/Y h:i:s A') ?></td>
+            <td><?php echo $ttnOverview->studentId; ?></td>
+
+            <td><?php echo $ttnOverview->ttnOverviewstudent; ?></td>
+            <td><?php echo $ttnOverview->placementTestResult; ?></td>
+            <td><?php echo $ttnOverview->lessonsAttempted; ?></td>
+            <td><?php echo $ttnOverview->totalLessonsPassed; ?></td>
+            <td><?php echo $ttnOverview->targetLessonPassRate; ?></td>
+            <td><?php echo $ttnOverview->precursorLessonPassRate; ?></td>
+            <td><?php echo $ttnOverview->lessonsPassedByPreQuiz; ?></td>
+            <td><?php echo $ttnOverview->preQuizAvg; ?></td>
+            <td><?php echo $ttnOverview->postQuizAvg; ?></td>
+            <td><?php echo $ttnOverview->problemsAttempted; ?></td>
+            <td><?php echo $ttnOverview->earnedPoints; ?></td>
+            <td><?php echo $ttnOverview->learningCoachHelps; ?></td>
+            <td><?php echo $ttnOverview->liveHelps; ?></td>
+            <td><?php echo $ttnOverview->totalMathTime; ?></td>
+            <td><?php echo $ttnOverview->schoolTime; ?></td>
+            <td><?php echo $ttnOverview->eveningWeekendTime; ?></td>
+
+        </tr>
+    <?php endforeach; ?>
+</table>

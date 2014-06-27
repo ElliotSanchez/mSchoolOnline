@@ -31,6 +31,7 @@ class ImportController extends AbstractActionController
             case 'iready': $importerStrategy = $this->getServiceLocator()->get('IreadyImporter'); break;
             case 'dreambox-usage': $importerStrategy = $this->getServiceLocator()->get('DreamboxUsageImporter'); break;
             case 'ttm-student': $importerStrategy = $this->getServiceLocator()->get('ThinkThroughMathStudentImporter'); break;
+            case 'ttm-overview': $importerStrategy = $this->getServiceLocator()->get('ThinkThroughMathOverviewImporter'); break;
         }
 
         $dropbox = $this->getServiceLocator()->get('Dropbox');
@@ -57,6 +58,7 @@ class ImportController extends AbstractActionController
             case 'iready': $data = $this->getServiceLocator()->get('IreadyService')->all(); break;
             case 'dreambox-usage': $data = $this->getServiceLocator()->get('DreamboxUsageService')->all(); break;
             case 'ttm-student': $data = $this->getServiceLocator()->get('ThinkThroughMathStudentService')->all(); break;
+            case 'ttm-overview': $data = $this->getServiceLocator()->get('ThinkThroughMathOverviewService')->all(); break;
         }
 
         $this->layout()->activeMenu = 'import';
