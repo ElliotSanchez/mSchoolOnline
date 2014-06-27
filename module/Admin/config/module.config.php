@@ -705,7 +705,7 @@ return array(
                         'options' => array(
                             'route'    => '/import/[:type]',
                             'constraints' => array(
-                                'type' => 'iready|dreambox-usage',
+                                'type' => 'iready|dreambox-usage|ttm-student',
                             ),
                             'defaults' => array(
                                 'controller' => 'Admin\Controller\Import',
@@ -719,7 +719,7 @@ return array(
                         'options' => array(
                             'route'    => '/import/history/[:type]',
                             'constraints' => array(
-                                'type' => 'iready|dreambox-usage',
+                                'type' => 'iready|dreambox-usage|ttm-student',
                             ),
                             'defaults' => array(
                                 'controller' => 'Admin\Controller\Import',

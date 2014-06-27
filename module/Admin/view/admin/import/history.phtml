@@ -10,4 +10,6 @@
     <?php echo $this->partial('admin/import/history-iready.phtml', array('iready' => $this->data)); ?>
 <?php elseif ($this->type == 'dreambox-usage'): ?>
     <?php echo $this->partial('admin/import/history-dreambox-usage.phtml', array('data' => $this->data)); ?>
+<?php elseif ($this->type == 'ttm-student'): ?>
+    <?php echo $this->partial('admin/import/history-ttm-student.phtml', array('data' => $this->data)); ?>
 <?php endif; ?>

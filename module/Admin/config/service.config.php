@@ -509,6 +509,9 @@ return array(
         'DreamboxUsageImporter' => function ($sm) {
                 return new \Admin\Import\Dreambox\Usage($sm->get('DreamboxUsageService'));
             },
+        'ThinkThroughMathStudentImporter' => function ($sm) {
+            return new \Admin\Import\ThinkThroughMath\Student($sm->get('ThinkThroughMathStudentService'));
+        },
 
         // IREADY
         'IreadyTableGateway' => function ($sm) {
@@ -558,7 +561,14 @@ return array(
                 return new DreamboxUsageService($sm->get('DreamboxUsageTable'));
             },
 
+
+
     ),
+
+    'abstract_factories' => array(
+        'Admin\ThinkThroughMath\Student\Factory',
+    ),
+
     'invokables' => array(
         'AdminLoginForm' => 'Admin\Form\Auth\Login',
     ),

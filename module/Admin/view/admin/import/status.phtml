@@ -55,8 +55,14 @@
     $listContents($entry);
 ?>
 
-<h2>ST Math</h2>
+<h2>Think Through Math - Student</h2>
+<div class="row">
+    <div class="col-md-12">
+        <a href="/import/ttm-student" class="btn btn-primary">Import</a>
+        <a href="/import/history/ttm-student" class="btn btn-info">History</a>
+    </div>
+</div>
 <?php
-    $entry = $this->dropbox->getMetadataWithChildren('/thinkthroughmath');
+    $entry = $this->dropbox->getMetadataWithChildren('/thinkthroughmath/import/student');
     $listContents($entry);
 ?>

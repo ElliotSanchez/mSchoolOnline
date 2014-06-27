@@ -1,0 +1,42 @@
+<table class="table">
+    <tr>
+        <th>Filename</th>
+        <th>Imported At</th>
+        <th>Student Id</th>
+        <th>Student Name</th>
+        <th>Grade Name</th>
+        <th>Classroom Name</th>
+        <th>Pathway Name</th>
+        <th>Grade Level Deviation</th>
+        <th>Lesson Name</th>
+        <th>Type</th>
+        <th>Tested Out</th>
+        <th>Passed</th>
+        <th>Pre Quiz Score</th>
+        <th>Post Quiz Score</th>
+        <th>Time On System</th>
+        <th>Date Started</th>
+        <th>Date Completed</th>
+    </tr>
+    <?php foreach ($this->data as $ttmStudent): ?>
+        <tr>
+            <td><?php echo $ttmStudent->filename() ?></td>
+            <td><?php echo $ttmStudent->importedAt->format('m/d/Y h:i:s A') ?></td>
+            <td><?php echo $ttmStudent->studentId; ?></td>
+            <td><?php echo $ttmStudent->studentName; ?></td>
+            <td><?php echo $ttmStudent->gradeName; ?></td>
+            <td><?php echo $ttmStudent->classroomName; ?></td>
+            <td><?php echo $ttmStudent->pathwayName; ?></td>
+            <td><?php echo $ttmStudent->gradeLevelDeviation; ?></td>
+            <td><?php echo $ttmStudent->lessonName; ?></td>
+            <td><?php echo $ttmStudent->type; ?></td>
+            <td><?php echo $ttmStudent->testedOut; ?></td>
+            <td><?php echo $ttmStudent->passed; ?></td>
+            <td><?php echo $ttmStudent->preQuizScore; ?></td>
+            <td><?php echo $ttmStudent->postQuizScore; ?></td>
+            <td><?php echo $ttmStudent->timeOnSystem; ?></td>
+            <td><?php echo $ttmStudent->dateStarted; ?></td>
+            <td><?php echo $ttmStudent->dateCompleted; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
