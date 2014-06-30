@@ -4,12 +4,14 @@ namespace Admin\Import\Dreambox;
 
 use Admin\Student\Service as StudentService;
 use Admin\Dreambox\Standards\Service as DreamboxStandardsService;
+use Admin\Dreambox\StandardsData\Service as DreamboxStandardsDataService;
 use \Dropbox\Client as Dropbox;
 
 class Standards {
 
     protected $dropbox;
     protected $dreamboxStandardsService;
+    protected $dreamboxStandardsDataService;
     protected $studentService;
 
     protected $originalFilename;
@@ -19,9 +21,10 @@ class Standards {
     protected $importPath;
     protected $filenamePrefix;
 
-    public function __construct(DreamboxStandardsService $dreamboxStandardsService) {
+    public function __construct(DreamboxStandardsService $dreamboxStandardsService, DreamboxStandardsDataService $dreamboxStandardsDataService) {
 
         $this->dreamboxStandardsService = $dreamboxStandardsService;
+        $this->dreamboxStandardsDataService = $dreamboxStandardsDataService;
         $this->importDate = new \DateTime();
         $this->importPath = '/dreambox/import/standards';
         $this->completedPath = '/dreambox/completed/standards';
@@ -85,44 +88,65 @@ class Standards {
         $SCHOOL_NAME = 'G';
         $INTERVENTION = 'H';
 
+        $standards = [];
+
         foreach ($rowIterator as $row) {
 
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(false); // Loop all cells, even if it is not set
 
-            if(1 == $row->getRowIndex ()) continue; //skip first row
+            if(1 == $row->getRowIndex ()) {
 
-            $data = [];
-
-            foreach ($cellIterator as $cell) {
-                switch ($cell->getColumn()) {
-                    case $STUDENT_FIRST_NAME: $data['first_name'] = $cell->getValue(); break;
-                    case $STUDENT_LAST_NAME: $data['last_name'] = $cell->getValue(); break;
-                    case $STUDENT_ID: $data['student_id'] = $cell->getValue(); break;
-                    case $GRADE: $data['student_grade'] = $cell->getValue(); break;
-                    case $TEACHER_EMAILS: $data['teacher_emails'] = $cell->getValue(); break;
-                    case $CLASS_NAME: $data['class_name'] = $cell->getValue(); break;
-                    case $SCHOOL_NAME: $data['school_name'] = $cell->getValue(); break;
-                    case $INTERVENTION: $data['intervention'] = $cell->getValue(); break;
+                foreach ($cellIterator as $cell) {
+                    $standards[$cell->getColumn()] = $cell->getValue();
                 }
-            }
 
-            // FIND STUDENT
-            $student = null;
-
-            if (!empty($data['student_id']))
-                $student = $this->studentService->getWithStudentNumber($data['student_id']);
-
-            if ($student) {
-
-                $data['import_filename'] = $this->originalFilename;
-                $data['imported_at'] = $this->importDate->format('Y-m-d H:i:s');
-                $data['student_id'] = $student->id;
-
-                $dreamboxUsage = $this->dreamboxStandardsService->create($data);
 
             } else {
-                // TODO NOT HANDLING MISSING STUDENT
+
+                $data = [];
+                $standardsData = [];
+
+                foreach ($cellIterator as $cell) {
+                    switch ($cell->getColumn()) {
+                        case $STUDENT_FIRST_NAME: $data['first_name'] = $cell->getValue(); break;
+                        case $STUDENT_LAST_NAME: $data['last_name'] = $cell->getValue(); break;
+                        case $STUDENT_ID: $data['student_id'] = $cell->getValue(); break;
+                        case $GRADE: $data['student_grade'] = $cell->getValue(); break;
+                        case $TEACHER_EMAILS: $data['teacher_emails'] = $cell->getValue(); break;
+                        case $CLASS_NAME: $data['class_name'] = $cell->getValue(); break;
+                        case $SCHOOL_NAME: $data['school_name'] = $cell->getValue(); break;
+                        case $INTERVENTION: $data['intervention'] = $cell->getValue(); break;
+                        default: $standardsData[$standards[$cell->getColumn()]] = $cell->getValue(); break;
+                    }
+                }
+
+                // FIND STUDENT
+                $student = null;
+
+                if (!empty($data['student_id']))
+                    $student = $this->studentService->getWithStudentNumber($data['student_id']);
+
+                if ($student) {
+
+                    $data['import_filename'] = $this->originalFilename;
+                    $data['imported_at'] = $this->importDate->format('Y-m-d H:i:s');
+                    $data['student_id'] = $student->id;
+
+                    $dreamboxStandards = $this->dreamboxStandardsService->create($data);
+
+                    foreach ($standardsData as $standard => $value) {
+                        $this->dreamboxStandardsDataService->create([
+                            'dreambox_standards_id' => $dreamboxStandards->id,
+                            'column' => $standard,
+                            'value' => $value
+                        ]);
+                    }
+
+                } else {
+                    // TODO NOT HANDLING MISSING STUDENT
+                }
+
             }
 
         }
