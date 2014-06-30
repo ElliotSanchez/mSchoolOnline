@@ -65,7 +65,7 @@ class Standards {
 
             $this->importFile();
 
-            //$this->cleanUp();
+            $this->cleanUp();
 
         }
 

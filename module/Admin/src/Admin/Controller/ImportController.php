@@ -46,7 +46,7 @@ class ImportController extends AbstractActionController
         $importer->setStudentService($studentService);
 
         $importer->import();
-die('done');
+
         $this->redirect()->toUrl('/import/history/' . $type);
 
     }
@@ -58,6 +58,7 @@ die('done');
         switch ($type){
             case 'iready': $data = $this->getServiceLocator()->get('IreadyService')->all(); break;
             case 'dreambox-usage': $data = $this->getServiceLocator()->get('DreamboxUsageService')->all(); break;
+            case 'dreambox-standards': $data = $this->getServiceLocator()->get('DreamboxStandardsService')->all(); break;
             case 'ttm-student': $data = $this->getServiceLocator()->get('ThinkThroughMathStudentService')->all(); break;
             case 'ttm-overview': $data = $this->getServiceLocator()->get('ThinkThroughMathOverviewService')->all(); break;
         }
