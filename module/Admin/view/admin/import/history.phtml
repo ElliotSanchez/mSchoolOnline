@@ -8,6 +8,8 @@
 
 <?php if ($this->type == 'iready'): ?>
     <?php echo $this->partial('admin/import/history-iready.phtml', array('iready' => $this->data)); ?>
+<?php elseif ($this->type == 'digitwhiz-mastery'): ?>
+    <?php echo $this->partial('admin/import/history-digitwhiz-mastery.phtml', array('data' => $this->data)); ?>
 <?php elseif ($this->type == 'dreambox-usage'): ?>
     <?php echo $this->partial('admin/import/history-dreambox-usage.phtml', array('data' => $this->data)); ?>
 <?php elseif ($this->type == 'dreambox-standards'): ?>

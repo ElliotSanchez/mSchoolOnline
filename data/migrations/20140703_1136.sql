@@ -1,0 +1,21 @@
+CREATE TABLE `digitwhiz_mastery` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `import_filename` varchar(256) DEFAULT NULL,
+  `imported_at` datetime DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `student_name` varchar(256) DEFAULT '',
+  `multiplication_plw` varchar(256) DEFAULT NULL,
+  `multiplication_current` varchar(256) DEFAULT NULL,
+  `division_plw` varchar(256) DEFAULT NULL,
+  `division_current` varchar(256) DEFAULT NULL,
+  `integer_plw` varchar(256) DEFAULT NULL,
+  `integer_current` varchar(256) DEFAULT NULL,
+  `like_terms_plw` varchar(256) DEFAULT NULL,
+  `like_terms_current` varchar(256) DEFAULT NULL,
+  `equations_plw` varchar(256) DEFAULT NULL,
+  `equations_current` varchar(256) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -29,6 +29,7 @@ class ImportController extends AbstractActionController
 
         switch ($type) {
             case 'iready': $importerStrategy = $this->getServiceLocator()->get('IreadyImporter'); break;
+            case 'digitwhiz-mastery': $importerStrategy = $this->getServiceLocator()->get('DigitWhizMasteryImporter'); break;
             case 'dreambox-usage': $importerStrategy = $this->getServiceLocator()->get('DreamboxUsageImporter'); break;
             case 'dreambox-standards': $importerStrategy = $this->getServiceLocator()->get('DreamboxStandardsImporter'); break;
             case 'ttm-student': $importerStrategy = $this->getServiceLocator()->get('ThinkThroughMathStudentImporter'); break;
@@ -57,6 +58,7 @@ class ImportController extends AbstractActionController
 
         switch ($type){
             case 'iready': $data = $this->getServiceLocator()->get('IreadyService')->all(); break;
+            case 'digitwhiz-mastery': $data = $this->getServiceLocator()->get('DigitWhizMasteryService')->all(); break;
             case 'dreambox-usage': $data = $this->getServiceLocator()->get('DreamboxUsageService')->all(); break;
             case 'dreambox-standards': $data = $this->getServiceLocator()->get('DreamboxStandardsService')->all(); break;
             case 'ttm-student': $data = $this->getServiceLocator()->get('ThinkThroughMathStudentService')->all(); break;

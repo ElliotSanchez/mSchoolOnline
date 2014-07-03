@@ -21,6 +21,18 @@
 
 ?>
 
+<h2>DigitWhiz - Mastery</h2>
+<div class="row">
+    <div class="col-md-12">
+        <a href="/import/digitwhiz-mastery" class="btn btn-primary">Import</a>
+        <a href="/import/history/digitwhiz-mastery" class="btn btn-info">History</a>
+    </div>
+</div>
+<?php
+$entry = $this->dropbox->getMetadataWithChildren('/digitwhiz/import/mastery');
+$listContents($entry);
+?>
+
 <h2>Dreambox - Usage</h2>
 <div class="row">
     <div class="col-md-12">

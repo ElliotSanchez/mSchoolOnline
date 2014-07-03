@@ -1,0 +1,40 @@
+<table class="table">
+    <tr>
+        <th>Filename</th>
+        <th>Imported At</th>
+        <th>Student Id</th>
+        <th>Student Name</th>
+
+        <th>Multi PLW</th>
+        <th>Multi Cur</th>
+        <th>Div PLW</th>
+        <th>Div Cur</th>
+        <th>Int PLW</th>
+        <th>Int Current</th>
+        <th>Like PLW</th>
+        <th>Like Current</th>
+        <th>Eqns PLW</th>
+        <th>Eqns Cur</th>
+
+    </tr>
+    <?php foreach ($this->data as $digitWhizMastery): ?>
+        <tr>
+            <td><?php echo $digitWhizMastery->filename() ?></td>
+            <td><?php echo $digitWhizMastery->importedAt->format('m/d/Y h:i:s A') ?></td>
+            <td><?php echo $digitWhizMastery->studentId ?></td>
+            <td><?php echo $digitWhizMastery->studentName ?></td>
+
+            <td><?php echo $digitWhizMastery->multiplicationPLW; ?></td>
+            <td><?php echo $digitWhizMastery->multiplicationCurrent; ?></td>
+            <td><?php echo $digitWhizMastery->divisionPLW; ?></td>
+            <td><?php echo $digitWhizMastery->divisionCurrent; ?></td>
+            <td><?php echo $digitWhizMastery->integerPLW; ?></td>
+            <td><?php echo $digitWhizMastery->integerCurrent; ?></td>
+            <td><?php echo $digitWhizMastery->likeTermsPLW; ?></td>
+            <td><?php echo $digitWhizMastery->likeTermsCurrent; ?></td>
+            <td><?php echo $digitWhizMastery->equationsPLW; ?></td>
+            <td><?php echo $digitWhizMastery->equationsCurrent; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
