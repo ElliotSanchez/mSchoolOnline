@@ -510,6 +510,10 @@ return array(
             return new \Admin\Import\DigitWhiz\Mastery($sm->get('DigitWhizMasteryService'));
         },
 
+        'DigitWhizTimeImporter' => function ($sm) {
+            return new \Admin\Import\DigitWhiz\Time($sm->get('DigitWhizTimeService'));
+        },
+
         'DreamboxUsageImporter' => function ($sm) {
                 return new \Admin\Import\Dreambox\Usage($sm->get('DreamboxUsageService'));
             },
@@ -574,6 +578,10 @@ return array(
         'DigitWhizMasteryTableGateway' => 'Admin\DigitWhiz\Mastery\Factory',
         'DigitWhizMasteryTable' => 'Admin\DigitWhiz\Mastery\Factory',
         'DigitWhizMasteryService' => 'Admin\DigitWhiz\Mastery\Factory',
+
+        'DigitWhizTimeTableGateway' => 'Admin\DigitWhiz\Time\Factory',
+        'DigitWhizTimeTable' => 'Admin\DigitWhiz\Time\Factory',
+        'DigitWhizTimeService' => 'Admin\DigitWhiz\Time\Factory',
 
         'DreamboxStandardsTableGateway' => 'Admin\Dreambox\Standards\Factory',
         'DreamboxStandardsTable' => 'Admin\Dreambox\Standards\Factory',

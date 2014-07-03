@@ -1,0 +1,26 @@
+<table class="table">
+    <tr>
+        <th>Filename</th>
+        <th>Imported At</th>
+        <th>Student Id</th>
+        <th>Student Name</th>
+
+        <th>Plays</th>
+        <th>Points</th>
+        <th>Time</th>
+
+    </tr>
+    <?php foreach ($this->data as $digitWhizTime): ?>
+        <tr>
+            <td><?php echo $digitWhizTime->filename() ?></td>
+            <td><?php echo $digitWhizTime->importedAt->format('m/d/Y h:i:s A') ?></td>
+            <td><?php echo $digitWhizTime->studentId ?></td>
+            <td><?php echo $digitWhizTime->studentName ?></td>
+
+            <td><?php echo $digitWhizTime->plays; ?></td>
+            <td><?php echo $digitWhizTime->points; ?></td>
+            <td><?php echo $digitWhizTime->time; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+

@@ -33,6 +33,18 @@ $entry = $this->dropbox->getMetadataWithChildren('/digitwhiz/import/mastery');
 $listContents($entry);
 ?>
 
+<h2>DigitWhiz - Time</h2>
+<div class="row">
+    <div class="col-md-12">
+        <a href="/import/digitwhiz-time" class="btn btn-primary">Import</a>
+        <a href="/import/history/digitwhiz-time" class="btn btn-info">History</a>
+    </div>
+</div>
+<?php
+$entry = $this->dropbox->getMetadataWithChildren('/digitwhiz/import/time');
+$listContents($entry);
+?>
+
 <h2>Dreambox - Usage</h2>
 <div class="row">
     <div class="col-md-12">
