@@ -1,4 +1,4 @@
-CREATE TABLE `digitwhiz_time` (
+CREATE TABLE `stmath_usage` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `import_filename` varchar(256) DEFAULT NULL,
   `imported_at` datetime DEFAULT NULL,

@@ -85,6 +85,30 @@ $listContents($entry);
     </div>
 </div>
 
+<h2>ST Math - Progress</h2>
+<div class="row">
+    <div class="col-md-12">
+        <a href="/import/stmath-progress" class="btn btn-primary">Import</a>
+        <a href="/import/history/stmath-progress" class="btn btn-info">History</a>
+    </div>
+</div>
+<?php
+$entry = $this->dropbox->getMetadataWithChildren('/stmath/import/progress');
+$listContents($entry);
+?>
+
+<h2>ST Math - Student</h2>
+<div class="row">
+    <div class="col-md-12">
+        <a href="/import/stmath-student" class="btn btn-primary">Import</a>
+        <a href="/import/history/stmath-student" class="btn btn-info">History</a>
+    </div>
+</div>
+<?php
+$entry = $this->dropbox->getMetadataWithChildren('/stmath/import/student');
+$listContents($entry);
+?>
+
 <h2>ST Math - Usage</h2>
 <div class="row">
     <div class="col-md-12">

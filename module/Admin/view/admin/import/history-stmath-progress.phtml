@@ -1,0 +1,74 @@
+<table class="table">
+    <tr>
+        <th>Filename</th>
+        <th>Imported At</th>
+        <th>Student Id</th>
+        <th>Student Name</th>
+
+        <th>SCD</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>School Sessions</th>
+        <th>Home Sessions</th>
+        <th>Syllabus Progress</th>
+        <th>Objectives Attempted</th>
+        <th>Standards Mastery</th>
+        <th>Standards Attempted</th>
+        <th>Current Objective</th>
+        <th>Module</th>
+        <th>Game</th>
+        <th>Level</th>
+        <th>Total Attempts</th>
+        <th>Last Session</th>
+        <th>Alerts</th>
+        <th>Extra plays</th>
+        <th>Low post quiz score</th>
+        <th>Decreasing quiz score</th>
+        <th>Low standards mastery</th>
+        <th>Low time on task</th>
+        <th>High number of tries</th>
+        <th>Low progress</th>
+        <th>Low attendance</th>
+        <th>Level cancelling</th>
+        <th>Unaddressed hand raising</th>
+        <th>Stuck on intro objectives</th>
+
+    </tr>
+    <?php foreach ($this->data as $stMathProgress): ?>
+        <tr>
+            <td><?php echo $stMathProgress->filename() ?></td>
+            <td><?php echo $stMathProgress->importedAt->format('m/d/Y h:i:s A') ?></td>
+            <td><?php echo $stMathProgress->studentId ?></td>
+            <td><?php echo $stMathProgress->studentName ?></td>
+
+            <td><?php echo $stMathProgress->scd; ?></td>
+            <td><?php echo $stMathProgress->firstName; ?></td>
+            <td><?php echo $stMathProgress->lastName; ?></td>
+            <td><?php echo $stMathProgress->schoolSessions; ?></td>
+            <td><?php echo $stMathProgress->homeSessions; ?></td>
+            <td><?php echo $stMathProgress->syllabusProgress; ?></td>
+            <td><?php echo $stMathProgress->objectivesAttempted; ?></td>
+            <td><?php echo $stMathProgress->standardsMastery; ?></td>
+            <td><?php echo $stMathProgress->standardsAttempted; ?></td>
+            <td><?php echo $stMathProgress->currentObjective; ?></td>
+            <td><?php echo $stMathProgress->module; ?></td>
+            <td><?php echo $stMathProgress->game; ?></td>
+            <td><?php echo $stMathProgress->level; ?></td>
+            <td><?php echo $stMathProgress->totalAttempts; ?></td>
+            <td><?php echo $stMathProgress->lastSession; ?></td>
+            <td><?php echo $stMathProgress->alerts; ?></td>
+            <td><?php echo $stMathProgress->extraPlays; ?></td>
+            <td><?php echo $stMathProgress->lowPostQuizScore; ?></td>
+            <td><?php echo $stMathProgress->decreasingQuizScore; ?></td>
+            <td><?php echo $stMathProgress->lowStandardsMastery; ?></td>
+            <td><?php echo $stMathProgress->lowTimeOnTask; ?></td>
+            <td><?php echo $stMathProgress->highNumberOfTries; ?></td>
+            <td><?php echo $stMathProgress->lowProgress; ?></td>
+            <td><?php echo $stMathProgress->lowAttendance; ?></td>
+            <td><?php echo $stMathProgress->levelCancelling; ?></td>
+            <td><?php echo $stMathProgress->unaddressedHandRaising; ?></td>
+            <td><?php echo $stMathProgress->stuckOnIntroObjectives; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
