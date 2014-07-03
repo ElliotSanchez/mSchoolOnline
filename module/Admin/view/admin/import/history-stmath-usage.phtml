@@ -1,0 +1,36 @@
+<table class="table">
+    <tr>
+        <th>Filename</th>
+        <th>Imported At</th>
+        <th>Student Id</th>
+        <th>Student Name</th>
+
+        <th>SCD</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Avg. Time / Week</th>
+        <th>Avg. Progress / Week</th>
+        <th>Total Time</th>
+        <th>Syllabus Progress</th>
+        <th>First Login</th>
+
+    </tr>
+    <?php foreach ($this->data as $stMathUsage): ?>
+        <tr>
+            <td><?php echo $stMathUsage->filename() ?></td>
+            <td><?php echo $stMathUsage->importedAt->format('m/d/Y h:i:s A') ?></td>
+            <td><?php echo $stMathUsage->studentId ?></td>
+            <td><?php echo $stMathUsage->studentName ?></td>
+
+            <td><?php echo $stMathUsage->scd; ?></td>
+            <td><?php echo $stMathUsage->firstName; ?></td>
+            <td><?php echo $stMathUsage->lastName; ?></td>
+            <td><?php echo $stMathUsage->avgTimeWeek; ?></td>
+            <td><?php echo $stMathUsage->avgProgressWeek; ?></td>
+            <td><?php echo $stMathUsage->totalTime; ?></td>
+            <td><?php echo $stMathUsage->syllabusProgress; ?></td>
+            <td><?php echo $stMathUsage->firstLogin; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+

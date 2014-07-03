@@ -520,6 +520,19 @@ return array(
         'DreamboxStandardsImporter' => function ($sm) {
                 return new \Admin\Import\Dreambox\Standards($sm->get('DreamboxStandardsService'), $sm->get('DreamboxStandardsDataService'));
             },
+
+        'STMathProgressImporter' => function ($sm) {
+            return new \Admin\Import\STMath\Progress($sm->get('STMathProgressService'));
+        },
+
+        'STMathStudentImporter' => function ($sm) {
+            return new \Admin\Import\STMath\Student($sm->get('STMathStudentService'));
+        },
+
+        'STMathUsageImporter' => function ($sm) {
+            return new \Admin\Import\STMath\Usage($sm->get('STMathUsageService'));
+        },
+
         'ThinkThroughMathStudentImporter' => function ($sm) {
             return new \Admin\Import\ThinkThroughMath\Student($sm->get('ThinkThroughMathStudentService'));
         },
@@ -590,7 +603,19 @@ return array(
         'DreamboxStandardsDataTableGateway' => 'Admin\Dreambox\StandardsData\Factory',
         'DreamboxStandardsDataTable' => 'Admin\Dreambox\StandardsData\Factory',
         'DreamboxStandardsDataService' => 'Admin\Dreambox\StandardsData\Factory',
-        
+
+        'STMathProgressTableGateway' => 'Admin\STMath\Progress\Factory',
+        'STMathProgressTable' => 'Admin\STMath\Progress\Factory',
+        'STMathProgressService' => 'Admin\STMath\Progress\Factory',
+
+        'STMathStudentTableGateway' => 'Admin\STMath\Student\Factory',
+        'STMathStudentTable' => 'Admin\STMath\Student\Factory',
+        'STMathStudentService' => 'Admin\STMath\Student\Factory',
+
+        'STMathUsageTableGateway' => 'Admin\STMath\Usage\Factory',
+        'STMathUsageTable' => 'Admin\STMath\Usage\Factory',
+        'STMathUsageService' => 'Admin\STMath\Usage\Factory',
+
         'ThinkThroughMathOverviewTableGateway' => 'Admin\ThinkThroughMath\Overview\Factory',
         'ThinkThroughMathOverviewTable' => 'Admin\ThinkThroughMath\Overview\Factory',
         'ThinkThroughMathOverviewService' => 'Admin\ThinkThroughMath\Overview\Factory',
