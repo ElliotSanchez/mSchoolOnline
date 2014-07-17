@@ -17,6 +17,9 @@ use Admin\Teacher\Service as TeacherService;
 use Admin\Student\Entity as Student;
 use Admin\Student\Table as StudentTable;
 use Admin\Student\Service as StudentService;
+use Admin\GradeLevel\Entity as GradeLevel;
+use Admin\GradeLevel\Table as GradeLevelTable;
+use Admin\GradeLevel\Service as GradeLevelService;
 use Admin\Mclass\Entity as Mclass;
 use Admin\Mclass\Table as MclassTable;
 use Admin\Mclass\Service as MclassService;
@@ -179,10 +182,26 @@ return array(
                 return new StudentService($sm->get('StudentTable'));
             },
         'StudentAddForm' => function ($sm) {
-                return new Admin\Form\Account\StudentAdd($sm->get('SchoolService'), $sm->get('Zend\Db\Adapter\Adapter'));
+                return new Admin\Form\Account\StudentAdd($sm->get('SchoolService'), $sm->get('GradeLevelService'), $sm->get('Zend\Db\Adapter\Adapter'));
             },
         'StudentEditForm' => function ($sm) {
-                return new Admin\Form\Account\StudentEdit($sm->get('SchoolService'), $sm->get('Zend\Db\Adapter\Adapter'));
+                return new Admin\Form\Account\StudentEdit($sm->get('SchoolService'), $sm->get('GradeLevelService'), $sm->get('Zend\Db\Adapter\Adapter'));
+            },
+
+        // GRADE LEVELS
+        'GradeLevelTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new GradeLevel());
+                return new TableGateway('grade_levels', $dbAdapter, null, $resultSetPrototype);
+            },
+        'GradeLevelTable' =>  function($sm) {
+                $tableGateway = $sm->get('GradeLevelTableGateway');
+                $table = new GradeLevelTable($tableGateway);
+                return $table;
+            },
+        'GradeLevelService' => function ($sm) {
+                return new GradeLevelService($sm->get('GradeLevelTable'));
             },
 
         // MCLASSES

@@ -10,17 +10,20 @@ use Zend\Db\Adapter\AdapterInterface;
 
 use Admin\School\Service As SchoolService;
 use Admin\Account\Entity As Account;
+use Admin\GradeLevel\Service as GradeLevelService;
 
 class StudentEdit extends Form
 {
     protected $schoolService;
+    protected $gradeLevelService;
     protected $dbAdapter;
 
     protected $account;
 
-    public function __construct(SchoolService $schoolService, AdapterInterface $dbAdapter) {
+    public function __construct(SchoolService $schoolService, GradeLevelService $gradeLevelService, AdapterInterface $dbAdapter) {
 
         $this->schoolService = $schoolService;
+        $this->gradeLevelService = $gradeLevelService;
         $this->dbAdapter = $dbAdapter;
 
         parent::__construct('student-edit');
@@ -69,6 +72,24 @@ class StudentEdit extends Form
             ),
             'type'  => 'Select',
         ));
+
+        $this->add(array(
+            'name' => 'grade_level_id',
+            'options' => array(
+                'required' => true,
+                'allow_empty' => true,
+            ),
+            'type'  => 'Select',
+        ));
+
+        $gradeLevelOptions = ['' => '-- Select --'];
+
+        foreach ($gradeLevelService->getOrdered() as $gradeLevel) {
+            $gradeLevelOptions[$gradeLevel->id] = $gradeLevel->name;
+        }
+
+        $this->get('grade_level_id')->setValueOptions($gradeLevelOptions);
+
 
         $this->add(array(
             'name' => 'username',

@@ -73,6 +73,19 @@ echo $this->formHidden($form->get('account_id'));
 </div>
 
 <div class="row">
+    <div class="form-group <?php echo (!$form->get('grade_level_id')->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="grade_level_id">Grade Level</label>
+            <?php
+            $school = $form->get('grade_level_id');
+            echo $this->formSelect($school->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($school);
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="form-group <?php echo (!$form->get('email')->getMessages()) ?: ('has-error') ?>">
         <div class="col-md-4">
             <label class="control-label" for="email">Email</label>

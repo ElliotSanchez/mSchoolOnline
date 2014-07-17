@@ -20,7 +20,7 @@ class Entity extends UserAbstract {
     public $gender;
     public $ethnicity;
     public $iep;
-    public $gradeLevel;
+    public $gradeLevelId;
 
     public $accountId;
     public $schoolId;
@@ -97,7 +97,7 @@ class Entity extends UserAbstract {
         $this->gender = (!empty($data['gender'])) ? $data['gender'] : null;
         $this->ethnicity = (!empty($data['ethnicity'])) ? $data['ethnicity'] : null;
         $this->iep = (!empty($data['iep'])) ? $data['iep'] : null;
-        $this->gradeLevel = (!empty($data['grade_level'])) ? $data['grade_level'] : null;
+        $this->gradeLevelId = (!empty($data['grade_level_id'])) ? $data['grade_level_id'] : null;
 
         $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : null;
         $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : null;
@@ -124,7 +124,7 @@ class Entity extends UserAbstract {
         $this->gender = (!empty($data['gender'])) ? $data['gender'] : null;
         $this->ethnicity = (!empty($data['ethnicity'])) ? $data['ethnicity'] : null;
         $this->iep = (!empty($data['iep'])) ? $data['iep'] : null;
-        $this->gradeLevel = (!empty($data['grade_level'])) ? $data['grade_level'] : null;
+        $this->gradeLevelId = (!empty($data['grade_level_id'])) ? $data['grade_level_id'] : null;
 
         $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : null;
         $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : null;
@@ -145,7 +145,7 @@ class Entity extends UserAbstract {
             'gender' => $this->gender,
             'ethnicity' => $this->ethnicity,
             'iep' => $this->iep,
-            'grade_level' => $this->gradeLevel,
+            'grade_level_id' => $this->gradeLevelId,
             'account_id' => $this->accountId,
             'school_id' => $this->schoolId,
         );
