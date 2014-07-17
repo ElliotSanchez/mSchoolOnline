@@ -23,4 +23,4 @@ INSERT INTO `grade_levels` (`id`, `name`, `sort_order`, `created_at`, `updated_a
 
 ALTER TABLE `students` CHANGE `grade_level` `grade_level_id` INT(11)  NULL  DEFAULT NULL;
 
-UPDATE students SET grade_level = grade_level + 1;
+UPDATE students SET grade_level_id = grade_level_id + 1;
