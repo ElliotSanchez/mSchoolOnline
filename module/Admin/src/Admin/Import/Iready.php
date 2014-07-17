@@ -17,6 +17,8 @@ class Iready {
     protected $originalFilename;
     protected $filename;
 
+    protected $downloadDate;
+
     public function __construct(IreadyService $ireadyService, IreadyDataService $ireadyDataService) {
         $this->ireadyService = $ireadyService;
         $this->ireadyDataService = $ireadyDataService;
@@ -44,6 +46,8 @@ class Iready {
             if ($filename == 'completed') continue;
 
             $this->originalFilename = $cp;
+
+            $this->setDownloadDate();
 
             $fd = tmpfile();
             $metadata = $this->dropbox->getFile($cp, $fd);
@@ -211,6 +215,7 @@ class Iready {
 
                 $data['import_filename'] = $this->originalFilename;
                 $data['imported_at'] = $this->importDate->format('Y-m-d H:i:s');
+                $data['download_date'] = $this->downloadDate->format('Y-m-d');
                 $data['student_id'] = $student->id;
 
                 $iready = $this->ireadyService->create($data);
@@ -249,6 +254,22 @@ class Iready {
         }
 
         $this->dropbox->move($this->originalFilename, $importCompletedPath . '/' . basename($this->originalFilename));
+
+    }
+
+    private function setDownloadDate() {
+
+        // EX. iready_diagnostic_2014-07-01_11_50_47.csv
+
+        $temp = basename($this->originalFilename);
+
+        $matches = array();
+        preg_match('/(\d{4})-(\d{2})-(\d{2})/', $temp, $matches);
+
+        if (count($matches)) {
+            $dateString = $matches[0];
+            $this->downloadDate = new \DateTime($dateString);
+        }
 
     }
 
