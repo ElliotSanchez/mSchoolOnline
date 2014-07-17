@@ -15,6 +15,8 @@ class Student {
     protected $originalFilename;
     protected $filename;
 
+    protected $downloadDate;
+
     protected $importDate;
     protected $importPath;
 
@@ -49,6 +51,8 @@ class Student {
             if ($filename == 'completed') continue;
 
             $this->originalFilename = $cp;
+
+            $this->setDownloadDate();
 
             $fd = tmpfile();
             $metadata = $this->dropbox->getFile($cp, $fd);
@@ -271,6 +275,23 @@ class Student {
         }
 
         return $objectiveRowIterator->current()->getRowIndex();
+
+    }
+
+    private function setDownloadDate() {
+
+        // EX. studentReport_1_7_2014_12_0_0.csv
+
+        $temp = basename($this->originalFilename);
+
+        $temp = str_replace('studentReport_', '', $temp);
+        $temp = str_replace('.csv', '', $temp);
+        $parts = explode('_', $temp);
+
+        if (count($parts)) {
+            $dateString = $parts[3] . '-' . $parts[1] . '-' . $parts[0];
+            $this->downloadDate = new \DateTime($dateString);
+        }
 
     }
 

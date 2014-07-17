@@ -15,6 +15,8 @@ class Progress {
     protected $originalFilename;
     protected $filename;
 
+    protected $downloadDate;
+
     protected $importDate;
     protected $importPath;
 
@@ -47,6 +49,8 @@ class Progress {
             if ($filename == 'completed') continue;
 
             $this->originalFilename = $cp;
+
+            $this->setDownloadDate();
 
             $fd = tmpfile();
             $metadata = $this->dropbox->getFile($cp, $fd);
@@ -153,6 +157,7 @@ class Progress {
 
                 $data['import_filename'] = $this->originalFilename;
                 $data['imported_at'] = $this->importDate->format('Y-m-d H:i:s');
+                $data['download_date'] = $this->downloadDate->format('Y-m-d');
                 $data['student_id'] = $student->id;
 
                 $stMathProgress = $this->stMathProgressService->create($data);
@@ -176,6 +181,23 @@ class Progress {
         }
 
         $this->dropbox->move($this->originalFilename, $importCompletedPath . '/' . basename($this->originalFilename));
+
+    }
+
+    private function setDownloadDate() {
+
+        // EX. progressReport_1_7_2014_11_59_3.csv
+
+        $temp = basename($this->originalFilename);
+
+        $temp = str_replace('progressReport_', '', $temp);
+        $temp = str_replace('.csv', '', $temp);
+        $parts = explode('_', $temp);
+
+        if (count($parts)) {
+            $dateString = $parts[2] . '-' . $parts[1] . '-' . $parts[0];
+            $this->downloadDate = new \DateTime($dateString);
+        }
 
     }
 

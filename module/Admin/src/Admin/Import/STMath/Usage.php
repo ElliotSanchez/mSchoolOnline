@@ -15,6 +15,8 @@ class Usage {
     protected $originalFilename;
     protected $filename;
 
+    protected $downloadDate;
+
     protected $importDate;
     protected $importPath;
 
@@ -47,6 +49,8 @@ class Usage {
             if ($filename == 'completed') continue;
 
             $this->originalFilename = $cp;
+
+            $this->setDownloadDate();
 
             $fd = tmpfile();
             $metadata = $this->dropbox->getFile($cp, $fd);
@@ -115,6 +119,7 @@ class Usage {
 
                 $data['import_filename'] = $this->originalFilename;
                 $data['imported_at'] = $this->importDate->format('Y-m-d H:i:s');
+                $data['download_date'] = $this->downloadDate->format('Y-m-d');
                 $data['student_id'] = $student->id;
 
                 $stMathUsage = $this->stMathUsageService->create($data);
@@ -138,6 +143,23 @@ class Usage {
         }
 
         $this->dropbox->move($this->originalFilename, $importCompletedPath . '/' . basename($this->originalFilename));
+
+    }
+
+    private function setDownloadDate() {
+
+        // EX. usageReport_26_6_2014_11_0_34.csv
+
+        $temp = basename($this->originalFilename);
+
+        $temp = str_replace('usageReport_', '', $temp);
+        $temp = str_replace('.csv', '', $temp);
+        $parts = explode('_', $temp);
+
+        if (count($parts)) {
+            $dateString = $parts[2] . '-' . $parts[1] . '-' . $parts[0];
+            $this->downloadDate = new \DateTime($dateString);
+        }
 
     }
 
