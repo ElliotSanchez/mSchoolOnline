@@ -8,6 +8,7 @@ class Entity extends EntityAbstract {
 
     public $importFilename;
     public $importedAt;
+    public $downloadDate;
     public $studentId;
 
     public $studentName;
@@ -25,6 +26,7 @@ class Entity extends EntityAbstract {
 
         $this->importFilename = (!empty($data['import_filename'])) ? $data['import_filename'] : null;
         $this->importedAt = (!empty($data['imported_at'])) ? new \DateTime($data['imported_at']) : null;
+        $this->downloadDate = (!empty($data['download_date'])) ? new \DateTime($data['download_date']) : null;
         $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : null;
 
         $this->studentName = (!empty($data['student_name'])) ? $data['student_name'] : null;
@@ -41,6 +43,7 @@ class Entity extends EntityAbstract {
 
         $this->importFilename = (!empty($data['import_filename'])) ? $data['import_filename'] : $this->importFilename;
         $this->importedAt = (!empty($data['imported_at'])) ? new \DateTime($data['imported_at']) : $this->importedAt;
+        $this->downloadDate = (!empty($data['download_date'])) ? new \DateTime($data['download_date']) : null;
         $this->studentId = (!empty($data['student_id'])) ? $data['student_id'] : $this->studentId;
 
         $this->studentName = (!empty($data['student_name'])) ? $data['student_name'] : $this->studentName;
@@ -57,6 +60,7 @@ class Entity extends EntityAbstract {
         $data = array(
             'import_filename' => $this->importFilename,
             'imported_at' => ($this->importedAt) ? ($this->importedAt->format('Y-m-d H:i:s')) : (null),
+            'download_date' => ($this->downloadDate) ? ($this->downloadDate->format('Y-m-d H:i:s')) : (null),
             'student_id' => $this->studentId,
 
             'student_name' => $this->studentName,

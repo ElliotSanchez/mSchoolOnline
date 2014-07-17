@@ -15,6 +15,8 @@ class Mastery {
     protected $originalFilename;
     protected $filename;
 
+    protected $downloadDate;
+
     protected $importDate;
     protected $importPath;
 
@@ -48,6 +50,8 @@ class Mastery {
             if ($filename == 'completed') continue;
 
             $this->originalFilename = $cp;
+
+            $this->setDownloadDate();
 
             $fd = tmpfile();
             $metadata = $this->dropbox->getFile($cp, $fd);
@@ -127,6 +131,7 @@ class Mastery {
 
                 $data['import_filename'] = $this->originalFilename;
                 $data['imported_at'] = $this->importDate->format('Y-m-d H:i:s');
+                $data['download_date'] = $this->downloadDate->format('Y-m-d');
                 $data['student_id'] = $student->id;
 
                 $digitwhizMastery = $this->digitWhizMasteryService->create($data);
@@ -135,6 +140,21 @@ class Mastery {
                 // TODO NOT HANDLING MISSING STUDENT
             }
 
+        }
+
+    }
+
+    protected function setDownloadDate() {
+
+        // EX. digitwhizmastery_2014-07-14.csv
+
+        $temp = basename($this->originalFilename);
+
+        $temp = str_replace('digitwhizmastery_', '', $temp);
+        $temp = str_replace('.csv', '', $temp);
+
+        if (strlen($temp)) {
+            $this->downloadDate = new \DateTime($temp);
         }
 
     }

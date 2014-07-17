@@ -17,6 +17,8 @@ class Standards {
     protected $originalFilename;
     protected $filename;
 
+    protected $downloadDate;
+
     protected $importDate;
     protected $importPath;
     protected $filenamePrefix;
@@ -56,6 +58,8 @@ class Standards {
                 continue;
 
             $this->originalFilename = $cp;
+
+            $this->setDownloadDate();
 
             $fd = tmpfile();
             $metadata = $this->dropbox->getFile($cp, $fd);
@@ -131,6 +135,7 @@ class Standards {
 
                     $data['import_filename'] = $this->originalFilename;
                     $data['imported_at'] = $this->importDate->format('Y-m-d H:i:s');
+                    $data['download_date'] = $this->downloadDate->format('Y-m-d');
                     $data['student_id'] = $student->id;
 
                     $dreamboxStandards = $this->dreamboxStandardsService->create($data);
@@ -164,6 +169,22 @@ class Standards {
         }
 
         $this->dropbox->move($this->originalFilename, $importCompletedPath . '/' . basename($this->originalFilename));
+
+    }
+
+    private function setDownloadDate() {
+
+        // EX. Dreambox_Standards_KIPP_2014-07-01_9_49_45.csv
+
+        $temp = basename($this->originalFilename);
+
+        $matches = array();
+        preg_match('/(\d{4})-(\d{2})-(\d{2})/', $temp, $matches);
+
+        if (count($matches)) {
+            $dateString = $matches[0];
+            $this->downloadDate = new \DateTime($dateString);
+        }
 
     }
 

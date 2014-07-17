@@ -15,6 +15,8 @@ class Time {
     protected $originalFilename;
     protected $filename;
 
+    protected $downloadDate;
+
     protected $importDate;
     protected $importPath;
 
@@ -48,6 +50,8 @@ class Time {
             if ($filename == 'completed') continue;
 
             $this->originalFilename = $cp;
+
+            $this->setDownloadDate();
 
             $fd = tmpfile();
             $metadata = $this->dropbox->getFile($cp, $fd);
@@ -111,6 +115,7 @@ class Time {
 
                 $data['import_filename'] = $this->originalFilename;
                 $data['imported_at'] = $this->importDate->format('Y-m-d H:i:s');
+                $data['download_date'] = $this->downloadDate->format('Y-m-d');
                 $data['student_id'] = $student->id;
 
                 $digitwhizTime = $this->digitWhizTimeService->create($data);
@@ -119,6 +124,21 @@ class Time {
                 // TODO NOT HANDLING MISSING STUDENT
             }
 
+        }
+
+    }
+
+    protected function setDownloadDate() {
+
+        // EX. digitwhiztime_2014-07-14.csv
+
+        $temp = basename($this->originalFilename);
+
+        $temp = str_replace('digitwhiztime_', '', $temp);
+        $temp = str_replace('.csv', '', $temp);
+
+        if (strlen($temp)) {
+            $this->downloadDate = new \DateTime($temp);
         }
 
     }
