@@ -15,6 +15,8 @@ class Student {
     protected $originalFilename;
     protected $filename;
 
+    protected $downloadDate;
+
     protected $importDate;
     protected $importPath;
 
@@ -47,6 +49,8 @@ class Student {
             if ($filename == 'completed') continue;
 
             $this->originalFilename = $cp;
+
+            $this->setDownloadDate();
 
             $fd = tmpfile();
             $metadata = $this->dropbox->getFile($cp, $fd);
@@ -126,6 +130,7 @@ class Student {
 
                 $data['import_filename'] = $this->originalFilename;
                 $data['imported_at'] = $this->importDate->format('Y-m-d H:i:s');
+                $data['download_date'] = $this->downloadDate->format('Y-m-d');
                 $data['student_id'] = $student->id;
 
                 $ttmStudent = $this->ttmStudentService->create($data);
@@ -149,6 +154,22 @@ class Student {
         }
 
         $this->dropbox->move($this->originalFilename, $importCompletedPath . '/' . basename($this->originalFilename));
+
+    }
+
+    private function setDownloadDate() {
+
+        // EX. FIRSTNAME LASTNAME__2014-07-01_10_33_38.csv
+
+        $temp = basename($this->originalFilename);
+
+        $matches = array();
+        preg_match('/(\d{4})-(\d{2})-(\d{2})/', $temp, $matches);
+
+        if (count($matches)) {
+            $dateString = $matches[0];
+            $this->downloadDate = new \DateTime($dateString);
+        }
 
     }
 
