@@ -376,6 +376,7 @@ class AccountsController extends AbstractActionController
         $account = $this->getAccount();
 
         $students = $this->getServiceLocator()->get('StudentService')->getForAccount($account);
+        $gradeLevelMap = $this->getServiceLocator()->get('GradeLevelService')->getMap();
 
         $objPHPExcel = new \PHPExcel();
 
@@ -398,6 +399,8 @@ class AccountsController extends AbstractActionController
 
             $row = $index+2;
 
+            $gradeLevel = (isset($gradeLevelMap[$student->gradeLevelId])) ? ($gradeLevelMap[$student->gradeLevelId]->name) : (null);
+
             $objPHPExcel->getActiveSheet()
                 ->setCellValue('A'.$row, $student->number)
                 ->setCellValue('B'.$row, $student->firstName)
@@ -410,7 +413,7 @@ class AccountsController extends AbstractActionController
                 ->setCellValue('I'.$row, $student->gender)
                 ->setCellValue('J'.$row, $student->ethnicity)
                 ->setCellValue('K'.$row, $student->iep)
-                ->setCellValue('L'.$row, $student->gradeLevel);
+                ->setCellValue('L'.$row, $gradeLevel); // TODO FIX THIS TO USE MODEL
 
             $objPHPExcel->getActiveSheet()->getStyle('A'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);
             $objPHPExcel->getActiveSheet()->getStyle('B'.$row)->getNumberFormat()->setFormatCode(\PHPExcel_Style_NumberFormat::FORMAT_TEXT);

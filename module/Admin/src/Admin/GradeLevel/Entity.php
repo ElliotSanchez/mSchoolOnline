@@ -9,6 +9,10 @@ class Entity extends EntityAbstract {
     public $name;
     public $sortOrder;
 
+    public function numericValue() {
+        return preg_replace('/[a-z]+/', '', $this->name);
+    }
+
     public function create($data) {
 
         parent::create($data);

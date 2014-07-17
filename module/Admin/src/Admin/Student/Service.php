@@ -6,6 +6,7 @@ use Admin\ModelAbstract\ServiceAbstract as ServiceAbstract;
 use Admin\Student\Entity as Student;
 use Admin\Account\Entity as Account;
 use Admin\School\Entity as School;
+use Admin\GradeLevel\Service as GradeLevelService;
 
 class Service extends ServiceAbstract {
 
@@ -57,7 +58,9 @@ class Service extends ServiceAbstract {
 
     }
 
-    public function importStudentsFromFile($filename, $account, $school) {
+    public function importStudentsFromFile($filename, $account, $school, GradeLevelService $gradeLevelService) {
+
+        $gradeLevelMap = $gradeLevelService->getNumericMap();
 
         $objPHPExcel = \PHPExcel_IOFactory::load($filename);
 
@@ -106,6 +109,13 @@ class Service extends ServiceAbstract {
                     default:                break;
                 }
 
+            }
+
+            if (isset($data['grade_level'])) {
+                if (isset($gradeLevelMap[$data['grade_level']])) {
+                    $data['grade_level_id'] = $gradeLevelMap[$data['grade_level']]->id;
+                }
+                unset($data['grade_level']);
             }
 
             $student = $this->create($data);

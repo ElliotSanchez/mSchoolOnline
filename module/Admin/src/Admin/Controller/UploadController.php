@@ -36,7 +36,7 @@ class UploadController extends AbstractActionController
 
                 $studentService = $this->getServiceLocator()->get('StudentService');
 
-                $studentService->importStudentsFromFile($tempFilename, $account, $school);
+                $studentService->importStudentsFromFile($tempFilename, $account, $school, $this->getServiceLocator()->get('GradeLevelService'));
 
                 if ($tempFilename) {
                     unlink($tempFilename);
