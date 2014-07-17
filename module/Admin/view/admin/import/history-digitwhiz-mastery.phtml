@@ -1,6 +1,7 @@
 <table class="table">
     <tr>
         <th>Filename</th>
+        <th>Download Date</th>
         <th>Imported At</th>
         <th>Student Id</th>
         <th>Student Name</th>
@@ -20,6 +21,7 @@
     <?php foreach ($this->data as $digitWhizMastery): ?>
         <tr>
             <td><?php echo $digitWhizMastery->filename() ?></td>
+            <td><?php echo ($digitWhizMastery->downloadDate) ? ($digitWhizMastery->downloadDate->format('m/d/Y')) : ('') ?></td>
             <td><?php echo $digitWhizMastery->importedAt->format('m/d/Y h:i:s A') ?></td>
             <td><?php echo $digitWhizMastery->studentId ?></td>
             <td><?php echo $digitWhizMastery->studentName ?></td>

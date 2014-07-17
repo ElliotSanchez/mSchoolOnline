@@ -1,6 +1,7 @@
 <table class="table">
     <tr>
         <th>Filename</th>
+        <th>Download Date</th>
         <th>Imported At</th>
         <th>Student Id</th>
         <th>Student</th>
@@ -23,6 +24,7 @@
     <?php foreach ($this->data as $ttnOverview): ?>
         <tr>
             <td><?php echo $ttnOverview->filename() ?></td>
+            <td><?php echo ($ttnOverview->downloadDate) ? ($ttnOverview->downloadDate->format('m/d/Y')) : ('') ?></td>
             <td><?php echo $ttnOverview->importedAt->format('m/d/Y h:i:s A') ?></td>
             <td><?php echo $ttnOverview->studentId; ?></td>
 

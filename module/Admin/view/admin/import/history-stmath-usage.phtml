@@ -1,6 +1,7 @@
 <table class="table">
     <tr>
         <th>Filename</th>
+        <th>Download Date</th>
         <th>Imported At</th>
         <th>Student Id</th>
         <th>Student Name</th>
@@ -18,6 +19,7 @@
     <?php foreach ($this->data as $stMathUsage): ?>
         <tr>
             <td><?php echo $stMathUsage->filename() ?></td>
+            <td><?php echo ($stMathUsage->downloadDate) ? ($stMathUsage->downloadDate->format('m/d/Y')) : ('') ?></td>
             <td><?php echo $stMathUsage->importedAt->format('m/d/Y h:i:s A') ?></td>
             <td><?php echo $stMathUsage->studentId ?></td>
             <td><?php echo $stMathUsage->studentName ?></td>
