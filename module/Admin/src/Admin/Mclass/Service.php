@@ -169,4 +169,32 @@ class Service extends ServiceAbstract {
         return iterator_to_array($this->table->fetchWith($select));
 
     }
+
+    public function getStudentsAssignedToTeacher(Teacher $teacher) {
+
+        $assignedStudents = [];
+
+        $mclasses = $this->getMclassesForTeacher($teacher);
+
+        foreach ($mclasses as $mclass) {
+
+            $students = $this->getStudentsAssignedToMclass($mclass);
+
+            foreach ($students as $student) {
+                $assignedStudents[$student->id] = $student;
+            }
+
+        }
+
+        function studentNameCompare($a, $b)
+        {
+            return strcmp($a->lastName.$a->firstName, $b->lastName.$b->firstName);
+        }
+
+        usort($assignedStudents, "studentNameCompare");
+
+        return $assignedStudents;
+
+
+    }
 }

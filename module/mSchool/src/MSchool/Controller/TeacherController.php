@@ -32,7 +32,15 @@ class TeacherController extends AbstractActionController
     }
 
     public function studentAccountsAction() {
+
+        $teacher = $adminAuthService = $this->getServiceLocator()->get('TeacherAuthService')->getCurrentUser();
+        $students = $this->getServiceLocator()->get('MclassService')->getStudentsAssignedToTeacher($teacher);
+
         $this->layout('mschool/layout/coach');
+
+        return new ViewModel(array(
+            'students' => $students,
+        ));
     }
 
     public function classDashboardAction()

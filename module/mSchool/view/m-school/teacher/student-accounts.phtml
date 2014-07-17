@@ -8,3 +8,46 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box bordered-box purple-border" style="margin-bottom:0;">
+            <div class="box-header purple-background">
+                <div class="title">Students</div>
+                <div class="actions">
+                    <a class="btn box-remove btn-xs btn-link" href="#"><i class="icon-remove"></i>
+                    </a>
+
+                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                    </a>
+                </div>
+            </div>
+            <div class="box-content box-no-padding">
+                <table class="table table-striped" style="margin-bottom:0;">
+                    <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($this->students as $student): ?>
+                        <tr>
+                            <td>
+                                <a class="btn btn-link" href="<?php echo $this->url('mschool/teacher_student_password', ['id' => $student->id]); ?>">
+                                    <?php echo $student->getFullName(); ?>
+                                </a>
+                            </td>
+                            <td class="text-right">
+                                <a class="btn btn-default" href="<?php echo $this->url('mschool/teacher_student_password', ['id' => $student->id]); ?>">View</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
