@@ -41,51 +41,23 @@
         </a>
 
         <ul class='nav'>
-
-            <li class="dropdown light only-icon">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="icon-cog"></i>
+            <li class="light">
+                <a class="" href="<?php echo $this->url('mschool/teacher_progress'); ?>">
+                    <i class="icon-bar-chart"></i>
+                    Progress
                 </a>
-                <ul class="dropdown-menu color-settings">
-
-                </ul>
             </li>
-
-            <li class="dropdown medium only-icon widget">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="icon-rss"></i>
-                    <div class="label">5</div>
+            <li class="light">
+                <a class="" href="<?php echo $this->url('mschool/teacher_assessment'); ?>">
+                    <i class="icon-signal"></i>
+                    Assessment
                 </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">
-                            <div class="widget-body">
-                                <div class="pull-left icon">
-                                    <i class="icon-user text-success"></i>
-                                </div>
-                                <div class="pull-left text">
-                                    John Doe signed on
-                                    <small class="text-muted">just now</small>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div class="widget-body">
-                                <div class="pull-left icon">
-                                    <i class="icon-user text-success"></i>
-                                </div>
-                                <div class="pull-left text">
-                                    Jane Doe signed on
-                                    <small class="text-muted">last week</small>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                </ul>
+            </li>
+            <li class="light">
+                <a class="" href="<?php echo $this->url('mschool/teacher_student_accounts'); ?>">
+                    <i class="icon-group"></i>
+                    Student Accounts
+                </a>
             </li>
 
             <li class='dropdown dark'>
@@ -94,14 +66,61 @@
                     <?php echo $this->translate('Logout') ?>
                 </a>
             </li>
+
+<!--            <li class="dropdown light only-icon">-->
+<!--                <a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+<!--                    <i class="icon-cog"></i>-->
+<!--                </a>-->
+<!--                <ul class="dropdown-menu color-settings">-->
+<!---->
+<!--                </ul>-->
+<!--            </li>-->
+
+<!--            <li class="dropdown medium only-icon widget">-->
+<!--                <a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+<!--                    <i class="icon-rss"></i>-->
+<!--                    <div class="label">5</div>-->
+<!--                </a>-->
+<!--                <ul class="dropdown-menu">-->
+<!--                    <li>-->
+<!--                        <a href="#">-->
+<!--                            <div class="widget-body">-->
+<!--                                <div class="pull-left icon">-->
+<!--                                    <i class="icon-user text-success"></i>-->
+<!--                                </div>-->
+<!--                                <div class="pull-left text">-->
+<!--                                    John Doe signed on-->
+<!--                                    <small class="text-muted">just now</small>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li class="divider"></li>-->
+<!--                    <li>-->
+<!--                        <a href="#">-->
+<!--                            <div class="widget-body">-->
+<!--                                <div class="pull-left icon">-->
+<!--                                    <i class="icon-user text-success"></i>-->
+<!--                                </div>-->
+<!--                                <div class="pull-left text">-->
+<!--                                    Jane Doe signed on-->
+<!--                                    <small class="text-muted">last week</small>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li class="divider"></li>-->
+<!--                </ul>-->
+<!--            </li>-->
+
         </ul>
 
-        <form action="search_results.html" class="navbar-form navbar-right hidden-xs" method="get">
-            <button class="btn btn-link icon-search" name="button" type="submit"></button>
-            <div class="form-group">
-                <input value="" class="form-control" placeholder="Search..." autocomplete="off" id="q_header" name="q" type="text">
-            </div>
-        </form>
+<!--        <form action="search_results.html" class="navbar-form navbar-right hidden-xs" method="get">-->
+<!--            <button class="btn btn-link icon-search" name="button" type="submit"></button>-->
+<!--            <div class="form-group">-->
+<!--                <input value="" class="form-control" placeholder="Search..." autocomplete="off" id="q_header" name="q" type="text">-->
+<!--            </div>-->
+<!--        </form>-->
 
     </nav>
 </header>

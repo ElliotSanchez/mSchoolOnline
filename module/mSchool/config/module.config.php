@@ -168,6 +168,7 @@ return array(
                     ),
 
                     // TEACHER
+                    // - MAIN TEACHER NAVIGATION
                     'teacher_dashboard' => array(
                         'type' => 'Literal',
                         'options' => array(
@@ -178,6 +179,40 @@ return array(
                             ),
                         ),
                     ),
+
+                    'teacher_progress' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/teacher/progress',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Teacher',
+                                'action'     => 'progress',
+                            ),
+                        ),
+                    ),
+
+                    'teacher_assessment' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/teacher/assessment',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Teacher',
+                                'action'     => 'assessment',
+                            ),
+                        ),
+                    ),
+
+                    'teacher_student_accounts' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/teacher/student-accounts',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Teacher',
+                                'action'     => 'student-accounts',
+                            ),
+                        ),
+                    ),
+                    // - END MAIN TEACHER NAVIGATION
 
                     'teacher_class_dashboard' => array(
                         'type' => 'Segment',

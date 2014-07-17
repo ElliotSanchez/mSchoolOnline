@@ -23,6 +23,18 @@ class TeacherController extends AbstractActionController
 
     }
 
+    public function progressAction() {
+        $this->layout('mschool/layout/coach');
+    }
+
+    public function assessmentAction() {
+        $this->layout('mschool/layout/coach');
+    }
+
+    public function studentAccountsAction() {
+        $this->layout('mschool/layout/coach');
+    }
+
     public function classDashboardAction()
     {
 
