@@ -75,7 +75,7 @@ class Module
         $router = $sm->get('router');
         $request = $sm->get('request');
         $matchedRoute = $router->match($request);
-        if ($matchedRoute->getParam('subdomain')) {
+        if ($matchedRoute && $matchedRoute->getParam('subdomain')) {
             // THIS IS DONE SO THAT CALLED TO CONTROLLER redirect()->toRoute(...) HAVE THE SUBDOMAIN AVAILABLE
             $router->setDefaultParam('subdomain', $matchedRoute->getParam('subdomain'));
             $this->subdomain = $matchedRoute->getParam('subdomain');
