@@ -181,9 +181,12 @@ return array(
                     ),
 
                     'teacher_progress' => array(
-                        'type' => 'Literal',
+                        'type' => 'Segment',
                         'options' => array(
-                            'route'    => '/teacher/progress',
+                            'route'    => '/teacher/progress[/:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
                             'defaults' => array(
                                 'controller' => 'MSchool\Controller\Teacher',
                                 'action'     => 'progress',
@@ -192,9 +195,12 @@ return array(
                     ),
 
                     'teacher_assessment' => array(
-                        'type' => 'Literal',
+                        'type' => 'Segment',
                         'options' => array(
-                            'route'    => '/teacher/assessment',
+                            'route'    => '/teacher/assessment[/:id]',
+                            'constraints' => array(
+                                'id' => '[0-9]*',
+                            ),
                             'defaults' => array(
                                 'controller' => 'MSchool\Controller\Teacher',
                                 'action'     => 'assessment',

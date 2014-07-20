@@ -8,3 +8,15 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <?php echo $this->partial('m-school/teacher/common/class-switcher.phtml', array('mclasses' => $mclasses, 'current' => $mclass, 'url' => '/teacher/progress')); ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h1><?php echo $mclass->name ?></h1>
+    </div>
+</div>

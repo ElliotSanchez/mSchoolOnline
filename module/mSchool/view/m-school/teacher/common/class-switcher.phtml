@@ -1,0 +1,7 @@
+<select class="teacher-class-switcher" data-url="<?php echo $this->url?>">
+    <?php foreach($mclasses as $mclass): ?>
+        <option data-mclassid="<?php echo $mclass->id ?>" <?php echo ($mclass->id == $current->id) ? ('selected="selected"') : ('') ?>>
+            <?php echo $mclass->name?>
+        </option>
+    <?php endforeach; ?>
+</select>

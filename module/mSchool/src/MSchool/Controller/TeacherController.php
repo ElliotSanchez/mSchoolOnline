@@ -5,12 +5,45 @@ namespace MSchool\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use Admin\Teacher\Entity as Teacher;
+use Zend\Stdlib\DispatchableInterface;
+use Zend\Stdlib\RequestInterface as Request;
+use Zend\Stdlib\ResponseInterface as Response;
 
-class TeacherController extends AbstractActionController
+class TeacherController extends AbstractActionController implements DispatchableInterface
 {
+    protected $teacher;
+    protected $assignedMclasses;
+    protected $mclass;
+
+    public function dispatch(Request $request, Response $response = null)
+    {
+        $this->teacher = $this->getServiceLocator()->get('TeacherAuthService')->getCurrentUser();
+        $this->loadAssignedMclasses();
+        $this->loadRequestedMclass();
+
+        return parent::dispatch($request, $response);
+    }
+
+    protected function loadAssignedMclasses() {
+        $this->assignedMclasses = $this->getServiceLocator()->get('MclassService')->getMclassesForTeacher($this->teacher);
+    }
+
+    protected function loadRequestedMclass() {
+        $mclassId = $this->params('id');
+        $mclass = null;
+
+        if ($mclassId) {
+            $this->mclass = $this->getServiceLocator()->get('MclassService')->get($mclassId);
+        } else if (count($this->assignedMclasses)) {
+            $this->mclass = $this->assignedMclasses[0];
+        }
+
+        return $this->mclass;
+    }
+
     public function dashboardAction()
     {
-
         $teacher = $adminAuthService = $this->getServiceLocator()->get('TeacherAuthService')->getCurrentUser();
 
         $mclasses = $this->getServiceLocator()->get('MclassService')->getMclassesForTeacher($teacher);
@@ -20,15 +53,26 @@ class TeacherController extends AbstractActionController
         return new ViewModel(array(
             'mclasses' => $mclasses,
         ));
-
     }
 
     public function progressAction() {
         $this->layout('mschool/layout/coach');
+
+        return new ViewModel(array(
+            'mclasses' => $this->assignedMclasses,
+            'mclass' => $this->mclass,
+        ));
     }
 
     public function assessmentAction() {
+
         $this->layout('mschool/layout/coach');
+
+        return new ViewModel(array(
+            'mclasses' => $this->assignedMclasses,
+            'mclass' => $this->mclass,
+        ));
+
     }
 
     public function studentAccountsAction() {
