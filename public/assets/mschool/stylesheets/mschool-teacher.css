@@ -1,0 +1,21 @@
+.assessment-student-placement .x-axis path {
+    stroke:white;
+    fill:none;
+}
+.assessment-student-placement .x-axis line {
+    fill: none;
+    stroke: none;
+    stroke-opacity:.8;
+    shape-rendering: crispEdges;
+}
+.assessment-student-placement .bars rect {
+    fill:steelblue;
+    fill-opacity:.9;
+}
+.assessment-student-placement  .title {
+    font-weight: bold;
+}
+.assessment-student-placement #precise-value {
+    fill:white;
+    font-size: 12px;
+}

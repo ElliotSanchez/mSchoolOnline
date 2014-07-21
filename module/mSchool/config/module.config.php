@@ -220,6 +220,24 @@ return array(
                     ),
                     // - END MAIN TEACHER NAVIGATION
 
+                    // TEACHER DATA
+
+                    'teacher_data_student_placement' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/teacher/data/student/placement[/:class_id]',
+                            'constraints' => array(
+                                'class_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\TeacherData',
+                                'action'     => 'student-placement',
+                            ),
+                        ),
+                    ),
+
+                    // END TEACHER DATA
+
                     'teacher_class_dashboard' => array(
                         'type' => 'Segment',
                         'options' => array(
@@ -348,6 +366,7 @@ return array(
             'MSchool\Controller\Pages' => 'MSchool\Controller\PagesController',
             'MSchool\Controller\Pathway' => 'MSchool\Controller\PathwayController',
             'MSchool\Controller\Teacher' => 'MSchool\Controller\TeacherController',
+            'MSchool\Controller\TeacherData' => 'MSchool\Controller\TeacherDataController',
         ),
     ),
     'view_manager' => array(
