@@ -16,9 +16,13 @@ class TeacherDataController extends AbstractActionController implements Dispatch
     public function studentPlacementAction()
     {
 
+        $classId = $this->params('class_id');
+
+        $mclass = $this->getServiceLocator()->get('MclassService')->get($classId);
+
         $ireadyService = $this->getServiceLocator()->get('IreadyService');
 
-        $data = $ireadyService->getStudentPlacement();
+        $data = $ireadyService->getStudentPlacement($mclass);
 
         $json = new JsonModel();
         $objs = [];
