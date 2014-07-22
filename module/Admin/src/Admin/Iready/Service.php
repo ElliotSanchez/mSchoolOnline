@@ -33,13 +33,15 @@ class Service extends ServiceAbstract
 
         $select = $sql->select()->columns([
             'student_id' => 'student_id',
-            'last_name' => 'last_name',
-            'first_name' => 'first_name',
             'diagnostic_overall_scale_score' => 'diagnostic_overall_scale_score',
             'download_date' => new \Zend\Db\Sql\Expression('MAX(download_date)'),
         ]);
 
         $select->join('mclasses_students', 'mclasses_students.student_id = iready.student_id', []);
+        $select->join('students', 'mclasses_students.student_id = students.id', [
+            'last_name' => 'last_name',
+            'first_name' => 'first_name',
+        ]);
         $select->where(['mclasses_students.mclass_id = ?' => $mclass->id]);
 
         $select->group(['student_id', 'diagnostic_overall_scale_score']);
