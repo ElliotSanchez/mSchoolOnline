@@ -19,3 +19,26 @@
     fill:white;
     font-size: 12px;
 }
+
+/* PROGRESS : TIME ON MATH */
+.progress-time-on-math .x-axis path {
+    stroke:white;
+    fill:none;
+}
+.progress-time-on-math .x-axis line {
+    fill: none;
+    stroke: none;
+    stroke-opacity:.8;
+    shape-rendering: crispEdges;
+}
+.progress-time-on-math .bars rect {
+    fill:steelblue;
+    fill-opacity:.9;
+}
+.progress-time-on-math  .title {
+    font-weight: bold;
+}
+.progress-time-on-math #time {
+    fill:black;
+    font-size: 12px;
+}

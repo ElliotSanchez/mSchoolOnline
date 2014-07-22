@@ -47,8 +47,6 @@ class Service extends ServiceAbstract
 
         //die($select->getSqlString($this->table->getAdapter()->getPlatform()));
 
-
-
         return $this->table->fetchWith($select);
 
 

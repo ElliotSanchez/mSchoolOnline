@@ -236,6 +236,20 @@ return array(
                         ),
                     ),
 
+                    'teacher_data_time_on_math' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/teacher/data/time-on-math/[:class_id]',
+                            'constraints' => array(
+                                'class_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\TeacherData',
+                                'action'     => 'time-on-math',
+                            ),
+                        ),
+                    ),
+
                     // END TEACHER DATA
 
                     'teacher_class_dashboard' => array(

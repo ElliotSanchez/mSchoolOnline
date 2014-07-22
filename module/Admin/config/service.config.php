@@ -639,6 +639,10 @@ return array(
         'ThinkThroughMathOverviewTable' => 'Admin\ThinkThroughMath\Overview\Factory',
         'ThinkThroughMathOverviewService' => 'Admin\ThinkThroughMath\Overview\Factory',
 
+        'TeacherStatService' => function ($sm) {
+            return new \Admin\Stats\Teacher($dbAdapter = $sm->get('Zend\Db\Adapter\Adapter'));
+        },
+
     ),
 
     'abstract_factories' => array(
