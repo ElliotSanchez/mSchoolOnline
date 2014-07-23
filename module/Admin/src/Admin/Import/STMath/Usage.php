@@ -148,16 +148,15 @@ class Usage {
 
     private function setDownloadDate() {
 
-        // EX. usageReport_26_6_2014_11_0_34.csv
+        // EX. usageReport_2014-07-18_11_33_32.csv
 
         $temp = basename($this->originalFilename);
 
-        $temp = str_replace('usageReport_', '', $temp);
-        $temp = str_replace('.csv', '', $temp);
-        $parts = explode('_', $temp);
+        $matches = array();
+        preg_match('/(\d{4})-(\d{2})-(\d{2})/', $temp, $matches);
 
-        if (count($parts)) {
-            $dateString = $parts[2] . '-' . $parts[1] . '-' . $parts[0];
+        if (count($matches)) {
+            $dateString = $matches[0];
             $this->downloadDate = new \DateTime($dateString);
         }
 
