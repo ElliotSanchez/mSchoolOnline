@@ -42,3 +42,26 @@
     fill:black;
     font-size: 12px;
 }
+
+/* PROGRESS : LEARNING POINTS */
+.progress-learning-points .x-axis path {
+    stroke:white;
+    fill:none;
+}
+.progress-learning-points .x-axis line {
+    fill: none;
+    stroke: none;
+    stroke-opacity:.8;
+    shape-rendering: crispEdges;
+}
+.progress-learning-points .bars rect {
+    fill:steelblue;
+    fill-opacity:.9;
+}
+.progress-learning-points  .title {
+    font-weight: bold;
+}
+.progress-learning-points #time {
+    fill:black;
+    font-size: 12px;
+}

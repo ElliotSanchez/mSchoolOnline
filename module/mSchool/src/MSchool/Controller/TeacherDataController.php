@@ -62,4 +62,26 @@ class TeacherDataController extends AbstractActionController implements Dispatch
 
     }
 
+    public function learningPointsAction() {
+
+        $classId = $this->params('class_id');
+
+        $mclass = $this->getServiceLocator()->get('MclassService')->get($classId);
+
+        $teacherStatService = $this->getServiceLocator()->get('TeacherStatService');
+
+        $lps = $teacherStatService->getLearningPoints($mclass);
+
+        $json = new JsonModel();
+        $objs = [];
+
+        foreach ($lps->getData() as $data) {
+            $objs[] = $data;
+        }
+        $json->setVariables($objs);
+
+        return $json;
+
+    }
+
 }

@@ -250,6 +250,20 @@ return array(
                         ),
                     ),
 
+                    'teacher_data_learning_points' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/teacher/data/learning-points/[:class_id]',
+                            'constraints' => array(
+                                'class_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\TeacherData',
+                                'action'     => 'learning-points',
+                            ),
+                        ),
+                    ),
+
                     // END TEACHER DATA
 
                     'teacher_class_dashboard' => array(
