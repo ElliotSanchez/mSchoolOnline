@@ -157,7 +157,22 @@ $(function() {
         var url = "/teacher/data/time-on-math/"+ mclassId;
 
         $.getJSON(url, function(data) {
-//console.log(data); return;
+
+            // SORT DATA
+            data.sort(function(a,b) {
+
+                if (a['time'] < b['time']) {
+                    return -1;
+                } else if (a['time'] > b['time']) {
+                    return 1;
+                }
+
+                return 0;
+
+            });
+
+            data.reverse();
+
             chartWidth = 600;
             chartHeight = 500; // MODIFIED BELOW BASED ON DATA
             numRecords = 24;
@@ -301,6 +316,22 @@ $(function() {
         var url = "/teacher/data/learning-points/"+ mclassId;
 
         $.getJSON(url, function(data) {
+
+            // SORT DATA
+            data.sort(function(a,b) {
+
+                if (a['learning_points'] < b['learning_points']) {
+                    return -1;
+                } else if (a['learning_points'] > b['learning_points']) {
+                    return 1;
+                }
+
+                return 0;
+
+            });
+
+            data.reverse();
+
 
             chartWidth = 600;
             chartHeight = 500; // MODIFIED BELOW BASED ON DATA
