@@ -9,6 +9,7 @@ class Entity extends EntityAbstract {
     public $name;
     public $shortCode;
     public $url;
+    public $image;
     public $isExternal;
 
     public function create($data) {
@@ -17,6 +18,7 @@ class Entity extends EntityAbstract {
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
         $this->shortCode = trim((!empty($data['short_code'])) ? $data['short_code'] : null);
         $this->url = (!empty($data['url'])) ? $data['url'] : null;
+        $this->image = (!empty($data['image'])) ? $data['image'] : null;
         $this->isExternal = (!empty($data['is_external'])) ? $data['is_external'] : 0;
 
     }
@@ -29,6 +31,7 @@ class Entity extends EntityAbstract {
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
         $this->shortCode = trim((!empty($data['short_code'])) ? $data['short_code'] : null);
         $this->url = (!empty($data['url'])) ? $data['url'] : null;
+        $this->image = (!empty($data['image'])) ? $data['image'] : $this->image;
         $this->isExternal = (!empty($data['is_external'])) ? $data['is_external'] : 0;
 
         $this->exchangeDates($data);
@@ -40,6 +43,7 @@ class Entity extends EntityAbstract {
             'name' => $this->name,
             'short_code' => trim($this->shortCode),
             'url' => $this->url,
+            'image' => $this->image,
             'is_external' => $this->isExternal,
         );
 
