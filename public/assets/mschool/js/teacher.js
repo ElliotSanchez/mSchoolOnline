@@ -12,14 +12,6 @@ $(function() {
 
         var mclassId = $(this).data('mclass-id');
 
-//        chartWidth = 600;
-//        chartHeight = 500; // MODIFIED BELOW BASED ON DATA
-//        numRecords = 24;
-
-//        (function(){
-
-            //var canvasSelector = 'div.assessment-class-average'; // TODO MERGE WITH ABOVE USAGE
-
         var rangeMap = {
             'K' : { 'lower': {'min':201 ,	'max':403}, 'upper': {'min': 451, 	'max': 499}},
             '1' : { 'lower': {'min':406 ,	'max':425}, 'upper': {'min': 474, 	'max': 523}},
@@ -38,77 +30,35 @@ $(function() {
 
         var rangeBounds = rangeMap['7'];
 
-        var rangeMin = Math.floor(rangeBounds.lower.min/100)*100;
-        var rangeMax = Math.ceil(rangeBounds.upper.max/100)*100;
+//        var rangeMin = Math.floor(rangeBounds.lower.min/100)*100;
+//        var rangeMax = Math.ceil(rangeBounds.upper.max/100)*100;
 
-        console.log(rangeBounds)
-        console.log(rangeMin);
-        console.log(rangeMax);
+        var height = 400;
 
-        var square = 400;
+        var svg = d3.select("div.assessment-class-average").append("svg")
+                .attr("width", height)
+                .attr("height", height);
 
-        //var scale = square / rangeMax;
-        //console.log(scale);
+        var yScale = d3.scale.linear();
 
-        console.log(square);
-            var svg = d3.select("div.assessment-class-average").append("svg")
-                    .attr("width", square)
-                    .attr("height", square);
+        yScale.domain([rangeBounds.lower.min, rangeBounds.upper.max]);
+        yScale.range([height, 0]); // INVERTED
 
-        var y0 = d3.scale.linear();
+        var maxLine = svg.append("line")
+            .attr("x1", 0)
+            .attr("y1", yScale(rangeBounds.lower.max))
+            .attr("x2", height)
+            .attr("y2", yScale(rangeBounds.upper.max))
+            .attr("stroke-width", 1)
+            .attr("stroke", "gray");
 
-        y0.domain([rangeBounds.lower.min, rangeBounds.upper.max]);
-        y0.range([square, 0]); // INVERTED
-
-//            y1 = d3.scale.linear().domain([20, 80]).range([height, 0]);
-
-//        var xAxis = d3.svg.axis()
-//            .scale(x)
-//            .orient("bottom");
-
-        // create left yAxis
-        //var yAxisLeft = d3.svg.axis().scale(y0).ticks(4).orient("left");
-        // create right yAxis
-        //var yAxisRight = d3.svg.axis().scale(y1).ticks(6).orient("right");
-
-        var yAxis = d3.svg.axis().scale(y0).orient("left");
-
-        console.log('y1 '+ rangeBounds.upper.max);
-        console.log('y1 '+ y0(rangeBounds.upper.max));
-
-            var line1 = svg.append("line")
-                .attr("x1", 0)
-                .attr("y1", y0(rangeBounds.lower.max))
-                .attr("x2", square)
-                .attr("y2", y0(rangeBounds.upper.max))
-                .attr("stroke-width", 1)
-                .attr("stroke", "gray");
-
-            var line2 = svg.append("line")
-                .attr("x1", 0)
-                .attr("y1", y0(rangeBounds.lower.min))
-                .attr("x2", square)
-                .attr("y2", y0(rangeBounds.upper.min))
-                .attr("stroke-width", 1)
-                .attr("stroke", "gray");
-
-//            var line1 = svg.append("line")
-//                .attr("x1", 0)
-//                .attr("y1", Math.floor(square-rangeBounds.lower.max*scale))
-//                .attr("x2", square)
-//                .attr("y2", Math.floor(square-rangeBounds.upper.max*scale))
-//                .attr("stroke-width", 1)
-//                .attr("stroke", "gray");
-//
-//            var line2 = svg.append("line")
-//                .attr("x1", 0)
-//                .attr("y1", Math.floor(square-rangeBounds.lower.min*scale))
-//                .attr("x2", square)
-//                .attr("y2", Math.floor(square-rangeBounds.upper.min*scale))
-//                .attr("stroke-width", 1)
-//                .attr("stroke", "gray");
-
-//        })();
+        var minLine = svg.append("line")
+            .attr("x1", 0)
+            .attr("y1", yScale(rangeBounds.lower.min))
+            .attr("x2", height)
+            .attr("y2", yScale(rangeBounds.upper.min))
+            .attr("stroke-width", 1)
+            .attr("stroke", "gray");
 
     });
 
