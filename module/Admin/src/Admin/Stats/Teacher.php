@@ -161,4 +161,50 @@ class Teacher
 
     }
 
+    public function getLearningPointsGradeAverages(Mclass $mclass) {
+
+        //echo $select->getSqlString($this->dbAdapter->getPlatform());
+
+        $lpavgs = new LearningPointsAvgs();
+
+        $this->dbAdapter;
+
+        try {
+
+            $sql = new Sql($this->dbAdapter);
+
+            // GRADE AVERAGES
+            $gradeAvgSelect = $sql->select(['iready' =>'iready'])->columns([
+                'average_score' => new \Zend\Db\Sql\Expression('AVG(diagnostic_overall_scale_score)'),
+                'download_date' => new \Zend\Db\Sql\Expression('MAX(download_date)'),
+            ])
+                ->join('mclasses_students', 'mclasses_students.student_id = iready.student_id', [])
+                ->join('students', 'mclasses_students.student_id = students.id', [])
+                ->join('grade_levels', 'students.grade_level_id = grade_levels.id', [
+                    'grade_level_id' => 'id',
+                    'grade_level_name' => 'name',
+                ])
+                ->where(['mclasses_students.mclass_id = ?' => $mclass->id])
+                ->group(['grade_level_id']);
+
+
+//            echo $gradeAvgSelect->getSqlString($this->dbAdapter->getPlatform());
+//            die();
+
+            $statement = $sql->prepareStatementForSqlObject($gradeAvgSelect);
+
+            $results = $statement->execute();
+
+            foreach ($results as $r) {
+                $lpavgs->add($r['grade_level_id'], $r['grade_level_name'], $r['average_score']);
+            }
+
+            return $lpavgs;
+
+        } catch (\Exception $e) {
+            var_dump($e);
+        }
+
+    }
+
 }

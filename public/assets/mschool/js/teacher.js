@@ -28,12 +28,12 @@ $(function() {
             '12': { 'lower': {'min':601.5 ,	'max':617}, 'upper': {'min': 708.5,	'max': 800}}
             };
 
-        var rangeBounds = rangeMap['7'];
+        var rangeBounds = rangeMap['3']; // TESTING 3rd GRADE
 
 //        var rangeMin = Math.floor(rangeBounds.lower.min/100)*100;
 //        var rangeMax = Math.ceil(rangeBounds.upper.max/100)*100;
 
-        var height = 400;
+        var height = 600;
 
         var svg = d3.select("div.assessment-class-average").append("svg")
                 .attr("width", height)
@@ -43,6 +43,8 @@ $(function() {
 
         yScale.domain([rangeBounds.lower.min, rangeBounds.upper.max]);
         yScale.range([height, 0]); // INVERTED
+
+        var xScale = d3.scale.ordinal().domain([1, 2, 3, 4]).range([0, height]);
 
         var maxLine = svg.append("line")
             .attr("x1", 0)
@@ -59,6 +61,95 @@ $(function() {
             .attr("y2", yScale(rangeBounds.upper.min))
             .attr("stroke-width", 1)
             .attr("stroke", "gray");
+
+        var url = "/teacher/data/learning-points/grade-averages/"+ mclassId;
+
+        $.getJSON(url, function(data) {
+            //console.log(data);
+            //console.log(data['4']);
+            var gradeData = data['4'];
+            //console.log(gradeData);
+            //console.log(gradeData.avg);
+
+            var square = 600;
+
+            var gdata = [
+                {'x':square *.2, 'y':gradeData.avg}
+            ];
+
+            var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                width = square - margin.left - margin.right,
+                height = square - margin.top - margin.bottom;
+
+            // THIS SHOULD REALLY USE AN ORDINAL RANGE
+            var x = d3.scale.linear()
+                .range([0, height]);
+
+            var y = d3.scale.linear()
+                .range([height, 0]);
+
+            var color = d3.scale.category10();
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+
+            svg.append("g");
+//                .attr("width", width + margin.left + margin.right)
+//                .attr("height", height + margin.top + margin.bottom)
+//                .append("g")
+//                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            x.domain([0,square]).nice();
+            y.domain([0,square]).nice();
+
+            y.domain([rangeBounds.lower.min, rangeBounds.upper.max]);
+            //y.range([height, 0]); // INVERTED
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("class", "label")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Sepal Length (cm)");
+
+            svg.selectAll(".dot")
+                .data(gdata)
+                .enter().append("circle")
+                .attr("class", "dot")
+                .attr("r", 20)
+                .attr("cx", function(d) { return x(d.x); })
+                .attr("cy", function(d) { return y(d.y); })
+                .style("fill", "#379e51");
+
+            var legend = svg.selectAll(".legend")
+                .data(color.domain())
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+            legend.append("rect")
+                .attr("x", width - 18)
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", color);
+
+            legend.append("text")
+                .attr("x", width - 24)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .style("text-anchor", "end")
+                .text(function(d) { return d; });
+
+        });
 
     });
 
