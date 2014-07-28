@@ -466,5 +466,78 @@ $(function() {
         });
     });
 
+    // PROGRESS : RESOURCE MAP
+    $('.student-resource-map').each(function() {
+
+        var studentId = $(this).data('student-id');
+
+        var planGroupsDiv = $(this).find('.plan-groups');
+
+        var loadindDiv = $(this).find('.loading-resource-map');
+
+        var noResourceDiv = $(this).find('.no-resource-map');
+
+        var url = '/teacher/data/map-visual-data/' + studentId;
+        var imagePath = '/assets/mschool/images/resources';
+
+        $.getJSON(url, function(data) {
+
+            loadindDiv.hide();
+
+            if (!data.length) {
+                noResourceDiv.show();
+                return;
+            }
+
+            planGroupsDiv.show();
+
+            var planGroups = data[0]['plan_groups'];
+
+            $.each(planGroups, function(planGroupIndex, planGroupValue) {
+
+                var planGroupRow = $('<div>', {
+                    'data-plan-group' : planGroupIndex,
+                    'class' : 'plan-group',
+                });
+
+                var planGroupCol = $('<div>', {
+                    'class' : '',
+                });
+
+                $.each(planGroupValue, function(stepIndex, stepsValue) {
+
+                    var img = $('<img>', {
+                        'class' : 'resource-tooltip',
+                        'data-placement' : 'bottom',
+                        'title' : '',
+                        'data-original-title' : stepsValue['description'],
+                    });
+
+                    if (stepsValue['image']) {
+                        img.attr('src', imagePath + '/' + stepsValue['image']);
+                    } else {
+                        img.attr('src', imagePath + '/mschool.jpg');
+                    }
+
+                    img.css('width', '100px');
+                    img.css('padding', '8px');
+
+                    planGroupCol.append(img);
+
+                });
+
+                planGroupRow.append(planGroupCol);
+
+                planGroupsDiv.append(planGroupRow);
+
+            });
+
+            // INIT TOOL TIPS
+            $('.resource-tooltip').tooltip();
+
+        });
+
+    });
+
 });
 

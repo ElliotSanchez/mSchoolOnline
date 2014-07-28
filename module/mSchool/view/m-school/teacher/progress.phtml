@@ -31,3 +31,43 @@
         <div class="progress-learning-points" style="background-color: white" data-mclass-id="<?php echo $mclass->id ?>"></div>
     </div>
 </div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+
+                <?php foreach($students as $currStudent): ?>
+
+                    <div class="box" style="padding-bottom: 12px">
+
+                        <div class="box-content">
+
+                            <div class="student-resource-map" data-student-id="<?php echo $currStudent->id ?>">
+                                <h4><?php echo $currStudent->getFullName() ?></h4>
+
+                                <div class="loading-resource-map">
+                                    <img src="/assets/images/ajax-loaders/17.gif"> Loading...
+                                </div>
+
+                                <div class="plan-groups" style="display: none">
+
+                                </div>
+
+                                <div class="no-resource-map alert alert-warning alert-dismissable" style="display: none">
+                                    No upcoming resources found.
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                <?php endforeach; ?>
+
+        </div>
+
+    </div>
+
+</div>

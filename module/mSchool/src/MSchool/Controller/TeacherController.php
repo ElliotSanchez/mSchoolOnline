@@ -58,9 +58,12 @@ class TeacherController extends AbstractActionController implements Dispatchable
     public function progressAction() {
         $this->layout('mschool/layout/coach');
 
+        $studentsInClass = $this->getServiceLocator()->get('MclassService')->getStudentsAssignedToMclass($this->mclass);
+
         return new ViewModel(array(
             'mclasses' => $this->assignedMclasses,
             'mclass' => $this->mclass,
+            'students' => $studentsInClass,
         ));
     }
 

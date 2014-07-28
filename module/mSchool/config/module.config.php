@@ -264,6 +264,20 @@ return array(
                         ),
                     ),
 
+                    'teacher_data_map_visualization_data' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/teacher/data/map-visual-data/[:student_id]',
+                            'constraints' => array(
+                                'student_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\TeacherData',
+                                'action'     => 'map-visual-data',
+                            ),
+                        ),
+                    ),
+
                     // END TEACHER DATA
 
                     'teacher_class_dashboard' => array(

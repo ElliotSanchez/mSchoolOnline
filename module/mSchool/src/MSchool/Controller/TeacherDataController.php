@@ -3,6 +3,7 @@
 namespace MSchool\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use Admin\Teacher\Entity as Teacher;
@@ -12,6 +13,13 @@ use Zend\Stdlib\ResponseInterface as Response;
 
 class TeacherDataController extends AbstractActionController implements DispatchableInterface
 {
+
+    public function onDispatch(MvcEvent $mvcEvent) {
+
+        $mvcEvent->getViewModel()->setTerminal(true);
+
+        return parent::onDispatch($mvcEvent);
+    }
 
     public function studentPlacementAction()
     {
@@ -76,6 +84,26 @@ class TeacherDataController extends AbstractActionController implements Dispatch
         $objs = [];
 
         foreach ($lps->getData() as $data) {
+            $objs[] = $data;
+        }
+        $json->setVariables($objs);
+
+        return $json;
+
+    }
+
+    public function mapVisualDataAction() {
+
+        $studentId = $this->params('student_id');
+
+        $student = $this->getServiceLocator()->get('StudentService')->get($studentId);
+
+        $mapData = $this->getServiceLocator()->get('SequenceService')->getStudentMapVisualizationData($student);
+
+        $json = new JsonModel();
+        $objs = [];
+
+        foreach ($mapData as $data) {
             $objs[] = $data;
         }
         $json->setVariables($objs);

@@ -669,4 +669,70 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
     }
 
+    // STATS
+    public function getStudentMapVisualizationData(Student $student) {
+
+
+        $sql = new Sql($this->adapter);
+        $select = $sql->select();
+
+        $select->from(['ss' => 'student_steps'])->columns([
+            'plan_group',
+            'step_id',
+            'completed_at',
+        ])->join(['sq' => 'sequences'], 'ss.sequence_id = sq.id', [
+                'student_id',
+                'sequence_id' => 'id',
+            ]);
+        $select->join(['st'=> 'steps'],  'ss.step_id = st.id', []);
+        $select->join(['r'=> 'resources'],  'ss.step_id = r.id', ['image', 'name']);
+        $select->where([
+                'ss.student_id' => $student->id,
+                'sq.is_complete = 0',
+                'sq.is_default = 0',
+                'sq.is_active = 1',
+                'sq.moved_on = 0',
+            ]);
+
+        $select->order(['student_id', 'sequence_id', 'plan_group']);
+
+        $selectString = $sql->getSqlStringForSqlObject($select);
+
+        $results = $this->adapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
+
+        $studentPlanGroupsResources = [];
+
+        foreach ($results as $currResult) {
+
+            $studentId = $currResult->student_id;
+
+            if (!isset($studentPlanGroupsResources[$studentId])) {
+                $studentPlanGroupsResources[$studentId] = [
+                    'plan_groups' => [],
+                ];
+            }
+
+            $currPlanGroup = $currResult['plan_group'];
+
+            if (!isset($studentPlanGroupsResources[$studentId]['plan_groups'][$currPlanGroup])) {
+                $studentPlanGroupsResources[$studentId]['plan_groups'][$currPlanGroup] = [];
+            }
+
+            $newResource = [];
+
+            $newResource['step_id'] = $currResult['step_id'];
+            $newResource['sequence_id'] = $currResult['sequence_id'];
+            $newResource['image'] = $currResult['image'];
+            $newResource['description'] = ($currResult['name']) ? ($currResult['name']) : ('mSchool Acivity');
+
+            $studentPlanGroupsResources[$studentId]['plan_groups'][$currPlanGroup][] = $newResource;
+
+
+        }
+
+        return $studentPlanGroupsResources;
+
+
+    }
+
 }
