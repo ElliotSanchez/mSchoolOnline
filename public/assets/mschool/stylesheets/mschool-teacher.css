@@ -1,3 +1,12 @@
+/** PROGRESS */
+.resource-box {
+    width : 50px;
+    padding : 8px;
+}
+
+/** D3 CHARTS */
+
+/** ASSEMENT : PLACEMENT */
 .assessment-student-placement .x-axis path {
     stroke:white;
     fill:none;

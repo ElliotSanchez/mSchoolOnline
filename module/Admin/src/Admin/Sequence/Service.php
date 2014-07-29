@@ -726,7 +726,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             $newResource['step_id'] = $currResult['step_id'];
             $newResource['sequence_id'] = $currResult['sequence_id'];
             $newResource['image'] = $currResult['image'];
-            $newResource['description'] = ($currResult['name']) ? ($currResult['name']) : ('mSchool');
+            $newResource['description'] = ($currResult['name']) ? ($currResult['name']) : ('null');
 
             $studentPlanGroupsResources[$studentId]['plan_groups'][$currPlanGroup][] = $newResource;
 

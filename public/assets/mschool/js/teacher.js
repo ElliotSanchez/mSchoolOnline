@@ -506,23 +506,20 @@ $(function() {
 
                 $.each(planGroupValue, function(stepIndex, stepsValue) {
 
-                    var img = $('<img>', {
-                        'class' : 'resource-tooltip',
-                        'data-placement' : 'bottom',
-                        'title' : '',
-                        'data-original-title' : stepsValue['description'],
-                    });
-
                     if (stepsValue['image']) {
+
+                        var img = $('<img>', {
+                            'class' : 'resource-tooltip resource-box',
+                            'data-placement' : 'bottom',
+                            'title' : '',
+                            'data-original-title' : stepsValue['description'],
+                        });
+
                         img.attr('src', imagePath + '/' + stepsValue['image']);
-                    } else {
-                        img.attr('src', imagePath + '/mschool.jpg');
+
+                        planGroupCol.append(img);
+
                     }
-
-                    img.css('width', '100px');
-                    img.css('padding', '8px');
-
-                    planGroupCol.append(img);
 
                 });
 
