@@ -12,103 +12,56 @@ $(function() {
 
         var mclassId = $(this).data('mclass-id');
 
-        var rangeMap = {
-            'K' : { 'lower': {'min':201 ,	'max':403}, 'upper': {'min': 451, 	'max': 499}},
-            '1' : { 'lower': {'min':406 ,	'max':425}, 'upper': {'min': 474, 	'max': 523}},
-            '2' : { 'lower': {'min':428 ,	'max':447}, 'upper': {'min': 494.5,	'max': 542}},
-            '3' : { 'lower': {'min':450 ,	'max':469}, 'upper': {'min': 516, 	'max': 563}},
-            '4' : { 'lower': {'min':471.5,	'max':490}, 'upper': {'min': 532, 	'max': 574}},
-            '5' : { 'lower': {'min':487.5,	'max':501}, 'upper': {'min': 542.5, 'max': 584}},
-            '6' : { 'lower': {'min':497 ,	'max':509}, 'upper': {'min': 518, 	'max': 527}},
-            '7' : { 'lower': {'min':518 ,	'max':528}, 'upper': {'min': 532, 	'max': 536}},
-            '8' : { 'lower': {'min':532 ,	'max':537}, 'upper': {'min': 546, 	'max': 555}},
-            '9' : { 'lower': {'min':546 ,	'max':556}, 'upper': {'min': 591, 	'max': 626}},
-            '10': { 'lower': {'min':571	,	'max':587}, 'upper': {'min': 612,	'max': 637}},
-            '11': { 'lower': {'min':586.5 ,	'max':602}, 'upper': {'min': 627, 	'max': 652}},
-            '12': { 'lower': {'min':601.5 ,	'max':617}, 'upper': {'min': 708.5,	'max': 800}}
-            };
+        /**
+         * BEGIN EXAMPLE
+         * http://bl.ocks.org/mbostock/3887118
+         */
+        var margin = {top: 20, right: 20, bottom: 30, left: 40},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
 
-        var rangeBounds = rangeMap['3']; // TESTING 3rd GRADE
+        var x = d3.scale.linear()
+            .range([0, width]);
 
-//        var rangeMin = Math.floor(rangeBounds.lower.min/100)*100;
-//        var rangeMax = Math.ceil(rangeBounds.upper.max/100)*100;
+        var y = d3.scale.linear()
+            .range([height, 0]);
 
-        var height = 600;
+        var color = d3.scale.category10();
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
 
         var svg = d3.select("div.assessment-class-average").append("svg")
-                .attr("width", height)
-                .attr("height", height);
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        var yScale = d3.scale.linear();
+        d3.tsv("/data.tsv", function(error, data) {
 
-        yScale.domain([rangeBounds.lower.min, rangeBounds.upper.max]);
-        yScale.range([height, 0]); // INVERTED
+            data.forEach(function(d) {
+                d.sepalLength = +d.sepalLength;
+                d.sepalWidth = +d.sepalWidth;
+            });
 
-        var xScale = d3.scale.ordinal().domain([1, 2, 3, 4]).range([0, height]);
+            x.domain(d3.extent(data, function(d) { return d.sepalWidth; })).nice();
+            y.domain(d3.extent(data, function(d) { return d.sepalLength; })).nice();
 
-        var maxLine = svg.append("line")
-            .attr("x1", 0)
-            .attr("y1", yScale(rangeBounds.lower.max))
-            .attr("x2", height)
-            .attr("y2", yScale(rangeBounds.upper.max))
-            .attr("stroke-width", 1)
-            .attr("stroke", "gray");
-
-        var minLine = svg.append("line")
-            .attr("x1", 0)
-            .attr("y1", yScale(rangeBounds.lower.min))
-            .attr("x2", height)
-            .attr("y2", yScale(rangeBounds.upper.min))
-            .attr("stroke-width", 1)
-            .attr("stroke", "gray");
-
-        var url = "/teacher/data/learning-points/grade-averages/"+ mclassId;
-
-        $.getJSON(url, function(data) {
-            //console.log(data);
-            //console.log(data['4']);
-            var gradeData = data['4'];
-            //console.log(gradeData);
-            //console.log(gradeData.avg);
-
-            var square = 600;
-
-            var gdata = [
-                {'x':square *.2, 'y':gradeData.avg}
-            ];
-
-            var margin = {top: 20, right: 20, bottom: 30, left: 40},
-                width = square - margin.left - margin.right,
-                height = square - margin.top - margin.bottom;
-
-            // THIS SHOULD REALLY USE AN ORDINAL RANGE
-            var x = d3.scale.linear()
-                .range([0, height]);
-
-            var y = d3.scale.linear()
-                .range([height, 0]);
-
-            var color = d3.scale.category10();
-
-            var xAxis = d3.svg.axis()
-                .scale(x)
-                .orient("bottom");
-
-            var yAxis = d3.svg.axis()
-                .scale(y)
-                .orient("left");
-
-            svg.append("g");
-//                .attr("width", width + margin.left + margin.right)
-//                .attr("height", height + margin.top + margin.bottom)
-//                .append("g")
-//                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            x.domain([0,square]).nice();
-            y.domain([0,square]).nice();
-
-            y.domain([rangeBounds.lower.min, rangeBounds.upper.max]);
-            //y.range([height, 0]); // INVERTED
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis)
+                .append("text")
+                .attr("class", "label")
+                .attr("x", width)
+                .attr("y", -6)
+                .style("text-anchor", "end")
+                .text("Sepal Width (cm)");
 
             svg.append("g")
                 .attr("class", "y axis")
@@ -119,16 +72,16 @@ $(function() {
                 .attr("y", 6)
                 .attr("dy", ".71em")
                 .style("text-anchor", "end")
-                .text("Sepal Length (cm)");
+                .text("Sepal Length (cm)")
 
             svg.selectAll(".dot")
-                .data(gdata)
+                .data(data)
                 .enter().append("circle")
                 .attr("class", "dot")
-                .attr("r", 20)
-                .attr("cx", function(d) { return x(d.x); })
-                .attr("cy", function(d) { return y(d.y); })
-                .style("fill", "#379e51");
+                .attr("r", 3.5)
+                .attr("cx", function(d) { return x(d.sepalWidth); })
+                .attr("cy", function(d) { return y(d.sepalLength); })
+                .style("fill", function(d) { return color(d.species); });
 
             var legend = svg.selectAll(".legend")
                 .data(color.domain())
@@ -149,7 +102,181 @@ $(function() {
                 .style("text-anchor", "end")
                 .text(function(d) { return d; });
 
+            /**
+             * BEGIN CUSTOM
+             */
+            var url = "/teacher/data/learning-points/grade-averages/"+ mclassId;
+
+            $.getJSON(url, function(data2) {
+
+                //var gradeData = data['4'];
+                console.log(data2);
+
+//                var svg = d3.select("div.assessment-class-average svg");
+//                console.log(svg);
+                //console.log(svg);
+                svg.selectAll(".dot2")
+                    .data(data2)
+                    .enter().append("circle")
+                    .attr("class", "dot")
+                    .attr("r", 15)
+                    //.attr("cx", function(d) { console.log('x:'+d); return x(d.grade_level_id); })
+                    .attr("cx", function(d) { console.log('x:'+d.grade_level_id); return x(d.grade_level_id); })
+                    .attr("cy", function(d) { console.log('y:'+d.avg/100); return y(d.avg/100); })
+                    .style("fill", function(d) { return color("setosa"); });
+
+            });
+            /**
+             * END CUSTOM
+             */
+
         });
+
+        /**
+         * END EXAMPLE
+         */
+
+//
+//        var mclassId = $(this).data('mclass-id');
+//
+//        var rangeMap = {
+//            'K' : { 'lower': {'min':201 ,	'max':403}, 'upper': {'min': 451, 	'max': 499}},
+//            '1' : { 'lower': {'min':406 ,	'max':425}, 'upper': {'min': 474, 	'max': 523}},
+//            '2' : { 'lower': {'min':428 ,	'max':447}, 'upper': {'min': 494.5,	'max': 542}},
+//            '3' : { 'lower': {'min':450 ,	'max':469}, 'upper': {'min': 516, 	'max': 563}},
+//            '4' : { 'lower': {'min':471.5,	'max':490}, 'upper': {'min': 532, 	'max': 574}},
+//            '5' : { 'lower': {'min':487.5,	'max':501}, 'upper': {'min': 542.5, 'max': 584}},
+//            '6' : { 'lower': {'min':497 ,	'max':509}, 'upper': {'min': 518, 	'max': 527}},
+//            '7' : { 'lower': {'min':518 ,	'max':528}, 'upper': {'min': 532, 	'max': 536}},
+//            '8' : { 'lower': {'min':532 ,	'max':537}, 'upper': {'min': 546, 	'max': 555}},
+//            '9' : { 'lower': {'min':546 ,	'max':556}, 'upper': {'min': 591, 	'max': 626}},
+//            '10': { 'lower': {'min':571	,	'max':587}, 'upper': {'min': 612,	'max': 637}},
+//            '11': { 'lower': {'min':586.5 ,	'max':602}, 'upper': {'min': 627, 	'max': 652}},
+//            '12': { 'lower': {'min':601.5 ,	'max':617}, 'upper': {'min': 708.5,	'max': 800}}
+//            };
+//
+//        var rangeBounds = rangeMap['3']; // TESTING 3rd GRADE
+//
+////        var rangeMin = Math.floor(rangeBounds.lower.min/100)*100;
+////        var rangeMax = Math.ceil(rangeBounds.upper.max/100)*100;
+//
+//        var height = 600;
+//
+//        var svg = d3.select("div.assessment-class-average").append("svg")
+//                .attr("width", height)
+//                .attr("height", height);
+//
+//        var yScale = d3.scale.linear();
+//
+//        yScale.domain([rangeBounds.lower.min, rangeBounds.upper.max]);
+//        yScale.range([height, 0]); // INVERTED
+//
+//        var xScale = d3.scale.ordinal().domain([1, 2, 3, 4]).range([0, height]);
+//
+//        var maxLine = svg.append("line")
+//            .attr("x1", 0)
+//            .attr("y1", yScale(rangeBounds.lower.max))
+//            .attr("x2", height)
+//            .attr("y2", yScale(rangeBounds.upper.max))
+//            .attr("stroke-width", 1)
+//            .attr("stroke", "gray");
+//
+//        var minLine = svg.append("line")
+//            .attr("x1", 0)
+//            .attr("y1", yScale(rangeBounds.lower.min))
+//            .attr("x2", height)
+//            .attr("y2", yScale(rangeBounds.upper.min))
+//            .attr("stroke-width", 1)
+//            .attr("stroke", "gray");
+//
+//        var url = "/teacher/data/learning-points/grade-averages/"+ mclassId;
+//
+//        $.getJSON(url, function(data) {
+//            //console.log(data);
+//            //console.log(data['4']);
+//            var gradeData = data['4'];
+//            //console.log(gradeData);
+//            //console.log(gradeData.avg);
+//
+//            var square = 600;
+//
+//            var gdata = [
+//                {'x':square *.2, 'y':gradeData.avg}
+//            ];
+//
+//            var margin = {top: 20, right: 20, bottom: 30, left: 40},
+//                width = square - margin.left - margin.right,
+//                height = square - margin.top - margin.bottom;
+//
+//            // THIS SHOULD REALLY USE AN ORDINAL RANGE
+//            var x = d3.scale.linear()
+//                .range([0, height]);
+//
+//            var y = d3.scale.linear()
+//                .range([height, 0]);
+//
+//            var color = d3.scale.category10();
+//
+//            var xAxis = d3.svg.axis()
+//                .scale(x)
+//                .orient("bottom");
+//
+//            var yAxis = d3.svg.axis()
+//                .scale(y)
+//                .orient("left");
+//
+//            svg.append("g");
+////                .attr("width", width + margin.left + margin.right)
+////                .attr("height", height + margin.top + margin.bottom)
+////                .append("g")
+////                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//
+//            x.domain([0,square]).nice();
+//            y.domain([0,square]).nice();
+//
+//            y.domain([rangeBounds.lower.min, rangeBounds.upper.max]);
+//            //y.range([height, 0]); // INVERTED
+//
+//            svg.append("g")
+//                .attr("class", "y axis")
+//                .call(yAxis)
+//                .append("text")
+//                .attr("class", "label")
+//                .attr("transform", "rotate(-90)")
+//                .attr("y", 6)
+//                .attr("dy", ".71em")
+//                .style("text-anchor", "end")
+//                .text("Sepal Length (cm)");
+//
+//            svg.selectAll(".dot")
+//                .data(gdata)
+//                .enter().append("circle")
+//                .attr("class", "dot")
+//                .attr("r", 20)
+//                .attr("cx", function(d) { return x(d.x); })
+//                .attr("cy", function(d) { return y(d.y); })
+//                .style("fill", "#379e51");
+//
+//            var legend = svg.selectAll(".legend")
+//                .data(color.domain())
+//                .enter().append("g")
+//                .attr("class", "legend")
+//                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+//
+//            legend.append("rect")
+//                .attr("x", width - 18)
+//                .attr("width", 18)
+//                .attr("height", 18)
+//                .style("fill", color);
+//
+//            legend.append("text")
+//                .attr("x", width - 24)
+//                .attr("y", 9)
+//                .attr("dy", ".35em")
+//                .style("text-anchor", "end")
+//                .text(function(d) { return d; });
+//
+//        });
 
     });
 

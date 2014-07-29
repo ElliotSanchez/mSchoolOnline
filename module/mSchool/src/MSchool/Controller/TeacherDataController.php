@@ -126,7 +126,7 @@ class TeacherDataController extends AbstractActionController implements Dispatch
         $objs = [];
 
         foreach ($lpavgs->getData() as $data) {
-            $objs[$data['grade_level_id']] = $data;
+            $objs[] = $data;
         }
         $json->setVariables($objs);
 
