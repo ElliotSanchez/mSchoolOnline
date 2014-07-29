@@ -1,4 +1,9 @@
 /** PROGRESS */
+.upcoming-resource-student-name
+{
+    vertical-align: middle !important;
+}
+
 .resource-box {
     width : 50px;
     padding : 8px;
