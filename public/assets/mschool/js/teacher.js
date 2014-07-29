@@ -8,6 +8,7 @@ $(function() {
         window.location = 'http://' + host + url + '/' + id;
     });
 
+    // ASSESSMENT : CLASS AVERAGE
     $('div.assessment-class-average').each(function() {
 
         var mclassId = $(this).data('mclass-id');
@@ -36,6 +37,8 @@ $(function() {
             .scale(y)
             .orient("left");
 
+
+        // SETUP SVG
         var svg = d3.select("div.assessment-class-average").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -44,13 +47,25 @@ $(function() {
 
         d3.tsv("/data.tsv", function(error, data) {
 
-            data.forEach(function(d) {
-                d.sepalLength = +d.sepalLength;
-                d.sepalWidth = +d.sepalWidth;
-            });
+//            data.forEach(function(d) {
+//                d.sepalLength = +d.sepalLength;
+//                d.sepalWidth = +d.sepalWidth;
+//            });
 
-            x.domain(d3.extent(data, function(d) { return d.sepalWidth; })).nice();
-            y.domain(d3.extent(data, function(d) { return d.sepalLength; })).nice();
+//            x.domain(d3.extent(data, function(d) { return d.sepalWidth; })).nice();
+//            y.domain(d3.extent(data, function(d) { return d.sepalLength; })).nice();
+
+
+            x.domain([0, 5]);
+            y.domain([100, 1000]);
+
+            xAxis.ticks(4)
+                .tickFormat(function(d) {
+                    if (d < 1 || d > 4) return null;
+                    else return d;
+                })
+                .innerTickSize(0)
+                .outerTickSize(0);
 
             svg.append("g")
                 .attr("class", "x axis")
@@ -60,8 +75,8 @@ $(function() {
                 .attr("class", "label")
                 .attr("x", width)
                 .attr("y", -6)
-                .style("text-anchor", "end")
-                .text("Sepal Width (cm)");
+                .style("text-anchor", "end");
+                //.text("Sepal Width (cm)");
 
             svg.append("g")
                 .attr("class", "y axis")
@@ -71,36 +86,36 @@ $(function() {
                 .attr("transform", "rotate(-90)")
                 .attr("y", 6)
                 .attr("dy", ".71em")
-                .style("text-anchor", "end")
-                .text("Sepal Length (cm)")
+                .style("text-anchor", "end");
+                //.text("Sepal Length (cm)")
 
-            svg.selectAll(".dot")
-                .data(data)
-                .enter().append("circle")
-                .attr("class", "dot")
-                .attr("r", 3.5)
-                .attr("cx", function(d) { return x(d.sepalWidth); })
-                .attr("cy", function(d) { return y(d.sepalLength); })
-                .style("fill", function(d) { return color(d.species); });
+//            svg.selectAll(".dot")
+//                .data(data)
+//                .enter().append("circle")
+//                .attr("class", "dot")
+//                .attr("r", 3.5)
+//                .attr("cx", function(d) { return x(d.sepalWidth*100); })
+//                .attr("cy", function(d) { return y(d.sepalLength*100); })
+//                .style("fill", function(d) { return color(d.species); });
 
-            var legend = svg.selectAll(".legend")
-                .data(color.domain())
-                .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-            legend.append("rect")
-                .attr("x", width - 18)
-                .attr("width", 18)
-                .attr("height", 18)
-                .style("fill", color);
-
-            legend.append("text")
-                .attr("x", width - 24)
-                .attr("y", 9)
-                .attr("dy", ".35em")
-                .style("text-anchor", "end")
-                .text(function(d) { return d; });
+//            var legend = svg.selectAll(".legend")
+//                .data(color.domain())
+//                .enter().append("g")
+//                .attr("class", "legend")
+//                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+//
+//            legend.append("rect")
+//                .attr("x", width - 18)
+//                .attr("width", 18)
+//                .attr("height", 18)
+//                .style("fill", color);
+//
+//            legend.append("text")
+//                .attr("x", width - 24)
+//                .attr("y", 9)
+//                .attr("dy", ".35em")
+//                .style("text-anchor", "end")
+//                .text(function(d) { return d; });
 
             /**
              * BEGIN CUSTOM
@@ -109,21 +124,18 @@ $(function() {
 
             $.getJSON(url, function(data2) {
 
-                //var gradeData = data['4'];
-                console.log(data2);
-
+                var gradeData = [data2[0]];
 //                var svg = d3.select("div.assessment-class-average svg");
 //                console.log(svg);
                 //console.log(svg);
                 svg.selectAll(".dot2")
-                    .data(data2)
+                    .data(gradeData)
                     .enter().append("circle")
                     .attr("class", "dot")
                     .attr("r", 15)
-                    //.attr("cx", function(d) { console.log('x:'+d); return x(d.grade_level_id); })
-                    .attr("cx", function(d) { console.log('x:'+d.grade_level_id); return x(d.grade_level_id); })
-                    .attr("cy", function(d) { console.log('y:'+d.avg/100); return y(d.avg/100); })
-                    .style("fill", function(d) { return color("setosa"); });
+                    .attr("cx", function(d) { console.log('x:'+"1"); return x(1); })
+                    .attr("cy", function(d) { console.log('y:'+d.avg); return y(d.avg); })
+                    .style("fill", function(d) { return "#f7990d"; });
 
             });
             /**
