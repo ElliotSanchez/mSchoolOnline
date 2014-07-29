@@ -672,7 +672,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
     // STATS
     public function getStudentMapVisualizationData(Student $student) {
 
-
         $sql = new Sql($this->adapter);
         $select = $sql->select();
 
@@ -685,7 +684,11 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                 'sequence_id' => 'id',
             ]);
         $select->join(['st'=> 'steps'],  'ss.step_id = st.id', []);
-        $select->join(['r'=> 'resources'],  'ss.step_id = r.id', ['image', 'name']);
+        $select->join(['r'=> 'resources'],  'st.resource_id = r.id', [
+            'resource_id' => 'id',
+            'image',
+            'name'
+        ]);
         $select->where([
                 'ss.student_id' => $student->id,
                 'sq.is_complete = 0',
