@@ -509,13 +509,16 @@ $(function() {
                     if (stepsValue['image']) {
 
                         var img = $('<img>', {
-                            'class' : 'resource-tooltip resource-box',
+                            'class' : 'resource-box',
                             'data-placement' : 'bottom',
-                            'title' : '',
-                            'data-original-title' : stepsValue['description'],
                         });
 
                         img.attr('src', imagePath + '/' + stepsValue['image']);
+
+                        if (stepsValue['description'] != null) {
+                            img.attr('data-original-title', stepsValue['description']);
+                            img.addClass('resource-tooltip');
+                        }
 
                         planGroupCol.append(img);
 

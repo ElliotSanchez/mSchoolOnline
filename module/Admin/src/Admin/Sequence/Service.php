@@ -697,7 +697,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
                 'sq.moved_on = 0',
             ]);
 
-        $select->order(['student_id', 'sequence_id', 'plan_group']);
+        $select->order(['student_id', 'sequence_id', 'plan_group', 'step_order']);
 
         $selectString = $sql->getSqlStringForSqlObject($select);
 
@@ -726,7 +726,7 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             $newResource['step_id'] = $currResult['step_id'];
             $newResource['sequence_id'] = $currResult['sequence_id'];
             $newResource['image'] = $currResult['image'];
-            $newResource['description'] = ($currResult['name']) ? ($currResult['name']) : ('null');
+            $newResource['description'] = ($currResult['name']) ? ($currResult['name']) : (null);
 
             $studentPlanGroupsResources[$studentId]['plan_groups'][$currPlanGroup][] = $newResource;
 
