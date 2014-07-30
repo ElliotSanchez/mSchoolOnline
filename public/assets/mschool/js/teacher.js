@@ -14,7 +14,7 @@ $(function() {
         var mclassId = $(this).data('mclass-id');
 
         /**
-         * BEGIN EXAMPLE
+         * ORIGINAL EXAMPLE
          * http://bl.ocks.org/mbostock/3887118
          */
         var margin = {top: 20, right: 20, bottom: 30, left: 40},
@@ -37,7 +37,6 @@ $(function() {
             .scale(y)
             .orient("left");
 
-
         // SETUP SVG
         var svg = d3.select("div.assessment-class-average").append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -45,49 +44,38 @@ $(function() {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        d3.tsv("/data.tsv", function(error, data) {
-
-//            data.forEach(function(d) {
-//                d.sepalLength = +d.sepalLength;
-//                d.sepalWidth = +d.sepalWidth;
-//            });
-
-//            x.domain(d3.extent(data, function(d) { return d.sepalWidth; })).nice();
-//            y.domain(d3.extent(data, function(d) { return d.sepalLength; })).nice();
-
-
             x.domain([0, 5]);
             y.domain([100, 1000]);
 
-            xAxis.ticks(4)
-                .tickFormat(function(d) {
-                    if (d < 1 || d > 4) return null;
-                    else return d;
-                })
-                .innerTickSize(0)
-                .outerTickSize(0);
+        xAxis.ticks(4)
+            .tickFormat(function(d) {
+                if (d < 1 || d > 4) return null;
+                else return d;
+            })
+            .innerTickSize(0)
+            .outerTickSize(0);
 
-            svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis)
-                .append("text")
-                .attr("class", "label")
-                .attr("x", width)
-                .attr("y", -6)
-                .style("text-anchor", "end");
-                //.text("Sepal Width (cm)");
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .append("text")
+            .attr("class", "label")
+            .attr("x", width)
+            .attr("y", -6)
+            .style("text-anchor", "end");
+            //.text("Sepal Width (cm)");
 
-            svg.append("g")
-                .attr("class", "y axis")
-                .call(yAxis)
-                .append("text")
-                .attr("class", "label")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 6)
-                .attr("dy", ".71em")
-                .style("text-anchor", "end");
-                //.text("Sepal Length (cm)")
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("class", "label")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end");
+            //.text("Sepal Length (cm)")
 
 //            svg.selectAll(".dot")
 //                .data(data)
@@ -117,35 +105,27 @@ $(function() {
 //                .style("text-anchor", "end")
 //                .text(function(d) { return d; });
 
-            /**
-             * BEGIN CUSTOM
-             */
-            var url = "/teacher/data/learning-points/grade-averages/"+ mclassId;
+        /**
+         * BEGIN CUSTOM
+         */
+        var url = "/teacher/data/learning-points/grade-averages/"+ mclassId;
 
-            $.getJSON(url, function(data2) {
+        $.getJSON(url, function(data) {
 
-                var gradeData = [data2[0]];
-//                var svg = d3.select("div.assessment-class-average svg");
-//                console.log(svg);
-                //console.log(svg);
-                svg.selectAll(".dot2")
-                    .data(gradeData)
-                    .enter().append("circle")
-                    .attr("class", "dot")
-                    .attr("r", 15)
-                    .attr("cx", function(d) { console.log('x:'+"1"); return x(1); })
-                    .attr("cy", function(d) { console.log('y:'+d.avg); return y(d.avg); })
-                    .style("fill", function(d) { return "#f7990d"; });
+            var gradeData = [data[0]];
 
-            });
-            /**
-             * END CUSTOM
-             */
+            svg.selectAll(".dot2")
+                .data(gradeData)
+                .enter().append("circle")
+                .attr("class", "dot")
+                .attr("r", 15)
+                .attr("cx", function(d) { console.log('x:'+"1"); return x(1); })
+                .attr("cy", function(d) { console.log('y:'+d.avg); return y(d.avg); })
+                .style("fill", function(d) { return "#f7990d"; });
 
         });
-
         /**
-         * END EXAMPLE
+         * END CUSTOM
          */
 
 //
