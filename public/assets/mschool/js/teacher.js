@@ -49,6 +49,11 @@ $(function() {
                 var gradeLevelId = gradeData.grade_level_id;
                 var gradeLevelName = gradeData.grade_level_name;
 
+                var gradeRanges = rangeMap[gradeLevelId-1]; // TODO WE'RE GETTING LUCKY ON THIS MATH
+
+                var gradeRangeMin = 0;
+                var gradeRangeMax = Math.ceil(gradeRanges[3][1]/100)*100;
+
                 /**
                  * ORIGINAL EXAMPLE
                  * http://bl.ocks.org/mbostock/3887118
@@ -81,7 +86,7 @@ $(function() {
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
                 x.domain([0, 5]);
-                y.domain([100, 1000]);
+                y.domain([gradeRangeMin, gradeRangeMax]);
 
                 xAxis.ticks(4)
                     .tickFormat(function(d) {
@@ -123,8 +128,6 @@ $(function() {
                     .style("fill", function(d) { return "#f7990d"; });
 
                 // PLOT RANGES
-                var gradeRanges = rangeMap[gradeLevelId-1]; // TODO WE'RE GETTING LUCKY ON THIS MATH
-
                 svg.selectAll(".dot2")
                     .data(gradeRanges)
                     .enter().append("circle")
