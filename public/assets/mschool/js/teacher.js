@@ -24,6 +24,7 @@ $(function() {
         gradeRangeMax = 5;
 
         var rangeMap = {
+            //    ['on level','early',                'mid',     'late'                ]
             '1' : [[0,201.0], [gradeRangeMax, 403.0], [0,451.0], [gradeRangeMax, 499.0]], // K
             '2' : [[0,406.0], [gradeRangeMax, 425.0], [0,474.0], [gradeRangeMax, 523.0]], // 1
             '3' : [[0,428.0], [gradeRangeMax, 447.0], [0,494.5], [gradeRangeMax, 542.0]], // 2
@@ -51,8 +52,8 @@ $(function() {
 
                 var gradeRanges = rangeMap[gradeLevelId-1]; // TODO WE'RE GETTING LUCKY ON THIS MATH
 
-                var gradeRangeMin = Math.floor(gradeRanges[0][1]/100)*100;
-                var gradeRangeMax = Math.ceil(gradeRanges[3][1]/100)*100;
+                var gradeRangeMin = Math.floor(gradeRanges[0][1]/100)*100-100;
+                var gradeRangeMax = Math.ceil(gradeRanges[3][1]/100)*100+100;
 
                 /**
                  * ORIGINAL EXAMPLE
@@ -91,10 +92,22 @@ $(function() {
                 xAxis.ticks(4)
                     .tickFormat(function(d) {
                         if (d < 1 || d > 4) return null;
-                        else return d;
+                        else return 'Assessment ' + d;
                     })
                     .innerTickSize(0)
                     .outerTickSize(0);
+
+                yAxis.tickValues([
+                    gradeRanges[1][1],
+                    gradeRanges[2][1],
+                    gradeRanges[3][1],
+
+                ]).tickFormat(function(d) {
+                    if (d == gradeRanges[1][1]) return 'Early';
+                    else if (d == gradeRanges[2][1]) return 'Mid';
+                    else if (d == gradeRanges[3][1]) return 'Late';
+                    else return null;
+                });
 
                 svg.append("g")
                     .attr("class", "x axis")
