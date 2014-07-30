@@ -116,6 +116,26 @@ $(function() {
                     .attr("dy", ".71em")
                     .style("text-anchor", "end");
 
+                // PLOT RANGE POLYGON
+                poly = [
+                    { "x": gradeRanges[0][0], "y": gradeRanges[0][1]}, // LOWER LEFT
+                    { "x": gradeRanges[2][0], "y": gradeRanges[2][1]}, // UPPER LEFT
+                    { "x": gradeRanges[3][0], "y": gradeRanges[3][1]}, // UPPER RIGHT
+                    { "x": gradeRanges[1][0], "y": gradeRanges[1][1]}  // LOWER RIGHT
+                ];
+
+                svg.selectAll("polygon")
+                    .data([poly])
+                    .enter().append("polygon")
+                    .attr("points",function(d) {
+                        return d.map(function(d) {
+                            return [x(d.x),y(d.y)].join(",");
+                        }).join(" ");
+                    })
+                    .attr("stroke","")
+                    .attr("fill", "gainsboro")
+                    .attr("stroke-width",2);
+
                 // PLOT RANGE BOUNDARY LINES
                 var lineDataMin = [
                     { "x": gradeRanges[0][0],   "y": gradeRanges[0][1]},  { "x": gradeRanges[1][0],  "y": gradeRanges[1][1]},
