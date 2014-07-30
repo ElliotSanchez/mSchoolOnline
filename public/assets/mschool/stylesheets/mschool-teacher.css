@@ -27,6 +27,10 @@
     stroke: #000;
 }
 
+.range-dot {
+    stroke: #000;
+}
+
 path.link {
     fill: none;
     stroke: #666666;

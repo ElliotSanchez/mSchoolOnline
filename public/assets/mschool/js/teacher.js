@@ -116,15 +116,6 @@ $(function() {
                     .attr("dy", ".71em")
                     .style("text-anchor", "end");
 
-                svg.selectAll(".dot")
-                    .data([gradeData])
-                    .enter().append("circle")
-                    .attr("class", "dot")
-                    .attr("r", 15)
-                    .attr("cx", function(d) { return x(1); })
-                    .attr("cy", function(d) { return y(d.avg); })
-                    .style("fill", function(d) { return "#f7990d"; });
-
                 // PLOT RANGE BOUNDARY LINES
                 var lineDataMin = [
                     { "x": gradeRanges[0][0],   "y": gradeRanges[0][1]},  { "x": gradeRanges[1][0],  "y": gradeRanges[1][1]},
@@ -158,13 +149,21 @@ $(function() {
                 svg.selectAll(".dot2")
                     .data(gradeRanges)
                     .enter().append("circle")
-                    .attr("class", "dot")
+                    .attr("class", "range-dot")
                     .attr("r", 10)
                     .attr("cx", function(d) { return x(d[0]); })
                     .attr("cy", function(d) { return y(d[1]); })
                     .style("fill", function(d) { return "gainsboro"; });
 
-
+                // PLOT MAIN DATA
+                svg.selectAll(".dot")
+                    .data([gradeData])
+                    .enter().append("circle")
+                    .attr("class", "dot")
+                    .attr("r", 15)
+                    .attr("cx", function(d) { return x(1); })
+                    .attr("cy", function(d) { return y(d.avg); })
+                    .style("fill", function(d) { return "#f7990d"; });
 
                 // ADD CONTROLS
                 var button = $('<button>').attr('class', 'grade-level-btn btn ' + ((chartNumber < 1) ? ('btn-info') : ('')))
