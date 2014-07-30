@@ -44,8 +44,8 @@ $(function() {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            x.domain([0, 5]);
-            y.domain([100, 1000]);
+        x.domain([0, 5]);
+        y.domain([100, 1000]);
 
         xAxis.ticks(4)
             .tickFormat(function(d) {
@@ -105,17 +105,18 @@ $(function() {
 //                .style("text-anchor", "end")
 //                .text(function(d) { return d; });
 
-        /**
-         * BEGIN CUSTOM
-         */
         var url = "/teacher/data/learning-points/grade-averages/"+ mclassId;
 
         $.getJSON(url, function(data) {
 
-            var gradeData = [data[0]];
+            var assessment1DataSet = data[0];
+            var assessment1Data = assessment1DataSet.data;
 
-            svg.selectAll(".dot2")
-                .data(gradeData)
+            console.log(assessment1DataSet);
+            console.log(assessment1Data);
+
+            svg.selectAll(".dot")
+                .data(assessment1Data)
                 .enter().append("circle")
                 .attr("class", "dot")
                 .attr("r", 15)
@@ -124,9 +125,6 @@ $(function() {
                 .style("fill", function(d) { return "#f7990d"; });
 
         });
-        /**
-         * END CUSTOM
-         */
 
 //
 //        var mclassId = $(this).data('mclass-id');

@@ -28,7 +28,12 @@ class LearningPointsAvgs
 
     public function getData() {
 
-        return $this->data;
+        $data = new \stdClass();
+
+        $data->assessment = "1";
+        $data->data = array_values($this->data);
+
+        return [$data];
     }
 
 }
