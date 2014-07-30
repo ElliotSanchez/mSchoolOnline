@@ -183,7 +183,7 @@ $(function() {
                     .data(gradeRanges)
                     .enter().append("circle")
                     .attr("class", "range-dot")
-                    .attr("r", 10)
+                    .attr("r", 5)
                     .attr("cx", function(d) { return x(d[0]); })
                     .attr("cy", function(d) { return y(d[1]); })
                     .style("fill", function(d) { return "gainsboro"; });
