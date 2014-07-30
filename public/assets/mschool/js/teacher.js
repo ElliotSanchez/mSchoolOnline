@@ -17,6 +17,28 @@ $(function() {
 
         var chartNumber = 0;
 
+        var margin = {top: 20, right: 20, bottom: 30, left: 40},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        gradeRangeMax = 5;
+
+        var rangeMap = {
+            '1' : [[0,201.0], [gradeRangeMax, 403.0], [0,451.0], [gradeRangeMax, 499.0]], // K
+            '2' : [[0,406.0], [gradeRangeMax, 425.0], [0,474.0], [gradeRangeMax, 523.0]], // 1
+            '3' : [[0,428.0], [gradeRangeMax, 447.0], [0,494.5], [gradeRangeMax, 542.0]], // 2
+            '4' : [[0,450.0], [gradeRangeMax, 469.0], [0,516.0], [gradeRangeMax, 563.0]], // 3
+            '5' : [[0,471.5], [gradeRangeMax, 490.0], [0,532.0], [gradeRangeMax, 574.0]], // 4
+            '6' : [[0,487.5], [gradeRangeMax, 501.0], [0,542.5], [gradeRangeMax, 584.0]], // 5
+            '7' : [[0,497.0], [gradeRangeMax, 509.0], [0,518.0], [gradeRangeMax, 527.0]], // 6
+            '8' : [[0,518.0], [gradeRangeMax, 528.0], [0,532.0], [gradeRangeMax, 536.0]], // 7
+            '9' : [[0,532.0], [gradeRangeMax, 537.0], [0,546.0], [gradeRangeMax, 555.0]], // 8
+            '10': [[0,546.0], [gradeRangeMax, 556.0], [0,591.0], [gradeRangeMax, 626.0]], // 9
+            '11': [[0,571.0], [gradeRangeMax, 587.0], [0,612.0], [gradeRangeMax, 637.0]], // 10
+            '12': [[0,586.5], [gradeRangeMax, 602.0], [0,627.0], [gradeRangeMax, 652.0]], // 11
+            '13': [[0,601.5], [gradeRangeMax, 617.0], [0,708.5], [gradeRangeMax, 800.0]]  // 12
+            };
+
         $.getJSON(url, function(data) {
 
             var assessment1DataSet = data[0];
@@ -31,9 +53,6 @@ $(function() {
                  * ORIGINAL EXAMPLE
                  * http://bl.ocks.org/mbostock/3887118
                  */
-                var margin = {top: 20, right: 20, bottom: 30, left: 40},
-                    width = 960 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
 
                 var x = d3.scale.linear()
                     .range([0, width]);
@@ -103,6 +122,18 @@ $(function() {
                     .attr("cy", function(d) { return y(d.avg); })
                     .style("fill", function(d) { return "#f7990d"; });
 
+                // PLOT RANGES
+                var gradeRanges = rangeMap[gradeLevelId-1]; // TODO WE'RE GETTING LUCKY ON THIS MATH
+
+                svg.selectAll(".dot2")
+                    .data(gradeRanges)
+                    .enter().append("circle")
+                    .attr("class", "dot")
+                    .attr("r", 10)
+                    .attr("cx", function(d) { return x(d[0]); })
+                    .attr("cy", function(d) { return y(d[1]); })
+                    .style("fill", function(d) { return "gainsboro"; });
+
                 // ADD CONTROLS
                 var button = $('<button>').attr('class', 'grade-level-btn btn ' + ((chartNumber < 1) ? ('btn-info') : ('')))
                     .html(gradeLevelName)
@@ -154,21 +185,6 @@ $(function() {
 //
 //        var mclassId = $(this).data('mclass-id');
 //
-//        var rangeMap = {
-//            'K' : { 'lower': {'min':201 ,	'max':403}, 'upper': {'min': 451, 	'max': 499}},
-//            '1' : { 'lower': {'min':406 ,	'max':425}, 'upper': {'min': 474, 	'max': 523}},
-//            '2' : { 'lower': {'min':428 ,	'max':447}, 'upper': {'min': 494.5,	'max': 542}},
-//            '3' : { 'lower': {'min':450 ,	'max':469}, 'upper': {'min': 516, 	'max': 563}},
-//            '4' : { 'lower': {'min':471.5,	'max':490}, 'upper': {'min': 532, 	'max': 574}},
-//            '5' : { 'lower': {'min':487.5,	'max':501}, 'upper': {'min': 542.5, 'max': 584}},
-//            '6' : { 'lower': {'min':497 ,	'max':509}, 'upper': {'min': 518, 	'max': 527}},
-//            '7' : { 'lower': {'min':518 ,	'max':528}, 'upper': {'min': 532, 	'max': 536}},
-//            '8' : { 'lower': {'min':532 ,	'max':537}, 'upper': {'min': 546, 	'max': 555}},
-//            '9' : { 'lower': {'min':546 ,	'max':556}, 'upper': {'min': 591, 	'max': 626}},
-//            '10': { 'lower': {'min':571	,	'max':587}, 'upper': {'min': 612,	'max': 637}},
-//            '11': { 'lower': {'min':586.5 ,	'max':602}, 'upper': {'min': 627, 	'max': 652}},
-//            '12': { 'lower': {'min':601.5 ,	'max':617}, 'upper': {'min': 708.5,	'max': 800}}
-//            };
 //
 //        var rangeBounds = rangeMap['3']; // TESTING 3rd GRADE
 //
