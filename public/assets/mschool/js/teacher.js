@@ -13,69 +13,113 @@ $(function() {
 
         var mclassId = $(this).data('mclass-id');
 
-        /**
-         * ORIGINAL EXAMPLE
-         * http://bl.ocks.org/mbostock/3887118
-         */
-        var margin = {top: 20, right: 20, bottom: 30, left: 40},
-            width = 960 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+        var url = "/teacher/data/learning-points/grade-averages/"+ mclassId;
 
-        var x = d3.scale.linear()
-            .range([0, width]);
+        var chartNumber = 0;
 
-        var y = d3.scale.linear()
-            .range([height, 0]);
+        $.getJSON(url, function(data) {
 
-        var color = d3.scale.category10();
+            var assessment1DataSet = data[0];
+            var assessment1Data = assessment1DataSet.data;
 
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom");
+            $(assessment1Data).each(function(index,gradeData) {
 
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left");
+                var gradeLevelId = gradeData.grade_level_id;
+                var gradeLevelName = gradeData.grade_level_name;
 
-        // SETUP SVG
-        var svg = d3.select("div.assessment-class-average").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                /**
+                 * ORIGINAL EXAMPLE
+                 * http://bl.ocks.org/mbostock/3887118
+                 */
+                var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                    width = 960 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom;
 
-        x.domain([0, 5]);
-        y.domain([100, 1000]);
+                var x = d3.scale.linear()
+                    .range([0, width]);
 
-        xAxis.ticks(4)
-            .tickFormat(function(d) {
-                if (d < 1 || d > 4) return null;
-                else return d;
-            })
-            .innerTickSize(0)
-            .outerTickSize(0);
+                var y = d3.scale.linear()
+                    .range([height, 0]);
 
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("class", "label")
-            .attr("x", width)
-            .attr("y", -6)
-            .style("text-anchor", "end");
-            //.text("Sepal Width (cm)");
+                var color = d3.scale.category10();
 
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("class", "label")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end");
-            //.text("Sepal Length (cm)")
+                var xAxis = d3.svg.axis()
+                    .scale(x)
+                    .orient("bottom");
+
+                var yAxis = d3.svg.axis()
+                    .scale(y)
+                    .orient("left");
+
+                // SETUP SVG
+                var svg = d3.select("div.assessment-class-average").append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .attr("data-grade-level-id", gradeLevelId)
+                    .attr("style", (chartNumber < 1) ? ('') : ('display: none')) // HIDES ALL CHARTS AFTER THE FIRST
+                    .attr("class", "grade-avg-chart")
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                x.domain([0, 5]);
+                y.domain([100, 1000]);
+
+                xAxis.ticks(4)
+                    .tickFormat(function(d) {
+                        if (d < 1 || d > 4) return null;
+                        else return d;
+                    })
+                    .innerTickSize(0)
+                    .outerTickSize(0);
+
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis)
+                    .append("text")
+                    .attr("class", "label")
+                    .attr("x", width)
+                    .attr("y", -6)
+                    .style("text-anchor", "end");
+                //.text("Sepal Width (cm)");
+
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("class", "label")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end");
+                //.text("Sepal Length (cm)")
+
+                svg.selectAll(".dot")
+                    .data([gradeData])
+                    .enter().append("circle")
+                    .attr("class", "dot")
+                    .attr("r", 15)
+                    .attr("cx", function(d) { return x(1); })
+                    .attr("cy", function(d) { return y(d.avg); })
+                    .style("fill", function(d) { return "#f7990d"; });
+
+                // ADD CONTROLS
+                var button = $('<button>').attr('class', 'grade-level-btn btn ' + ((chartNumber < 1) ? ('btn-info') : ('')))
+                    .html(gradeLevelName)
+                    .click(function() {
+                        $('.grade-level-btn').removeClass('btn-info');
+                        $(this).addClass('btn-info');
+                        $('.grade-avg-chart').hide();
+                        $('[data-grade-level-id="' + gradeLevelId + '"]').show();
+                    });
+
+                $('#grade-controls').append(button);
+
+
+                chartNumber++; // HIDES ALL CHARTS AFTER THE FIRST
+            });
+
+        });
 
 //            svg.selectAll(".dot")
 //                .data(data)
@@ -105,26 +149,7 @@ $(function() {
 //                .style("text-anchor", "end")
 //                .text(function(d) { return d; });
 
-        var url = "/teacher/data/learning-points/grade-averages/"+ mclassId;
-
-        $.getJSON(url, function(data) {
-
-            var assessment1DataSet = data[0];
-            var assessment1Data = assessment1DataSet.data;
-
-            console.log(assessment1DataSet);
-            console.log(assessment1Data);
-
-            svg.selectAll(".dot")
-                .data(assessment1Data)
-                .enter().append("circle")
-                .attr("class", "dot")
-                .attr("r", 15)
-                .attr("cx", function(d) { console.log('x:'+"1"); return x(1); })
-                .attr("cy", function(d) { console.log('y:'+d.avg); return y(d.avg); })
-                .style("fill", function(d) { return "#f7990d"; });
-
-        });
+// ---------------------
 
 //
 //        var mclassId = $(this).data('mclass-id');
