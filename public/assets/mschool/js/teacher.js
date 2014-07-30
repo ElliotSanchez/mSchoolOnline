@@ -51,7 +51,7 @@ $(function() {
 
                 var gradeRanges = rangeMap[gradeLevelId-1]; // TODO WE'RE GETTING LUCKY ON THIS MATH
 
-                var gradeRangeMin = 0;
+                var gradeRangeMin = Math.floor(gradeRanges[0][1]/100)*100;
                 var gradeRangeMax = Math.ceil(gradeRanges[3][1]/100)*100;
 
                 /**
