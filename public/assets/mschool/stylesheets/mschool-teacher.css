@@ -11,7 +11,52 @@
 
 /** D3 CHARTS */
 
-/** ASSEMENT : PLACEMENT */
+/** ASSSMENT : IREADY DIAGNOSTIC */
+/*body {*/
+/*font: 10px sans-serif;*/
+/*}*/
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.dot {
+    stroke: #000;
+}
+
+path.link {
+    fill: none;
+    stroke: #666666;
+    stroke-width: 1.5px;
+}
+
+.stroke {
+    fill: none;
+    stroke: #000;
+    stroke-width: 3px;
+}
+
+.fill {
+    fill: #fff;
+}
+
+.graticule {
+    fill: none;
+    stroke: #777;
+    stroke-width: .5px;
+    stroke-opacity: .5;
+}
+
+.route {
+    fill: none;
+    stroke: blue;
+    stroke-width: 3px;
+}
+
+/** ASSESMENT : PLACEMENT */
 .assessment-student-placement .x-axis path {
     stroke:white;
     fill:none;
