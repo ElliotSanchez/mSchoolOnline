@@ -105,7 +105,6 @@ $(function() {
                     .attr("x", width)
                     .attr("y", -6)
                     .style("text-anchor", "end");
-                //.text("Sepal Width (cm)");
 
                 svg.append("g")
                     .attr("class", "y axis")
@@ -116,7 +115,6 @@ $(function() {
                     .attr("y", 6)
                     .attr("dy", ".71em")
                     .style("text-anchor", "end");
-                //.text("Sepal Length (cm)")
 
                 svg.selectAll(".dot")
                     .data([gradeData])
@@ -127,7 +125,36 @@ $(function() {
                     .attr("cy", function(d) { return y(d.avg); })
                     .style("fill", function(d) { return "#f7990d"; });
 
-                // PLOT RANGES
+                // PLOT RANGE BOUNDARY LINES
+                var lineDataMin = [
+                    { "x": gradeRanges[0][0],   "y": gradeRanges[0][1]},  { "x": gradeRanges[1][0],  "y": gradeRanges[1][1]},
+                    ];
+
+                var lineDataMax = [
+                    { "x": gradeRanges[2][0],   "y": gradeRanges[2][1]},  { "x": gradeRanges[3][0],  "y": gradeRanges[3][1]},
+                ];
+
+                var lineFunction = d3.svg.line()
+                    .x(function(d) { return x(d.x); })
+                    .y(function(d) { return y(d.y); })
+                    .interpolate("linear");
+
+                //The line SVG Path we draw
+                var lineGraph = svg.append("path")
+                    .attr("d", lineFunction(lineDataMin))
+                    .attr("stroke", "#999999")
+                    .attr("stroke-width", 2)
+                    .attr("fill", "none")
+                    .style("stroke-dasharray", ("3, 3"));
+
+                var lineGraph = svg.append("path")
+                    .attr("d", lineFunction(lineDataMax))
+                    .attr("stroke", "#999999")
+                    .attr("stroke-width", 2)
+                    .attr("fill", "none")
+                    .style("stroke-dasharray", ("3, 3"));
+
+                // PLOT RANGE DOTS
                 svg.selectAll(".dot2")
                     .data(gradeRanges)
                     .enter().append("circle")
@@ -136,6 +163,8 @@ $(function() {
                     .attr("cx", function(d) { return x(d[0]); })
                     .attr("cy", function(d) { return y(d[1]); })
                     .style("fill", function(d) { return "gainsboro"; });
+
+
 
                 // ADD CONTROLS
                 var button = $('<button>').attr('class', 'grade-level-btn btn ' + ((chartNumber < 1) ? ('btn-info') : ('')))
