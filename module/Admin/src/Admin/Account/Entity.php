@@ -8,12 +8,14 @@ class Entity extends EntityAbstract {
 
     public $name;
     public $subdomain;
+    public $isDefault;
 
     public function create($data) {
 
         parent::create($data);
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
         $this->subdomain = (!empty($data['subdomain'])) ? $data['subdomain'] : null;
+        $this->isDefault = (!empty($data['is_default'])) ? $data['is_default'] : null;
 
     }
 
@@ -24,6 +26,7 @@ class Entity extends EntityAbstract {
 
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
         $this->subdomain = (!empty($data['subdomain'])) ? $data['subdomain'] : null;
+        $this->isDefault = (!empty($data['is_default'])) ? $data['is_default'] : $this->isDefault;
 
         $this->exchangeDates($data);
     }
@@ -33,6 +36,7 @@ class Entity extends EntityAbstract {
         $data = array(
             'name' => $this->name,
             'subdomain' => $this->subdomain,
+            'is_default' => (bool) $this->isDefault,
         );
 
         return $data;

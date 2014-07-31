@@ -23,4 +23,10 @@ class Service extends ServiceAbstract {
         return $this->table->fetchWith(array('subdomain' => $subdomain))->current();
     }
 
+    public function getDefaultAccount() {
+        return $this->table->fetchWith(array('is_default' => 1))->current();
+    }
+
+
+
 }

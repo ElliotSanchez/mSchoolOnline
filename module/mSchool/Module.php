@@ -98,10 +98,10 @@ class Module
             $sm             = $e->getApplication()->getServiceManager();
             $config         = $sm->get('config');
 
-            $DEFAULT_ACCOUNT_ID = $config['accounts']['default'];
+            //$DEFAULT_ACCOUNT_ID = $config['accounts']['default'];
             $accountService = $sm->get('AccountService');
 
-            self::$account = $accountService->get($DEFAULT_ACCOUNT_ID);
+            self::$account = $accountService->getDefaultAccount();
 
             $this->subdomain = self::$account->subdomain;
             $router = $sm->get('router');
