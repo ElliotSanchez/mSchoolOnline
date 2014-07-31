@@ -126,4 +126,13 @@ class AuthController extends AbstractActionController
         }
 
     }
+
+    /**
+     * PUBLIC COACH LOGIN
+     */
+    public function coachLoginAction() {
+
+        return $this->redirect()->toRoute('mschool/teacher_login', ['subdomain' => \MSchool\Module::account()->subdomain]);
+
+    }
 }

@@ -3,6 +3,34 @@
 return array(
     'router' => array(
         'routes' => array(
+
+            'public' => array(
+                'type' => 'Hostname',
+                'options' => array(
+                    'route' => 'mschool.today', // SEE MSchool/Module initRoute FOR REALLY IMPORTANT STUFF TO SUPPORT THIS
+                    'defaults' => array(
+                        // '__NAMESPACE__' => 'MSchool\Controller',  // REMOVAL OF THIS LINE IS IMPORTANT; OTHERWISE THE MSchool MODULE HAS TROUBLE
+                        'module'        => 'MSchool',
+                        'controller'    => 'Index',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    // COACH LOGIN
+                    'coach_login' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/coach',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Auth',
+                                'action'     => 'coach-login',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+
             'mschool' => array(
                 'type' => 'Hostname',
                 'options' => array(
@@ -11,7 +39,7 @@ return array(
                         'subdomain' => '[a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-//                        '__NAMESPACE__' => 'MSchool\Controller',  // REMOVE OF THIS LINE IS IMPORTANT; OTHER WISE THE MSchool MODULE HAS TROUBLE
+                        // '__NAMESPACE__' => 'MSchool\Controller',  // REMOVAL OF THIS LINE IS IMPORTANT; OTHERWISE THE MSchool MODULE HAS TROUBLE
                         'module'        => 'MSchool',
                         'controller'    => 'Index',
                         'action'        => 'index',

@@ -39,7 +39,17 @@ class Auth extends AbstractPlugin
 
         $match = $e->getRouteMatch();
         $name = $match->getMatchedRouteName();
-        if (in_array($name, array('admin/login', 'admin/authenticate', 'mschool/login', 'mschool/authenticate', 'mschool/teacher_login'))) {
+
+        // SEE Admin\Module:onBootstrap
+        $noAuthWhiteList = array(
+            'admin/login',
+            'admin/authenticate',
+            'mschool/login',
+            'mschool/authenticate',
+            'mschool/teacher_login',
+            'public/coach_login');
+
+        if (in_array($name, $noAuthWhiteList)) {
             return;
         }
 

@@ -76,7 +76,7 @@ class Module
         $request = $sm->get('request');
         $matchedRoute = $router->match($request);
         if ($matchedRoute && $matchedRoute->getParam('subdomain')) {
-            // THIS IS DONE SO THAT CALLED TO CONTROLLER redirect()->toRoute(...) HAVE THE SUBDOMAIN AVAILABLE
+            // THIS IS DONE SO THAT CALLS TO CONTROLLER redirect()->toRoute(...) HAVE THE SUBDOMAIN AVAILABLE
             $router->setDefaultParam('subdomain', $matchedRoute->getParam('subdomain'));
             $this->subdomain = $matchedRoute->getParam('subdomain');
         }
@@ -92,6 +92,20 @@ class Module
             $accountService = $sm->get('AccountService');
 
             self::$account = $accountService->getAccountWithSubdomain($this->subdomain);
+
+        } else {
+            // DEFAULT ACCOUNT
+            $sm             = $e->getApplication()->getServiceManager();
+            $config         = $sm->get('config');
+
+            $DEFAULT_ACCOUNT_ID = $config['accounts']['default'];
+            $accountService = $sm->get('AccountService');
+
+            self::$account = $accountService->get($DEFAULT_ACCOUNT_ID);
+
+            $this->subdomain = self::$account->subdomain;
+            $router = $sm->get('router');
+            $router->setDefaultParam('subdomain', $this->subdomain);
 
         }
 
