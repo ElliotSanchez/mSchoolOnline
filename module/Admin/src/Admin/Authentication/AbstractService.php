@@ -52,4 +52,17 @@ abstract class AbstractService {
         $this->sessionContainer->getManager()->getStorage()->clear('mschool');
     }
 
+    public static function getNoAuthWhiteList() {
+
+        return [
+            'admin/login',
+            'admin/authenticate',
+            'mschool/login',
+            'mschool/teacher_login',
+            'mschool/authenticate',
+            'public/coach_login'
+        ];
+
+    }
+
 }

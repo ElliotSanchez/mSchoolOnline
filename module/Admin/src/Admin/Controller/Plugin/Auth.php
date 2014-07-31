@@ -8,6 +8,7 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin,
 use Admin\User\Entity as AdminUser;
 use Admin\Student\Entity as StudentUser;
 use Admin\Teacher\Entity as TeacherUser;
+use Admin\Authentication\AbstractService as AdminAuthService;
 
 class Auth extends AbstractPlugin
 {
@@ -40,14 +41,7 @@ class Auth extends AbstractPlugin
         $match = $e->getRouteMatch();
         $name = $match->getMatchedRouteName();
 
-        // SEE Admin\Module:onBootstrap
-        $noAuthWhiteList = array(
-            'admin/login',
-            'admin/authenticate',
-            'mschool/login',
-            'mschool/authenticate',
-            'mschool/teacher_login',
-            'public/coach_login');
+        $noAuthWhiteList = AdminAuthService::getNoAuthWhiteList();
 
         if (in_array($name, $noAuthWhiteList)) {
             return;

@@ -12,6 +12,8 @@ namespace Admin;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
+use Admin\Authentication\AbstractService as AdminAuthService;
+
 class Module
 {
     public static $studentPasswordKey = null;
@@ -61,15 +63,7 @@ class Module
             // LOGIN PAGE
             $name = $match->getMatchedRouteName();
 
-            // SEE Admin\Controller\Plugin\Auth:doAuthorization
-            $noAuthWhiteList = array(
-                'admin/login',
-                'admin/authenticate',
-                'mschool/login',
-                'mschool/teacher_login',
-                'mschool/authenticate',
-                'public/coach_login'
-            );
+            $noAuthWhiteList = AdminAuthService::getNoAuthWhiteList();
 
             if (in_array($name, $noAuthWhiteList)) {
                 return;
