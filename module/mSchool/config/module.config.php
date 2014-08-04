@@ -17,6 +17,16 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
+                    'index' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Public',
+                                'action'     => 'index',
+                            ),
+                        ),
+                    ),
                     // COACH LOGIN
                     'coach_login' => array(
                         'type' => 'Literal',
@@ -31,7 +41,7 @@ return array(
                     'coach_signup' => array(
                         'type' => 'Literal',
                         'options' => array(
-                            'route'    => '/',
+                            'route'    => '/signup',
                             'defaults' => array(
                                 'controller' => 'MSchool\Controller\Public',
                                 'action'     => 'coach-signup',
@@ -41,7 +51,7 @@ return array(
                     'coach_signup_complete' => array(
                         'type' => 'Literal',
                         'options' => array(
-                            'route'    => '/signup-complete',
+                            'route'    => '/signup/complete',
                             'defaults' => array(
                                 'controller' => 'MSchool\Controller\Public',
                                 'action'     => 'coach-signup-complete',

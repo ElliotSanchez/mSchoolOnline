@@ -7,6 +7,10 @@ use Zend\View\Model\ViewModel;
 
 class PublicController extends AbstractActionController
 {
+    public function indexAction() {
+        $this->redirect()->toUrl('http://mschools.org');
+    }
+
     public function coachSignupAction()
     {
 
