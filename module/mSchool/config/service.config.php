@@ -69,5 +69,6 @@ return array(
         'StudentLoginForm' => 'MSchool\Form\Auth\StudentLogin',
         'TeacherLoginForm' => 'MSchool\Form\Auth\TeacherLogin',
         'StudentPasswordForm' => 'MSchool\Form\StudentPassword',
+        'CoachSignupForm' => 'MSchool\Form\Pub\CoachSignup',
     ),
 );

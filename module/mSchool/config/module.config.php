@@ -28,6 +28,26 @@ return array(
                             ),
                         ),
                     ),
+                    'coach_signup' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Public',
+                                'action'     => 'coach-signup',
+                            ),
+                        ),
+                    ),
+                    'coach_signup_complete' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/signup-complete',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Public',
+                                'action'     => 'coach-signup-complete',
+                            ),
+                        ),
+                    ),
                 ),
             ),
 
@@ -451,20 +471,22 @@ return array(
             'MSchool\Controller\Pathway' => 'MSchool\Controller\PathwayController',
             'MSchool\Controller\Teacher' => 'MSchool\Controller\TeacherController',
             'MSchool\Controller\TeacherData' => 'MSchool\Controller\TeacherDataController',
+            'MSchool\Controller\Public' => 'MSchool\Controller\PublicController',
         ),
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
+        'not_found_template'       => 'mschool/error/404',
+        'exception_template'       => 'mschool/error/index',
         'template_map' => array(
-            'mschool/layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'mschool/layout/coach'           => __DIR__ . '/../view/layout/coach.phtml',
-            'mschool/index/index' => __DIR__ . '/../view/mschool/index/index.phtml',
-            'mschool/error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'mschool/error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'mschool/layout/layout'     => __DIR__ . '/../view/layout/layout.phtml',
+            'mschool/layout/coach'      => __DIR__ . '/../view/layout/coach.phtml',
+            'mschool/index/index'       => __DIR__ . '/../view/mschool/index/index.phtml',
+            'mschool/layout/layout'     => __DIR__ . '/../view/layout/layout.phtml',
+            'mschool/error/404'         => __DIR__ . '/../view/error/404.phtml',
+            'mschool/error/index'       => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

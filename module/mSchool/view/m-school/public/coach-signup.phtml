@@ -1,0 +1,124 @@
+<div class='row'>
+    <div class='col-md-12'>
+
+        <h1 class='text-center title'>Signup Today</h1>
+        <?php
+
+        $form = $this->form;
+        $form->prepare();
+
+        $form->setAttribute('method', 'post');
+
+        echo $this->form()->openTag($form->setAttribute('class', 'validate-form'));
+        ?>
+
+        <?php // FIRST NAME ?>
+        <?php $element = $form->get('first_name') ?>
+        <?php $elemDescription = 'First Name'; ?>
+        <div class='form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>'>
+            <div class='controls with-icon-over-input'>
+                <?php
+                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', $elemDescription));
+                echo $this->formElementErrors($element);
+                ?>
+            </div>
+        </div>
+
+        <?php // LAST NAME ?>
+        <?php $element = $form->get('last_name') ?>
+        <?php $elemDescription = 'Last Name'; ?>
+        <div class='form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>'>
+            <div class='controls with-icon-over-input'>
+                <?php
+                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', $elemDescription));
+                echo $this->formElementErrors($element);
+                ?>
+            </div>
+        </div>
+
+        <?php // EMAIL ?>
+        <?php $element = $form->get('email') ?>
+        <?php $elemDescription = 'Email'; ?>
+        <div class='form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>'>
+            <div class='controls with-icon-over-input'>
+                <?php
+                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', $elemDescription));
+                echo $this->formElementErrors($element);
+                ?>
+            </div>
+        </div>
+
+        <?php // PASSWORD ?>
+        <?php $element = $form->get('password') ?>
+        <?php $elemDescription = 'Password'; ?>
+        <div class='form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>'>
+            <div class='controls with-icon-over-input'>
+                <?php
+                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', $elemDescription));
+                echo $this->formElementErrors($element);
+                ?>
+            </div>
+        </div>
+
+        <?php // PASSWORD CONFIRM ?>
+        <?php $element = $form->get('password_confirm') ?>
+        <?php $elemDescription = 'Password Confirm'; ?>
+        <div class='form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>'>
+            <div class='controls with-icon-over-input'>
+                <?php
+                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', $elemDescription));
+                echo $this->formElementErrors($element);
+                ?>
+            </div>
+        </div>
+
+        <?php // SCHOOL NAME ?>
+        <?php $element = $form->get('school_name') ?>
+        <?php $elemDescription = 'School Name'; ?>
+        <div class='form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>'>
+            <div class='controls with-icon-over-input'>
+                <?php
+                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', $elemDescription));
+                echo $this->formElementErrors($element);
+                ?>
+            </div>
+        </div>
+
+        <?php // SCHOOL ZIP CODE ?>
+        <?php $element = $form->get('school_zip_code') ?>
+        <?php $elemDescription = 'School Zip Code'; ?>
+        <div class='form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>'>
+            <div class='controls with-icon-over-input'>
+                <?php
+                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', $elemDescription));
+                echo $this->formElementErrors($element);
+                ?>
+            </div>
+        </div>
+
+        <?php // ROLE  ?>
+        <?php $element = $form->get('role') ?>
+        <?php //$elemDescription = 'What is your Role'; ?>
+        <div class='form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>'>
+            <div class='controls with-icon-over-input'>
+                <h5>What is your role?</h5>
+                <?php foreach ($element->getValueOptions() as $value => $option): ?>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="<?php echo $element->getName() ?>" id="" value="<?php echo $value ?>">
+                            <?php echo $option; ?>
+                        </label>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <?php
+            $submit = $form->get('submit');
+            echo $this->formInput($submit ->setAttribute('class', 'btn btn-primary btn-block')->setValue('Sign up'));
+            echo $this->formElementErrors($submit );
+        ?>
+
+        <?php echo $this->form()->closeTag() ?>
+    </div>
+</div>

@@ -75,6 +75,10 @@ use Admin\Dreambox\Usage\Entity as DreamboxUsage;
 use Admin\Dreambox\Usage\Table as DreamboxUsageTable;
 use Admin\Dreambox\Usage\Service as DreamboxUsageService;
 
+use Admin\CoachSignup\Entity as CoachSignup;
+use Admin\CoachSignup\Table as CoachSignupTable;
+use Admin\CoachSignup\Service as CoachSignupService;
+
 return array(
 
     'factories' => array(
@@ -113,7 +117,7 @@ return array(
                 return $table;
             },
         'AccountService' => function ($sm) {
-                return new AccountService($sm->get('AccountTable'));
+                return new AccountService($sm->get('AccountTable'), $sm->get('SchoolService'), $sm->get('TeacherService'), $sm->get('MClassService'));
             },
         'AccountAddForm' => function ($sm) {
                 return new Admin\Form\Account\Add();
@@ -643,6 +647,22 @@ return array(
             return new \Admin\Stats\Teacher($dbAdapter = $sm->get('Zend\Db\Adapter\Adapter'));
         },
 
+        // COACH SIGNUPS
+        'CoachSignupTableGateway' => function ($sm) {
+                $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                $resultSetPrototype = new ResultSet();
+                $resultSetPrototype->setArrayObjectPrototype(new CoachSignup());
+                return new TableGateway('coach_signups', $dbAdapter, null, $resultSetPrototype);
+            },
+        'CoachSignupTable' =>  function($sm) {
+                $tableGateway = $sm->get('CoachSignupTableGateway');
+                $table = new CoachSignupTable($tableGateway);
+                return $table;
+            },
+        'CoachSignupService' => function ($sm) {
+                return new CoachSignupService($sm->get('CoachSignupTable'), $sm->get('AccountService'));
+            },
+        
     ),
 
     'abstract_factories' => array(

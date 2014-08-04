@@ -6,6 +6,7 @@ use Admin\ModelAbstract\ServiceAbstract as ServiceAbstract;
 use Admin\Mclass\Table as MclassTable;
 use Admin\Mclass\Entity as Mclass;
 use Admin\Account\Entity as Account;
+use Admin\School\Entity as School;
 use Admin\School\Service as SchoolService;
 use Admin\MclassStudent\Service as MclassStudentService;
 use Admin\MclassTeacher\Service as MclassTeacherService;

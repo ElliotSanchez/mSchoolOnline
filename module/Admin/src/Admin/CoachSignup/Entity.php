@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Teacher;
+namespace Admin\CoachSignup;
 
 use Admin\User\UserAbstract as UserAbstract;
 
@@ -11,10 +11,11 @@ class Entity extends UserAbstract {
     public $email;
     public $firstName;
     public $lastName;
-    public $isSchoolAdmin;
-
-    public $accountId;
-    public $schoolId;
+    public $schoolName;
+    public $schoolZipCode;
+    public $role;
+    public $createdAt;
+    public $updatedAt;
 
     public function getFullName() {
         return $this->firstName . ' ' . $this->lastName;
@@ -28,22 +29,17 @@ class Entity extends UserAbstract {
 
     }
 
-    public function setPasswordHash($hash) {
-        $this->password = $hash;
-    }
-
     public function create($data) {
 
         parent::create($data);
         $this->username = (!empty($data['username'])) ? $data['username'] : null;
-        //$this->password = (!empty($data['password'])) ? $data['password'] : null;
+        $this->password = (!empty($data['password'])) ? $data['password'] : null;
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
         $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : null;
         $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : null;
-        $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : 0;
-
-        $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : null;
-        $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : null;
+        $this->schoolName = (!empty($data['school_name'])) ? $data['school_name'] : null;
+        $this->schoolZipCode = (!empty($data['school_zip_code'])) ? $data['school_zip_code'] : null;
+        $this->role = (!empty($data['role'])) ? $data['role'] : null;
 
         if(isset($data['password']))
             $this->setPassword($data['password']);
@@ -55,15 +51,14 @@ class Entity extends UserAbstract {
 
         if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
 
-        $this->username = (!empty($data['username'])) ? $data['username'] : null;
-        $this->password = (!empty($data['password']) && strlen($data['password'])) ? $data['password'] : null;
-        $this->email = (!empty($data['email'])) ? $data['email'] : null;
-        $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : null;
-        $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : null;
-        $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : 0;
-
-        $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : $this->accountId;
-        $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : $this->schoolId;
+        $this->username = (!empty($data['username'])) ? $data['username'] : $this->username;
+        $this->password = (!empty($data['password'])) ? $data['password'] : $this->password;
+        $this->email = (!empty($data['email'])) ? $data['email'] : $this->email;
+        $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : $this->firstName;
+        $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : $this->lastName;
+        $this->schoolName = (!empty($data['school_name'])) ? $data['school_name'] : $this->schoolName;
+        $this->schoolZipCode = (!empty($data['school_zip_code'])) ? $data['school_zip_code'] : $this->schoolZipCode;
+        $this->role = (!empty($data['role'])) ? $data['role'] : $this->role;
 
         $this->exchangeDates($data);
     }
@@ -75,9 +70,9 @@ class Entity extends UserAbstract {
             'email' => $this->email,
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
-            'is_school_admin' => $this->isSchoolAdmin,
-            'account_id' => $this->accountId,
-            'school_id' => $this->schoolId,
+            'school_name' => $this->schoolName,
+            'school_zip_code' => $this->schoolZipCode,
+            'role' => $this->role,
         );
 
         if ($this->password)

@@ -60,7 +60,9 @@ abstract class AbstractService {
             'mschool/login',
             'mschool/teacher_login',
             'mschool/authenticate',
-            'public/coach_login'
+            'public/coach_login',
+            'public/coach_signup',
+            'public/coach_signup_complete',
         ];
 
     }
