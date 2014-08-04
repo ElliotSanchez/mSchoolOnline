@@ -42,18 +42,31 @@ class PublicController extends AbstractActionController
     }
 
     public function coachSignupCompleteAction() {
-
         $this->layout('layout/public');
-
     }
 
     public function coachSignupConfirmationAction() {
 
-        $this->flashMessenger()->addSuccessMessage('Account confirmed');
+        $this->layout('layout/public');
 
-        $defaultAccount = $this->getServiceLocator()->get('AccountService')->getDefaultAccount();
+        $coachSignup = $this->getServiceLocator()->get('CoachSignupService')->findWithConfirmationKey($this->params('confirmation_key'));
 
-        return $this->redirect()->toRoute('mschool/teacher_login', ['subdomain' => $defaultAccount->subdomain]);
+        $accountService = $this->getServiceLocator()->get('AccountService');
+        $coachSignupService = $this->getServiceLocator()->get('CoachSignupService');
+
+        if ($coachSignup) {
+
+            $coachSignupService->confirmCoachSignup($coachSignup);
+
+            $this->flashMessenger()->addSuccessMessage('Account confirmed');
+            $defaultAccount = $accountService->getDefaultAccount();
+            return $this->redirect()->toRoute('mschool/teacher_login', ['subdomain' => $defaultAccount->subdomain]);
+
+        }
+
+        return new ViewModel([
+
+        ]);
 
     }
 }

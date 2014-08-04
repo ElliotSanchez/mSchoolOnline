@@ -49,9 +49,9 @@ return array(
                         ),
                     ),
                     'coach_signup_confirmation' => array(
-                        'type' => 'Literal',
+                        'type' => 'Segment',
                         'options' => array(
-                            'route'    => '/signup/confirmation',
+                            'route'    => '/signup/confirmation/[:confirmation_key]',
                             'defaults' => array(
                                 'controller' => 'MSchool\Controller\Public',
                                 'action'     => 'coach-signup-confirmation',

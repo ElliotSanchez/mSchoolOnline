@@ -14,6 +14,8 @@ class Entity extends UserAbstract {
     public $schoolName;
     public $schoolZipCode;
     public $role;
+    public $confirmationKey;
+    public $isConfirmed;
     public $createdAt;
     public $updatedAt;
 
@@ -29,6 +31,20 @@ class Entity extends UserAbstract {
 
     }
 
+    public function generateConfirmationKey() {
+
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < 200; $i++) {
+            shuffle($characters);
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        $this->confirmationKey = $randomString;
+
+    }
+
     public function create($data) {
 
         parent::create($data);
@@ -40,6 +56,8 @@ class Entity extends UserAbstract {
         $this->schoolName = (!empty($data['school_name'])) ? $data['school_name'] : null;
         $this->schoolZipCode = (!empty($data['school_zip_code'])) ? $data['school_zip_code'] : null;
         $this->role = (!empty($data['role'])) ? $data['role'] : null;
+        $this->confirmationKey = (!empty($data['confirmation_key'])) ? $data['confirmation_key'] : null;
+        $this->isConfirmed = (bool) (!empty($data['is_confirmed'])) ? $data['is_confirmed'] : false;
 
         if(isset($data['password']))
             $this->setPassword($data['password']);
@@ -59,6 +77,8 @@ class Entity extends UserAbstract {
         $this->schoolName = (!empty($data['school_name'])) ? $data['school_name'] : $this->schoolName;
         $this->schoolZipCode = (!empty($data['school_zip_code'])) ? $data['school_zip_code'] : $this->schoolZipCode;
         $this->role = (!empty($data['role'])) ? $data['role'] : $this->role;
+        $this->confirmationKey = (!empty($data['confirmation_key'])) ? $data['confirmation_key'] : $this->confirmationKey;
+        $this->isConfirmed = (bool) (!empty($data['is_confirmed'])) ? $data['is_confirmed'] : $this->isConfirmed;
 
         $this->exchangeDates($data);
     }
@@ -73,6 +93,8 @@ class Entity extends UserAbstract {
             'school_name' => $this->schoolName,
             'school_zip_code' => $this->schoolZipCode,
             'role' => $this->role,
+            'confirmation_key' => $this->confirmationKey,
+            'is_confirmed' => (int)$this->isConfirmed,
         );
 
         if ($this->password)

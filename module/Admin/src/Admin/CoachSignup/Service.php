@@ -29,17 +29,23 @@ class Service extends ServiceAbstract {
 
         $entity->create($data);
 
+        $entity->generateConfirmationKey();
+
         $entity = $this->table->save($entity);
 
         return $entity;
 
     }
 
+    public function findWithConfirmationKey($confirmationKey) {
+
+        return $this->table->fetchWith(['confirmation_key' => $confirmationKey])->current();
+
+    }
+
     public function signup(array $data) {
 
         $coachSignup = $this->create($data);
-
-        $this->accountService->signForDefaultAccount($coachSignup);
 
         $mgClient = new Mailgun(\Admin\Module::$MAILGUN_API_KEY);
         $domain = \Admin\Module::$MAILGUN_SMTP_HOST;
@@ -48,7 +54,7 @@ class Service extends ServiceAbstract {
         $firstName = $coachSignup->schoolName;
         $lastName = $coachSignup->lastName;
         $schoolName = $coachSignup->schoolName;
-        $confirmationUrl = 'http://mschool.lp/signup/confirmation';
+        $confirmationUrl = 'http://mschool.lp/signup/confirmation/' . $coachSignup->confirmationKey;
 
         $body = "<p>" . $firstName . ", hi!</p>
 
@@ -71,6 +77,18 @@ class Service extends ServiceAbstract {
             'html'    => $body,
         ));
 
+    }
+
+    public function confirmCoachSignup(CoachSignup $coachSignup) {
+
+        if (!$coachSignup->isConfirmed) {
+            $coach = $this->accountService->signForDefaultAccount($coachSignup);
+            $coachSignup->isConfirmed = true;
+            $this->save($coachSignup);
+            return $coach;
+        }
+
+        return false;
     }
 
 }

@@ -76,6 +76,8 @@ class Service extends ServiceAbstract {
             $this->mclassService->addTeacherToMclass($coach, $mclass);
         }
 
+        return $coach;
+
     }
 
 }
