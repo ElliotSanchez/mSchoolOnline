@@ -75,10 +75,9 @@ class CoachSignup extends Form
             'options' => array(
 //                'label' => 'What is your gender ?',
                 'value_options' => array(
-                    '0' => 'Administrator',
-                    '1' => 'Teacher',
-                    '2' => 'Parent',
-                    '3' => 'Student',
+                    'admin' => 'Administrator',
+                    'teacher' => 'Teacher',
+                    'parent' => 'Parent',
                 ),
             ),
         ));
