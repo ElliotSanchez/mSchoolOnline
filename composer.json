@@ -11,6 +11,7 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.2.*",
 	"phpoffice/phpexcel": "dev-develop",
-	"dropbox/dropbox-sdk": "1.1.*"
+	"dropbox/dropbox-sdk": "1.1.*",
+	"mailgun/mailgun-php": "dev-master"
     }
 }

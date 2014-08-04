@@ -17,6 +17,8 @@ use Admin\Authentication\AbstractService as AdminAuthService;
 class Module
 {
     public static $studentPasswordKey = null;
+    public static $MAILGUN_API_KEY = null;
+    public static $MAILGUN_SMTP_HOST = null;
 
     public function onBootstrap(MvcEvent $e)
     {
@@ -118,6 +120,8 @@ class Module
         $sm             = $e->getApplication()->getServiceManager();
         $config         = $sm->get('config');
         self::$studentPasswordKey = $config['encryption']['student_key'];
+        self::$MAILGUN_API_KEY = $config['mail']['mailgun']['api_key'];
+        self::$MAILGUN_SMTP_HOST = $config['mail']['mailgun']['smtp_host'];
     }
 
     protected function loadView(MvcEvent $e) {

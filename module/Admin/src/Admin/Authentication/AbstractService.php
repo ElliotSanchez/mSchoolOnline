@@ -63,6 +63,7 @@ abstract class AbstractService {
             'public/coach_login',
             'public/coach_signup',
             'public/coach_signup_complete',
+            'public/coach_signup_confirmation',
         ];
 
     }

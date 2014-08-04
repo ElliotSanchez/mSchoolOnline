@@ -48,6 +48,16 @@ return array(
                             ),
                         ),
                     ),
+                    'coach_signup_confirmation' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/signup/confirmation',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Public',
+                                'action'     => 'coach-signup-confirmation',
+                            ),
+                        ),
+                    ),
                 ),
             ),
 

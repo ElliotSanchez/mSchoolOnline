@@ -46,4 +46,14 @@ class PublicController extends AbstractActionController
         $this->layout('layout/public');
 
     }
+
+    public function coachSignupConfirmationAction() {
+
+        $this->flashMessenger()->addSuccessMessage('Account confirmed');
+
+        $defaultAccount = $this->getServiceLocator()->get('AccountService')->getDefaultAccount();
+
+        return $this->redirect()->toRoute('mschool/teacher_login', ['subdomain' => $defaultAccount->subdomain]);
+
+    }
 }
