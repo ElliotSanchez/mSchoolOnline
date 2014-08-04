@@ -27,6 +27,16 @@ return array(
                             ),
                         ),
                     ),
+                    'terms' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route'    => '/terms',
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Public',
+                                'action'     => 'terms',
+                            ),
+                        ),
+                    ),
                     // COACH LOGIN
                     'coach_login' => array(
                         'type' => 'Literal',

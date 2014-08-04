@@ -11,6 +11,10 @@ class PublicController extends AbstractActionController
         $this->redirect()->toUrl('http://mschools.org');
     }
 
+    public function termsAction() {
+        $this->layout('layout/public');
+    }
+
     public function coachSignupAction()
     {
 
