@@ -426,7 +426,7 @@ return array(
                     'teacher_student_password' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route'    => '/teacher/student/:id/password',
+                            'route'    => '/teacher/student/:s_id/password',
                             'constraints' => array(
                                 's_id' => '[0-9]*',
                             ),
