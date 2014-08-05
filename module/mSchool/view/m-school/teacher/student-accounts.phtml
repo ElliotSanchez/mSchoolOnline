@@ -37,7 +37,7 @@
                         <tr>
                             <td>
                                 <?php if ($this->account && !$this->account->isDefault): ?>
-                                    <a class="btn btn-link" href="<?php echo $this->url('mschool/teacher_student_password', ['id' => $student->id]); ?>">
+                                    <a class="btn btn-link" href="<?php echo $this->url('mschool/teacher_student_password', ['s_id' => $student->id]); ?>">
                                         <?php echo $student->getFullName(); ?>
                                     </a>
                                 <?php else: ?>
@@ -46,7 +46,7 @@
                             </td>
                             <td class="text-right">
                                 <?php if ($this->account && !$this->account->isDefault): ?>
-                                    <a class="btn btn-default" href="<?php echo $this->url('mschool/teacher_student_password', ['id' => $student->id]); ?>">View</a>
+                                    <a class="btn btn-default" href="<?php echo $this->url('mschool/teacher_student_password', ['s_id' => $student->id]); ?>">View</a>
                                 <?php endif; ?>
                             </td>
                         </tr>
