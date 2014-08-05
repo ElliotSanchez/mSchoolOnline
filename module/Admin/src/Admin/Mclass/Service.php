@@ -187,15 +187,15 @@ class Service extends ServiceAbstract {
 
         }
 
-        usort($assignedStudents, "studentNameCompare");
+        usort($assignedStudents, array($this, "studentNameCompare"));
 
         return $assignedStudents;
 
 
     }
-}
 
-function studentNameCompare($a, $b)
-{
-    return strcmp($a->lastName.$a->firstName, $b->lastName.$b->firstName);
+    public function studentNameCompare($a, $b) {
+        return strcmp($a->lastName.$a->firstName, $b->lastName.$b->firstName);
+    }
+
 }
