@@ -36,12 +36,18 @@
                     <?php foreach ($this->students as $student): ?>
                         <tr>
                             <td>
-                                <a class="btn btn-link" href="<?php echo $this->url('mschool/teacher_student_password', ['id' => $student->id]); ?>">
+                                <?php if ($this->account && !$this->account->isDefault): ?>
+                                    <a class="btn btn-link" href="<?php echo $this->url('mschool/teacher_student_password', ['id' => $student->id]); ?>">
+                                        <?php echo $student->getFullName(); ?>
+                                    </a>
+                                <?php else: ?>
                                     <?php echo $student->getFullName(); ?>
-                                </a>
+                                <?php endif; ?>
                             </td>
                             <td class="text-right">
-                                <a class="btn btn-default" href="<?php echo $this->url('mschool/teacher_student_password', ['id' => $student->id]); ?>">View</a>
+                                <?php if ($this->account && !$this->account->isDefault): ?>
+                                    <a class="btn btn-default" href="<?php echo $this->url('mschool/teacher_student_password', ['id' => $student->id]); ?>">View</a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -87,6 +87,7 @@ class TeacherController extends AbstractActionController implements Dispatchable
 
         return new ViewModel(array(
             'students' => $students,
+            'account' => \MSchool\Module::account()
         ));
     }
 
@@ -145,9 +146,11 @@ class TeacherController extends AbstractActionController implements Dispatchable
 
     public function studentPasswordAction() {
 
+        if (\MSchool\Module::account()->isDefault) $this->redirect()->toRoute('mschool/teacher_student_accounts');
+
         $studentService = $this->getServiceLocator()->get('StudentService');
 
-        $student = $studentService->get($this->params('id'));
+        $student = $studentService->get($this->params('s_id'));
 
         $this->layout('mschool/layout/coach');
 
