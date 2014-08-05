@@ -60,18 +60,6 @@
             </div>
         </div>
 
-        <?php // PASSWORD CONFIRM ?>
-        <?php $element = $form->get('password_confirm') ?>
-        <?php $elemDescription = 'Password Confirm'; ?>
-        <div class='form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>'>
-            <div class='controls with-icon-over-input'>
-                <?php
-                echo $this->formInput($element->setAttribute('class', 'form-control')->setAttribute('placeholder', $elemDescription));
-                echo $this->formElementErrors($element);
-                ?>
-            </div>
-        </div>
-
         <?php // SCHOOL NAME ?>
         <?php $element = $form->get('school_name') ?>
         <?php $elemDescription = 'School Name'; ?>

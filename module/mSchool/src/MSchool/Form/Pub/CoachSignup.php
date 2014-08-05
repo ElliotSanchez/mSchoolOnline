@@ -46,14 +46,6 @@ class CoachSignup extends Form
         ));
 
         $this->add(array(
-            'name' => 'password_confirm',
-            'options' => array(
-
-            ),
-            'type'  => 'Password',
-        ));
-
-        $this->add(array(
             'name' => 'school_name',
             'options' => array(
 
@@ -96,7 +88,6 @@ class CoachSignup extends Form
         $lastname = new Input('last_name');
         $email = new Input('email');
         $passwordInput = new Input('password');
-        $passwordConfirmInput = new Input('password_confirm');
         $schoolName = new Input('school_name');
         $schoolZipCode = new Input('school_zip_code');
         $role = new Input('role');
@@ -108,7 +99,6 @@ class CoachSignup extends Form
         $inputFilter->add($lastname);
         $inputFilter->add($email);
         $inputFilter->add($passwordInput);
-        $inputFilter->add($passwordConfirmInput);
         $inputFilter->add($schoolName);
         $inputFilter->add($schoolZipCode);
         $inputFilter->add($role);
