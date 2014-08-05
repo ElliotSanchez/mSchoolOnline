@@ -8,6 +8,24 @@ $(function() {
         window.location = 'http://' + host + url + '/' + id;
     });
 
+    // SIGNUP PROMPT
+    var welcomeMessage = $('#signup-welcome-message').first();
+
+    if (welcomeMessage.data('display') == 'yes') {
+
+        bootbox.dialog({
+            message: $('#signup-welcome-message').html(),
+            title: "Hi, meet your mSchool Coach Account",
+            buttons: {
+                main: {
+                    label: "Ok",
+                    className: "btn-primary",
+                    callback: null
+                }
+            }
+        });
+    }
+
     // ASSESSMENT : CLASS AVERAGE
     $('div.assessment-class-average').each(function() {
 

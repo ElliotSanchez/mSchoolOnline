@@ -12,6 +12,7 @@ class Entity extends UserAbstract {
     public $firstName;
     public $lastName;
     public $isSchoolAdmin;
+    public $displayedWelcome;
 
     public $accountId;
     public $schoolId;
@@ -41,6 +42,7 @@ class Entity extends UserAbstract {
         $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : null;
         $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : null;
         $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : 0;
+        $this->displayedWelcome = (!empty($data['displayed_welcome'])) ? $data['displayed_welcome'] : 0;
 
         $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : null;
         $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : null;
@@ -53,14 +55,15 @@ class Entity extends UserAbstract {
     public function exchangeArray(array $data)
     {
 
-        if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : null;
+        if (!$this->id) $this->id = (isset($data['id']) && !empty($data['id'])) ? $data['id'] : $this->id;
 
-        $this->username = (!empty($data['username'])) ? $data['username'] : null;
-        $this->password = (!empty($data['password']) && strlen($data['password'])) ? $data['password'] : null;
-        $this->email = (!empty($data['email'])) ? $data['email'] : null;
-        $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : null;
-        $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : null;
-        $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : 0;
+        $this->username = (!empty($data['username'])) ? $data['username'] : $this->username;
+        $this->password = (!empty($data['password']) && strlen($data['password'])) ? $data['password'] : $this->password;
+        $this->email = (!empty($data['email'])) ? $data['email'] : $this->email;
+        $this->firstName = (!empty($data['first_name'])) ? $data['first_name'] : $this->firstName;
+        $this->lastName = (!empty($data['last_name'])) ? $data['last_name'] : $this->lastName;
+        $this->isSchoolAdmin = (!empty($data['is_school_admin'])) ? $data['is_school_admin'] : $this->isSchoolAdmin;
+        $this->displayedWelcome = (!empty($data['displayed_welcome'])) ? $data['displayed_welcome'] : $this->displayedWelcome;
 
         $this->accountId = (!empty($data['account_id'])) ? $data['account_id'] : $this->accountId;
         $this->schoolId = (!empty($data['school_id'])) ? $data['school_id'] : $this->schoolId;
@@ -78,6 +81,7 @@ class Entity extends UserAbstract {
             'is_school_admin' => $this->isSchoolAdmin,
             'account_id' => $this->accountId,
             'school_id' => $this->schoolId,
+            'displayed_welcome' => (int) $this->displayedWelcome,
         );
 
         if ($this->password)

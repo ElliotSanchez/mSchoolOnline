@@ -25,6 +25,20 @@ class TeacherController extends AbstractActionController implements Dispatchable
         return parent::dispatch($request, $response);
     }
 
+    public function onDispatch(\Zend\Mvc\MvcEvent $mvcEvent) {
+
+        $mvcEvent->getViewModel()->setVariable('display_welcome', false);
+
+        if (!$this->teacher->displayedWelcome) {
+            $mvcEvent->getViewModel()->setVariable('displayWelcome', true);
+            $this->teacher->displayedWelcome = 1;
+            $this->getServiceLocator()->get('TeacherService')->save($this->teacher);
+        }
+
+        return parent::onDispatch($mvcEvent);
+
+    }
+
     protected function loadAssignedMclasses() {
         $this->assignedMclasses = $this->getServiceLocator()->get('MclassService')->getMclassesForTeacher($this->teacher);
     }
