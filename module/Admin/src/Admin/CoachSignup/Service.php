@@ -66,7 +66,7 @@ class Service extends ServiceAbstract {
 
         <p>We're excited to set up an mSchool Today account for " . $schoolName . ".</p>
 
-        <p>To finish your sign-up, we need to verify your email address. Please got to the link below to confirm your account and login.</p>
+        <p>To finish your sign up, we need to verify your email address. Please got to the link below to confirm your account and log in.</p>
 
         <p><a href=\"" . $confirmationUrl . "\">" . $confirmationUrl . "</a></p>
 
