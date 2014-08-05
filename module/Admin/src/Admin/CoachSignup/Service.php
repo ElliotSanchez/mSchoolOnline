@@ -12,12 +12,14 @@ use Mailgun\Mailgun;
 class Service extends ServiceAbstract {
 
     protected $accountService;
+    protected $router;
 
-    public function __construct(CoachSignupTable $table, AccountService $accountService) {
+    public function __construct(CoachSignupTable $table, AccountService $accountService, \Zend\Mvc\Router\RouteInterface $router) {
 
         parent::__construct($table);
 
         $this->accountService = $accountService;
+        $this->router = $router;
 
     }
 
@@ -51,10 +53,14 @@ class Service extends ServiceAbstract {
         $domain = \Admin\Module::$MAILGUN_SMTP_HOST;
 
         $email = $coachSignup->email;
-        $firstName = $coachSignup->schoolName;
+        $firstName = $coachSignup->firstName;
         $lastName = $coachSignup->lastName;
         $schoolName = $coachSignup->schoolName;
-        $confirmationUrl = 'http://mschool.lp/signup/confirmation/' . $coachSignup->confirmationKey;
+        $confirmationUrl = $this->router->assemble(array(
+            'confirmation_key' => $coachSignup->confirmationKey,
+        ), array(
+            'name' => 'public/coach_signup_confirmation',
+        ));
 
         $body = "<p>" . $firstName . ", hi!</p>
 

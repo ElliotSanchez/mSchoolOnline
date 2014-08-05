@@ -660,7 +660,7 @@ return array(
                 return $table;
             },
         'CoachSignupService' => function ($sm) {
-                return new CoachSignupService($sm->get('CoachSignupTable'), $sm->get('AccountService'));
+                return new CoachSignupService($sm->get('CoachSignupTable'), $sm->get('AccountService'), $sm->get('router'));
             },
         
     ),
