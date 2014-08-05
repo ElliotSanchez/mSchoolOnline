@@ -1,3 +1,51 @@
+<?php $this->layout('layout/error'); ?>
+
+<body class='contrast-red error contrast-background'>
+<div class='middle-container'>
+
+    <div class='middle-row'>
+        <div class='middle-wrapper'>
+            <div class='error-container-header'>
+                <div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            <div class='text-center'>
+                                <i class='icon-question-sign'></i>
+                                Error
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='error-container'>
+                <div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-4 col-sm-offset-4'>
+                            <h4 class='text-center title'>We're sorry. Something went wrong.</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='error-container-footer'>
+                <div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            <div class='text-center'>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php /*****************************************************************************/ ?>
+<?php /* DISABLED FROM HERE DOWN*/ ?>
+<?php return; ?>
+<?php /*****************************************************************************/ ?>
+
 <h1><?php echo $this->translate('An error occurred') ?></h1>
 <h2><?php echo $this->message ?></h2>
 
