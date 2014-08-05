@@ -81,6 +81,7 @@ class Entity extends UserAbstract {
             'is_school_admin' => $this->isSchoolAdmin,
             'account_id' => $this->accountId,
             'school_id' => $this->schoolId,
+            'is_school_admin' => (int) $this->isSchoolAdmin,
             'displayed_welcome' => (int) $this->displayedWelcome,
         );
 
