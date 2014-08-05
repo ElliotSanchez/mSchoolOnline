@@ -26,7 +26,7 @@ class Entity extends EntityAbstract {
 
         $this->name = (!empty($data['name'])) ? $data['name'] : null;
         $this->subdomain = (!empty($data['subdomain'])) ? $data['subdomain'] : null;
-        $this->isDefault = (int) (!empty($data['is_default'])) ? $data['is_default'] : $this->isDefault;
+        $this->isDefault = (int) ((!empty($data['is_default'])) ? $data['is_default'] : $this->isDefault);
 
         $this->exchangeDates($data);
     }
