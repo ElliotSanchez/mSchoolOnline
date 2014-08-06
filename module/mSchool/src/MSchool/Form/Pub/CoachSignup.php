@@ -93,6 +93,10 @@ class CoachSignup extends Form
         $role = new Input('role');
         $submitInput = new Input('submit');
 
+        $emailValidator = new Validator\EmailAddress();
+        $emailValidator->setMessage('Please enter a valid email address.', Validator\EmailAddress::INVALID_FORMAT);
+        $email->getValidatorChain()->attach($emailValidator);
+
         $inputFilter = new InputFilter();
 
         $inputFilter->add($firstname);

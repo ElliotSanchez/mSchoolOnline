@@ -31,15 +31,13 @@ class PublicController extends AbstractActionController
             $form->setData($this->request->getPost());
 
             if ($form->isValid()) {
+
                 $signupService->signup($form->getData());
 
                 return $this->redirect()->toRoute('public/coach_signup_complete');
 
             } else {
-                foreach($form->getMessages() as $message) {
-                    $this->flashMessenger()->addErrorMessage($message);
-                }
-                return $this->redirect()->toRoute('public/coach_signup');
+
             }
         }
 
