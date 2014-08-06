@@ -37,7 +37,7 @@ class Entity extends UserAbstract {
         $randomString = '';
 
         for ($i = 0; $i < 200; $i++) {
-            shuffle($characters);
+            str_shuffle($characters);
             $randomString .= $characters[rand(0, strlen($characters) - 1)];
         }
 
