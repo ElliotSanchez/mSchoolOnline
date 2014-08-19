@@ -17,10 +17,25 @@ function stopInterval() {
 }
 
 $.getJSON( "/pathway/timer", function( data ) {
+
     var time = data['timer']; // IN SECONDS
     var showPopup = data['showPopup'];
 
-    if (isNaN(parseInt(time)) || !isFinite(time)) {return;}
+    if (isNaN(parseInt(time)) || !isFinite(time)) {
+        // DEFAULT 2.5 SECOND TIMER
+        time = 2.0;
+
+        interval = window.setInterval(function () {
+            console.log('running');
+            $('#pathway-next-btn').removeAttr('disabled');
+            $('#pathway-next-chevron').css('display', 'inline');
+            $('#pathway-next-text').text('Next');
+            stopInterval();
+        }, 2500);
+
+        return;
+
+    }
 
     startTime = time;
     interval = window.setInterval(function () {

@@ -27,11 +27,11 @@
                 <?php //elseif ($step->isTimed()): ?>
                 <?php if ($step->isTimed()): ?>
                     <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-sm btn-primary pull-left" id="pathway-next-btn" disabled>
-                        <span id="pathway-next-text">Keep working!</span><span id="pathway-next-chevron" style="display: none" class="glyphicon glyphicon-chevron-right"></span>
+                        <span id="pathway-next-text">Keep working!</span><span id="pathway-next-chevron" class="glyphicon glyphicon-chevron-right" style="display: none" ></span>
                     </a>
                 <?php else: ?>
-                    <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-sm btn-primary">
-                        <span id="pathway-next-text">Next</span><span class="glyphicon glyphicon-chevron-right"></span>
+                    <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-sm btn-primary pull-left" id="pathway-next-btn" disabled>
+                        <span id="pathway-next-text">Please Wait</span><span id="pathway-next-chevron" class="glyphicon glyphicon-chevron-right" style="display: none"></span>
                     </a>
                 <?php endif; ?>
 
