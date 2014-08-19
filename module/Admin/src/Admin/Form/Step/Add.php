@@ -39,6 +39,14 @@ class Add extends Form
             'type'  => 'Text',
         ));
 
+        $this->add(array(
+            'name' => 'show_popup',
+            'options' => array(
+
+            ),
+            'type'  => 'Checkbox',
+        ));
+
         // RESOURCE
         $resourceOptions = array();
 
@@ -68,11 +76,13 @@ class Add extends Form
 
         $nameInput = new Input('name');
         $shortCodeInput = new Input('short_code');
+        $showPopup = new Input('show_popup');
 
         $inputFilter = new InputFilter();
 
         $inputFilter->add($nameInput);
         $inputFilter->add($shortCodeInput);
+        $inputFilter->add($showPopup);
 
         $this->setInputFilter($inputFilter);
 
