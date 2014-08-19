@@ -18,6 +18,7 @@ function stopInterval() {
 
 $.getJSON( "/pathway/timer", function( data ) {
     var time = data['timer']; // IN SECONDS
+    var showPopup = data['showPopup'];
 
     if (isNaN(parseInt(time)) || !isFinite(time)) {return;}
 
@@ -44,17 +45,19 @@ $.getJSON( "/pathway/timer", function( data ) {
             $('#pathway-next-chevron').css('display', 'inline');
             $('#pathway-next-text').text('Next');
 
-            bootbox.dialog({
-                message: "Please log out of your current work and then click 'Next'.",
-                title: "Well done!",
-                buttons: {
-                    main: {
-                        label: "Ok",
-                        className: "btn-primary",
-                        callback: null
+            if (showPopup) {
+                bootbox.dialog({
+                    message: "Please log out of your current work and then click 'Next'.",
+                    title: "Well done!",
+                    buttons: {
+                        main: {
+                            label: "Ok",
+                            className: "btn-primary",
+                            callback: null
+                        }
                     }
-                }
-            });
+                });
+            }
 
         }
     }, 1000);
