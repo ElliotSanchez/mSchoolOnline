@@ -47,6 +47,19 @@ echo $this->form()->openTag($form->setAttribute('class', 'form'));
     </div>
 </div>
 
+<?php $element = $form->get('show_popup'); ?>
+<div class="row">
+    <div class="form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>">
+        <div class="col-md-4">
+            <label class="control-label" for="show_popup">Show Popup</label>
+            <?php
+            echo $this->formCheckbox($element->setAttribute('class', 'form-control')->setAttribute('placeholder', ''));
+            echo $this->formElementErrors($element);
+            ?>
+        </div>
+    </div>
+</div>
+
 <?php $element = $form->get('is_active'); ?>
 <div class="row">
     <div class="form-group <?php echo (!$element->getMessages()) ?: ('has-error') ?>">

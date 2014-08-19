@@ -42,7 +42,7 @@ class Entity extends EntityAbstract {
         $this->shortCode = trim((!empty($data['short_code'])) ? $data['short_code'] : null);
         $this->timer = (!empty($data['timer'])) ? $data['timer'] : null;
         $this->isActive = (!empty($data['is_active'])) ? $data['is_active'] : null;
-        $this->showPopup = (!empty($data['show_popup'])) ? $data['show_popup'] : $this->showPopup;
+        $this->showPopup = (isset($data['show_popup'])) ? $data['show_popup'] : $this->showPopup;
 
         $this->resourceId = (!empty($data['resource_id'])) ? $data['resource_id'] : null;
 
@@ -56,7 +56,7 @@ class Entity extends EntityAbstract {
             'name' => $this->name,
             'short_code' => trim($this->shortCode),
             'timer' => $this->timer,
-            'show_popup' => $this->showPopup,
+            'show_popup' => (int)$this->showPopup,
             'is_active' => $this->isActive,
         );
 
