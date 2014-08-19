@@ -110,6 +110,7 @@ class PathwayController extends AbstractActionController
 
         $json = new JsonModel();
         $json->setVariable('timer', $time);
+        $json->setVariable('showPopup', (bool)$step->showPopup);
 
         return $json;
 
