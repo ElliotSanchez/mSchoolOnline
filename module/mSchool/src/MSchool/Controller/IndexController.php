@@ -27,8 +27,21 @@ class IndexController extends AbstractActionController
 
         $hasSteps = ($container && $container->hasAvailableSteps()) ? (true) : (false);
 
+
+        $extraCreditOptions = null;
+
+        if (!$hasSteps) {
+            try {
+                $extraCreditOptions = $this->getServiceLocator()->get('SequenceService')->getExtraCreditResourceOptions($student);
+            } catch (\Exception $e) {
+                //print_r($e);die();
+            }
+        }
+
         return new ViewModel(array(
             'hasSteps' => $hasSteps,
+            'extraCreditOptions' => $extraCreditOptions,
         ));
+
     }
 }

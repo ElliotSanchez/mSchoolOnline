@@ -4,6 +4,7 @@ namespace MSchool\Pathway;
 
 use Admin\Sequence\Entity as Sequence;
 use Admin\Progression\Entity as Progression;
+use Admin\Resource\Entity as Resource;
 
 class Container
 {
@@ -13,6 +14,8 @@ class Container
     protected $sequence;
     protected $currentProgression;
     protected $studentSteps;
+
+    protected $extraCreditResource;
 
     public function __construct(Sequence $sequence = null, Progression $progression = null) {
         $this->currStep = 1;
@@ -112,6 +115,44 @@ class Container
 
     public function hasAvailableSteps() {
         return (bool) $this->currentProgression && !$this->currentProgression->wasSkipped();
+    }
+
+    public function generateActivity() {
+
+        $activity = new Activity();
+
+        if ($this->isExtraCreditWork()) {
+
+            $activity->setResource($this->getExtraCreditResource());
+
+        } else {
+
+            $step = $this->getCurrentStep()->step;
+
+            $activity->setResource($step);
+
+            if ($step->isTimed()) {
+                $activity->setTimer($step->timer);
+                $activity->setShowPopup((bool)$step->showPopup);
+            }
+
+        }
+
+        return $activity;
+
+    }
+
+    // EXTRA CREDIT
+    public function setExtraCreditResource(Resource $resource) {
+        $this->extraCreditResource = $resource;
+    }
+
+    public function getExtraCreditResource() {
+        return $this->extraCreditResource;
+    }
+
+    public function isExtraCreditWork() {
+        return (bool) $this->extraCreditResource;
     }
 
 }

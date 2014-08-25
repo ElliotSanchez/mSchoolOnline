@@ -4,6 +4,7 @@ namespace Admin\Sequence;
 
 use Admin\ModelAbstract\ServiceAbstract as ServiceAbstract;
 use Admin\Sequence\Entity as Sequence;
+use Admin\Resource\Entity as Resource;
 use Admin\Sequence\Table as SequenceTable;
 use Admin\Pathway\Service as PathwayService;
 use Admin\Plan\Service as PlanService;
@@ -603,6 +604,36 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         return $studentSteps;
 
+    }
+
+    // EXTRA CREDIT
+    public function getExtraCreditResourceOptions(Student $student) {
+
+        //SELECT r.*
+        //FROM student_steps AS ss
+        //INNER JOIN steps AS st ON ss.step_id = st.id
+        //INNER JOIN resources AS r ON st.resource_id = r.id
+        //WHERE ss.is_complete = 1 OR ss.skipped_at IS NOT NULL
+
+        $sql = new Sql($this->adapter);
+
+        $select = $sql->select()->from('resources')
+            ->join(array('st'=> 'steps'),  'st.resource_id = resources.id', array())
+            ->join(array('ss' => 'student_steps'), 'ss.step_id = st.id', array())
+            ->where(array('(ss.is_complete = 1 OR ss.skipped_at IS NOT NULL) AND resources.is_external = 1'))
+            ->limit(4);
+        ;
+
+//        die($selectString = $sql->getSqlStringForSqlObject($select));
+
+        return iterator_to_array($this->resourceService->table->fetchWith($select));
+
+    }
+
+    public function generateContainerForExtraCreditResource(Resource $resource) {
+        $container = new Container(null, null);
+        $container->setExtraCreditResource($resource);
+        return $container;
     }
 
     // COMPLETION METHODS
