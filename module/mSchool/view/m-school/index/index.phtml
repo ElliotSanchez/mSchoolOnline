@@ -14,6 +14,26 @@
     <?php endif; ?>
 </p>
 
+<?php if (count($extraCreditOptions)): ?>
+    <h3>Do some extra credit work!</h3>
+    <p>Pick your favorite activity.</p>
+
+    <div class="row">
+
+        <?php foreach ($extraCreditOptions as $currResource): ?>
+            <div class="col-sm-2">
+                <a href="<?php echo $this->url('mschool/pathway_extra_credit', ['r_id' => $currResource->id]); ?>">
+                    <img src="/assets/mschool/images/resources/<?php echo $currResource->image ?>" class="img-responsive" />
+                </a>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+
+<?php endif; ?>
+
+<hr />
+
 <div class="row">
     <div class="col-sm-12">
         <div class="box">
