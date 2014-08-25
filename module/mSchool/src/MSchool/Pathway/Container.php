@@ -129,7 +129,7 @@ class Container
 
             $step = $this->getCurrentStep();
 
-            $activity->setResource($step);
+            $activity->setResource($step->resource);
 
             if ($step->isTimed()) {
                 $activity->setTimer($step->timer);
