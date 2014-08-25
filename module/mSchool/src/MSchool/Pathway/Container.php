@@ -127,7 +127,7 @@ class Container
 
         } else {
 
-            $step = $this->getCurrentStep()->step;
+            $step = $this->getCurrentStep();
 
             $activity->setResource($step);
 
