@@ -245,6 +245,20 @@ return array(
                         ),
                     ),
 
+                    'pathway_extra_credit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route'    => '/pathway/extra-credit/[:r_id]',
+                            'constraints' => array(
+                                'r_id' => '[0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'MSchool\Controller\Pathway',
+                                'action'     => 'extra-credit',
+                            ),
+                        ),
+                    ),
+
                     // TEACHER
                     // - MAIN TEACHER NAVIGATION
                     'teacher_dashboard' => array(

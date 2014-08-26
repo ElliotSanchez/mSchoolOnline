@@ -32,17 +32,17 @@ class PathwayController extends AbstractActionController
         }
 
         if ($container) {
-            $step = $container->getCurrentStep();
+            $activity = $container->generateActivity();
         }
 
         // DETERMINE VIEW BASED ON CONTENT OF CURRENT STEP
 
         $viewModel = new ViewModel(array(
             'container' => $container,
-            'step' => $step,
+            'activity' => $activity,
         ));
 
-        if ($step->isTimed() && !$container->isAtLastStep())
+        if ($activity->isTimed() && !$container->isAtLastStep())
             $this->getServiceLocator()->get('ViewHelperManager')->get('InlineScript')->appendFile('/assets/mschool/js/pathway-timer.js');
 
         return $viewModel;
@@ -53,6 +53,10 @@ class PathwayController extends AbstractActionController
         // MOVE THE CURRENT CONTAINER A STEP FORWARD AND REDIRECTS BACK TO LAYOUT
         $session = $this->getServiceLocator()->get('StudentSessionContainer');
         $container = $session->pathwayContainer;
+
+        if ($container->isExtraCreditWork()) {
+            return $this->redirect()->toRoute('mschool/home');
+        }
 
         $sequenceService = $this->getServiceLocator()->get('SequenceService');
 
@@ -101,16 +105,16 @@ class PathwayController extends AbstractActionController
 
         $container = $session->pathwayContainer;
 
-        $step = $container->getCurrentStep();
+        $activity = $container->generateActivity();
 
-        if ($step->isTimed())
-            $time = $step->timer;
+        if ($activity->isTimed())
+            $time = $activity->getTimer();
         else
             $time = null;
 
         $json = new JsonModel();
         $json->setVariable('timer', $time);
-        $json->setVariable('showPopup', (bool)$step->showPopup);
+        $json->setVariable('showPopup', $activity->getShowPopup());
 
         return $json;
 
@@ -131,7 +135,27 @@ class PathwayController extends AbstractActionController
 
     public function finishedAction() {
 
+        $session = $this->getServiceLocator()->get('StudentSessionContainer');
+
+        if ($session->pathwayContainer) {
+            $session->pathwayContainer->setReadyForExtraCredit(true);
+        }
+
         $this->layout('mschool/layout/layout');
+
+    }
+
+    public function extraCreditAction() {
+
+        $resource = $this->getServiceLocator()->get('ResourceService')->get($this->params('r_id'));
+
+        $session = $this->getServiceLocator()->get('StudentSessionContainer');
+
+        $container = $this->getServiceLocator()->get('SequenceService')->generateContainerForExtraCreditResource($resource);
+
+        $session->pathwayContainer = $container;
+
+        return $this->redirect()->toRoute('mschool/pathway');
 
     }
 

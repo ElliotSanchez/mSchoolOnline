@@ -25,7 +25,7 @@
 <!--                        Next-->
 <!--                    </a>-->
                 <?php //elseif ($step->isTimed()): ?>
-                <?php if ($step->isTimed()): ?>
+                <?php if ($activity->isTimed()): ?>
                     <a href="<?php echo $this->url('mschool/pathway_next'); ?>" class="btn btn-sm btn-primary pull-left" id="pathway-next-btn" disabled>
                         <span id="pathway-next-text">Keep working!</span><span id="pathway-next-chevron" class="glyphicon glyphicon-chevron-right" style="display: none" ></span>
                     </a>
@@ -50,7 +50,7 @@
 <div id='wrapper'>
     <section id='content' class="sequence-content">
         <div id="step_content">
-            <iframe src="<?php echo $step->resource->url ?>" style="height: 100%; width: 100%"></iframe>
+            <iframe src="<?php echo $activity->getResource()->url ?>" style="height: 100%; width: 100%"></iframe>
         </div>
     </section>
 </div>
