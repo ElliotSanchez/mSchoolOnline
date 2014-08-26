@@ -15,6 +15,7 @@ class Container
     protected $currentProgression;
     protected $studentSteps;
 
+    protected $readyForExtraCredit;
     protected $extraCreditResource;
 
     public function __construct(Sequence $sequence = null, Progression $progression = null) {
@@ -22,6 +23,7 @@ class Container
         $this->studentSteps = array();
         $this->sequence = $sequence;
         $this->currentProgression = $progression;
+        $this->readyForExtraCredit = false;
     }
 
     public function next() {
@@ -153,6 +155,14 @@ class Container
 
     public function isExtraCreditWork() {
         return (bool) $this->extraCreditResource;
+    }
+
+    public function readyForExtraCredit() {
+        return $this->readyForExtraCredit;
+    }
+
+    public function setReadyForExtraCredit($ready) {
+        $this->readyForExtraCredit = (bool) $ready;
     }
 
 }

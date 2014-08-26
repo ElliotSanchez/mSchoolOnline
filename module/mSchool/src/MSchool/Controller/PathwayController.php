@@ -135,6 +135,12 @@ class PathwayController extends AbstractActionController
 
     public function finishedAction() {
 
+        $session = $this->getServiceLocator()->get('StudentSessionContainer');
+
+        if ($session->pathwayContainer) {
+            $session->pathwayContainer->setReadyForExtraCredit(true);
+        }
+
         $this->layout('mschool/layout/layout');
 
     }

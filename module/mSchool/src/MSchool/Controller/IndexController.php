@@ -30,7 +30,7 @@ class IndexController extends AbstractActionController
 
         $extraCreditOptions = null;
 
-        if (!$hasSteps) {
+        if (!$hasSteps || ($container && $container->readyForExtraCredit())) {
             try {
                 $extraCreditOptions = $this->getServiceLocator()->get('SequenceService')->getExtraCreditResourceOptions($student);
             } catch (\Exception $e) {
