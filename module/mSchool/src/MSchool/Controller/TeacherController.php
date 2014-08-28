@@ -164,7 +164,7 @@ class TeacherController extends AbstractActionController implements Dispatchable
 
         $studentService = $this->getServiceLocator()->get('StudentService');
 
-        $student = $studentService->get($this->params('id'));
+        $student = $studentService->get($this->params('s_id'));
 
         $this->layout('mschool/layout/coach');
 
