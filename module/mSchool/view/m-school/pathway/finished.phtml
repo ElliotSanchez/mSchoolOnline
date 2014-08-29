@@ -5,3 +5,20 @@
     </h4>
     You're all done for the day.
 </div>
+
+<?php if (count($extraCreditOptions)): ?>
+    <h4>Want to keep growing your brain for extra credit?</h4>
+    <p>Pick your favorite activity.</p>
+
+    <div class="row">
+
+        <?php foreach ($extraCreditOptions as $currResource): ?>
+            <div class="col-sm-2">
+                <a href="<?php echo $this->url('mschool/pathway_extra_credit', ['r_id' => $currResource->id]); ?>">
+                    <img src="/assets/mschool/images/resources/<?php echo $currResource->image ?>" class="img-responsive" />
+                </a>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+<?php endif; ?>

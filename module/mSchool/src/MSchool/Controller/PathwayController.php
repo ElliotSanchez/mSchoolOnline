@@ -143,6 +143,13 @@ class PathwayController extends AbstractActionController
 
         $this->layout('mschool/layout/layout');
 
+        $student = $adminAuthService = $this->getServiceLocator()->get('StudentAuthService')->getCurrentUser();
+        $extraCreditOptions = $this->getServiceLocator()->get('SequenceService')->getExtraCreditResourceOptions($student);
+
+        return new ViewModel(array(
+            'extraCreditOptions' => $extraCreditOptions,
+        ));
+
     }
 
     public function extraCreditAction() {
