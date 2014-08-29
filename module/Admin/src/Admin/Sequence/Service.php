@@ -617,9 +617,9 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         $sql = new Sql($this->adapter);
 
-        $select = $sql->select()->from('resources')
+        $select = $sql->select()->from('resources', array('id'))
             ->join(array('st'=> 'steps'),  'st.resource_id = resources.id', array())
-            ->join(array('ss' => 'student_steps'), 'ss.step_id = st.id', array())
+            ->join(array('ss' => 'student_steps'), 'ss.step_id = st.id', array('completed_at'))
             ->where(array('ss.student_id' => $student->id))
             ->where(array('(ss.is_complete = 1 OR ss.skipped_at IS NOT NULL) AND resources.is_external = 1 AND resources.image IS NOT NULL'))
             ->order(array('completed_at DESC'))
@@ -628,7 +628,30 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
 //        die($selectString = $sql->getSqlStringForSqlObject($select));
 
-        return iterator_to_array($this->resourceService->table->fetchWith($select));
+//        $resources = iterator_to_array($this->resourceService->table->fetchWith($select);
+
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $this->adapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
+
+        $options = array();
+
+        foreach ($results as $result) {
+
+            $completeTime = strtotime($results->completed_at);
+
+            if (!isset($options[$completeTime])) {
+                $options[$completeTime] = array();
+            }
+
+            $resource = $this->resourceService->get($result->id);
+
+            $options[$completeTime][$resource->id] = $resource;
+
+        }
+
+        $options = $options[max(array_keys($options))];
+
+        return $options;
 
     }
 
