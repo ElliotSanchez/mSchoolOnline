@@ -627,7 +627,6 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
         ;
 
 //        die($selectString = $sql->getSqlStringForSqlObject($select));
-
 //        $resources = iterator_to_array($this->resourceService->table->fetchWith($select);
 
         $selectString = $sql->getSqlStringForSqlObject($select);
@@ -637,15 +636,16 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
 
         foreach ($results as $result) {
 
-            $completeTime = strtotime($results->completed_at);
+            $completeTime = new \DateTime($result->completed_at);
+            $completeTimeStr = strtotime($completeTime->format('Y-m-d 00:00:00'));
 
-            if (!isset($options[$completeTime])) {
-                $options[$completeTime] = array();
+            if (!isset($options[$completeTimeStr])) {
+                $options[$completeTimeStr] = array();
             }
 
             $resource = $this->resourceService->get($result->id);
 
-            $options[$completeTime][$resource->id] = $resource;
+            $options[$completeTimeStr][] = $resource;
 
         }
 
