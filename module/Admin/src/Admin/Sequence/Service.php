@@ -622,7 +622,8 @@ class Service extends ServiceAbstract implements \Zend\Db\Adapter\AdapterAwareIn
             ->join(array('ss' => 'student_steps'), 'ss.step_id = st.id', array())
             ->where(array('ss.student_id' => $student->id))
             ->where(array('(ss.is_complete = 1 OR ss.skipped_at IS NOT NULL) AND resources.is_external = 1 AND resources.image IS NOT NULL'))
-            ->limit(4);
+            ->order(array('completed_at DESC'))
+            ->limit(6);
         ;
 
 //        die($selectString = $sql->getSqlStringForSqlObject($select));
