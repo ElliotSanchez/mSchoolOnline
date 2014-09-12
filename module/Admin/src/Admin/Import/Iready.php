@@ -209,7 +209,7 @@ class Iready {
             $student = null;
 
             if (!empty($data['student_number']))
-                $student = $this->studentService->getWithStudentNumber($data['student_number']);
+                $student = $this->studentService->get($data['student_number']);
 
             if ($student) {
 
