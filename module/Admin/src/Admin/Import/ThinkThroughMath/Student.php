@@ -56,9 +56,10 @@ class Student {
             $metadata = $this->dropbox->getFile($cp, $fd);
 
             $fileMetadata = stream_get_meta_data($fd);
+
             $this->filename = $fileMetadata["uri"];
 
-            $this->importFile();
+            $this->importFile($filename);
 
             $this->cleanUp();
 
@@ -66,28 +67,55 @@ class Student {
 
     }
 
-    protected function importFile() {
+    protected function importFile($filename) {
 
+        // FIND STUDENT FROM FILENAME
+        $student = null;
+
+        $filenameParts = explode('_', $filename);
+        $nameParts = explode(' ', $filenameParts[0]);
+        $mname = $nameParts[count($nameParts)-1];
+
+        if (strlen($mname))
+            $student = $this->studentService->getWithStudentMname($mname);
+
+        // READ FILE
         $importFileName = $this->filename;
 
         $objPHPExcel = \PHPExcel_IOFactory::load($importFileName);
 
         $rowIterator = $objPHPExcel->getActiveSheet()->getRowIterator();
 
-        $STUDENT_NAME = 'A';
+//        ORIGINAL FILE FORMAT FIELDS
+//        $STUDENT_NAME = 'A';
+//        $GRADE_NAME = 'B';
+//        $CLASSROOM_NAME = 'C';
+//        $PATHWAY_NAME = 'D';
+//        $GRADE_LEVEL_DEVIATION = 'E';
+//        $LESSON_NAME = 'F';
+//        $TYPE = 'G';
+//        $TESTED_OUT = 'H';
+//        $PASSED = 'I';
+//        $PRE_QUIZ_SCORE = 'J';
+//        $POST_QUIZ_SCORE = 'K';
+//        $TIME_ON_SYSTEM = 'L';
+//        $DATE_STARTED = 'M';
+//        $DATE_COMPLETED = 'N';
+//                    case $STUDENT_NAME: $data['student_name'] = trim($cell->getValue()); break;
+//                    case $CLASSROOM_NAME: $data['classroom_name'] = trim($cell->getValue()); break;
+//                    case $PATHWAY_NAME: $data['pathway_name'] = trim($cell->getValue()); break;
+//                    case $GRADE_LEVEL_DEVIATION: $data['grade_level_deviation'] = trim($cell->getValue()); break;
+//                    case $DATE_STARTED: $data['date_started'] = trim($cell->getValue()); break;
+//                    case $TYPE: $data['type'] = trim($cell->getValue()); break;
+//                    case $TESTED_OUT: $data['tested_out'] = trim($cell->getValue()); break;
+//                    case $PASSED: $data['passed'] = trim($cell->getValue()); break;
+//                    case $PRE_QUIZ_SCORE: $data['pre_quiz_score'] = trim($cell->getValue()); break;
+
+        $LESSON_NAME = 'A';
         $GRADE_NAME = 'B';
-        $CLASSROOM_NAME = 'C';
-        $PATHWAY_NAME = 'D';
-        $GRADE_LEVEL_DEVIATION = 'E';
-        $LESSON_NAME = 'F';
-        $TYPE = 'G';
-        $TESTED_OUT = 'H';
-        $PASSED = 'I';
-        $PRE_QUIZ_SCORE = 'J';
-        $POST_QUIZ_SCORE = 'K';
-        $TIME_ON_SYSTEM = 'L';
-        $DATE_STARTED = 'M';
-        $DATE_COMPLETED = 'N';
+        $POST_QUIZ_SCORE = 'C';
+        $TIME_ON_SYSTEM = 'D';
+        $DATE_COMPLETED = 'E';
 
         foreach ($rowIterator as $row) {
 
@@ -100,31 +128,13 @@ class Student {
 
             foreach ($cellIterator as $cell) {
                 switch ($cell->getColumn()) {
-                    case $STUDENT_NAME: $data['student_name'] = trim($cell->getValue()); break;
                     case $GRADE_NAME: $data['grade_name'] = trim($cell->getValue()); break;
-                    case $CLASSROOM_NAME: $data['classroom_name'] = trim($cell->getValue()); break;
-                    case $PATHWAY_NAME: $data['pathway_name'] = trim($cell->getValue()); break;
-                    case $GRADE_LEVEL_DEVIATION: $data['grade_level_deviation'] = trim($cell->getValue()); break;
                     case $LESSON_NAME: $data['lesson_name'] = trim($cell->getValue()); break;
-                    case $TYPE: $data['type'] = trim($cell->getValue()); break;
-                    case $TESTED_OUT: $data['tested_out'] = trim($cell->getValue()); break;
-                    case $PASSED: $data['passed'] = trim($cell->getValue()); break;
-                    case $PRE_QUIZ_SCORE: $data['pre_quiz_score'] = trim($cell->getValue()); break;
                     case $POST_QUIZ_SCORE: $data['post_quiz_score'] = trim($cell->getValue()); break;
                     case $TIME_ON_SYSTEM: $data['time_on_system'] = trim($cell->getValue()); break;
-                    case $DATE_STARTED: $data['date_started'] = trim($cell->getValue()); break;
                     case $DATE_COMPLETED: $data['date_completed'] = trim($cell->getValue()); break;
                 }
             }
-
-            // FIND STUDENT
-            $student = null;
-
-            $nameParts = explode(' ', $data['student_name']);
-            $mname = $nameParts[count($nameParts)-1];
-
-            if (strlen($mname))
-                $student = $this->studentService->getWithStudentMname($mname);
 
             if ($student) {
 
