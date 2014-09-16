@@ -208,8 +208,13 @@ class Iready {
             // FIND STUDENT
             $student = null;
 
-            if (!empty($data['student_number']))
-                $student = $this->studentService->get($data['student_number']);
+            if (!empty($data['student_number'])) {
+                try {
+                    $student = $this->studentService->get($data['student_number']);
+                } catch (\Exception $e) {
+                    // DO NOTHING; NOT SURE WHY THIS IS THROWING ERRORS
+                }
+            }
 
             if ($student) {
 
